@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Calendar, Home, Video, Users, ArrowRight, Check, CheckCircle2, AlertCircle, CreditCard, TrendingUp, Info, Percent, Gift } from 'lucide-react';
+import { Calendar, Home, Video, Users, ArrowRight, Check, CheckCircle2, AlertCircle, CreditCard, TrendingUp, Info, Percent, Gift, Printer } from 'lucide-react';
 import { Button } from '../ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '../ui/dialog';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
