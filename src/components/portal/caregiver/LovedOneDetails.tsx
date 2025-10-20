@@ -679,15 +679,19 @@ export function LovedOneDetails({ seniorName, onBack, onNavigateToBooking, onNav
                     <div className="space-y-2">
                       <div className="flex items-center gap-2">
                         <CheckCircle2 className="w-5 h-5" style={{ color: '#16A34A' }} />
-                        <span>2 monthly sessions included</span>
+                        <span>1 in-home visit (90 min) OR 3 virtual sessions per month</span>
                       </div>
                       <div className="flex items-center gap-2">
                         <CheckCircle2 className="w-5 h-5" style={{ color: '#16A34A' }} />
-                        <span>24/7 support access</span>
+                        <span>Email/phone support (same-day response)</span>
                       </div>
                       <div className="flex items-center gap-2">
                         <CheckCircle2 className="w-5 h-5" style={{ color: '#16A34A' }} />
-                        <span>Progress tracking</span>
+                        <span>Learning library access & custom guides</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <CheckCircle2 className="w-5 h-5" style={{ color: '#16A34A' }} />
+                        <span>15% discount on add-on sessions</span>
                       </div>
                     </div>
                   </div>

@@ -21,15 +21,6 @@ export function ManageLovedOnes({ onBack, onViewDetails, onAddSenior, onNavigate
       plan: 'Standard Care',
       sessionsCompleted: 5,
       skillsMastered: 12
-    },
-    {
-      name: 'Robert Johnson',
-      relationship: 'Father',
-      status: 'active',
-      nextSession: 'Dec 2, 2025',
-      plan: 'Standard Care',
-      sessionsCompleted: 3,
-      skillsMastered: 8
     }
   ];
 

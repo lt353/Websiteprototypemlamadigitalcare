@@ -19,10 +19,10 @@ type PlanTrack = 'in-home' | 'virtual' | null;
 // Standard Care Plan data
 const standardCarePlan = {
   planName: 'Standard Care Plan',
-  monthlyPrice: '$99/month',
+  monthlyPrice: '$79/month',
   renewalDate: 'November 15, 2025',
   addOnDiscount: 15, // 15% member discount on all add-ons
-  firstAssessmentDiscount: 30, // 30% off first assessment
+  firstAssessmentDiscount: 20, // 20% off first assessment
   
   // User's selected track for this month
   selectedTrack: 'virtual' as PlanTrack, // User chose virtual this month

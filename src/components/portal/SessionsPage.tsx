@@ -100,7 +100,8 @@ export function SessionsPage({ onBack, onNavigateToBooking, onRescheduleSuccess,
       topics: 'Email Organization, Spam Filters',
       rating: 5,
       isPlanSession: false, // Add-on
-      price: 35,
+      price: 29.75, // 15% discount applied ($35 → $29.75)
+      originalPrice: 35,
       notes: 'Helped Michele set up email folders and filters to better manage her inbox. Reviewed her spam folder settings and practiced identifying suspicious emails. She\'s much more organized now!'
     },
     {
@@ -125,7 +126,8 @@ export function SessionsPage({ onBack, onNavigateToBooking, onRescheduleSuccess,
       topics: 'Zoom Basics for Book Club',
       rating: 5,
       isPlanSession: false, // Add-on
-      price: 35,
+      price: 29.75, // 15% discount applied ($35 → $29.75)
+      originalPrice: 35,
       notes: 'Walked through joining Zoom meetings, using mute/unmute, turning camera on/off, and screen sharing basics. Michele can now confidently join her book club\'s virtual meetings each week.'
     },
     {
@@ -403,13 +405,20 @@ export function SessionsPage({ onBack, onNavigateToBooking, onRescheduleSuccess,
                             </span>
                           </div>
                         ) : (
-                          <div className="flex items-center gap-2">
-                            <span className="text-[18px] font-bold" style={{ color: '#92400E' }}>
+                          <div className="flex items-center gap-2 flex-wrap">
+                            {session.originalPrice && (
+                              <span className="text-[16px] line-through" style={{ color: '#9CA3AF' }}>
+                                ${session.originalPrice}
+                              </span>
+                            )}
+                            <span className="text-[20px] font-bold" style={{ color: '#065F46' }}>
                               ${session.price}
                             </span>
-                            <span className="text-[14px]" style={{ color: '#6B7280' }}>
-                              (paid separately)
-                            </span>
+                            {session.originalPrice && (
+                              <span className="px-2 py-1 rounded text-[12px] font-bold" style={{ background: '#D1FAE5', color: '#065F46' }}>
+                                15% OFF (SAVE ${(session.originalPrice - session.price).toFixed(2)})
+                              </span>
+                            )}
                           </div>
                         )}
                       </div>
@@ -455,7 +464,7 @@ export function SessionsPage({ onBack, onNavigateToBooking, onRescheduleSuccess,
                     Add-On Sessions:
                   </span>
                   <span className="text-[18px] font-bold" style={{ color: '#92400E' }}>
-                    2 virtual sessions ($70)
+                    2 virtual sessions ($59.50 with 15% discount)
                   </span>
                 </div>
                 <div className="flex items-center justify-between">
@@ -479,7 +488,7 @@ export function SessionsPage({ onBack, onNavigateToBooking, onRescheduleSuccess,
                     Total Paid (Add-ons):
                   </span>
                   <span className="text-[18px] font-bold" style={{ color: '#92400E' }}>
-                    $138 ($68 + $70)
+                    $127.50 ($68 + $59.50)
                   </span>
                 </div>
               </div>
@@ -489,7 +498,7 @@ export function SessionsPage({ onBack, onNavigateToBooking, onRescheduleSuccess,
                   💡 <strong>Considering Premium?</strong>
                 </p>
                 <p className="text-[14px] mb-3" style={{ color: '#6B7280' }}>
-                  You've added 2 extra sessions ($70) plus the discounted assessment ($68). With Premium, you get more sessions included and could save on future add-ons!
+                  You've added 2 extra sessions ($59.50 with member discount) plus the discounted assessment ($68). With Premium, you get more sessions included and could save on future add-ons!
                 </p>
                 <button
                   onClick={() => {
