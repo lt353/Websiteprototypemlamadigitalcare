@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react"; 
 import {
   Shield,
   Upload,
@@ -9,6 +9,8 @@ import {
   MessageSquare,
   Share2,
   HelpCircle,
+  Calendar,
+  Mic,
 } from "lucide-react";
 import { Button } from "../ui/button";
 import { Textarea } from "../ui/textarea";
@@ -17,6 +19,8 @@ import { Label } from "../ui/label";
 
 interface ScamCheckerPageProps {
   onBack: () => void;
+  onNavigateToSessions?: () => void;
+  onNavigateToBooking?: (context?: { priority?: string; reason?: string; topic?: string }) => void;
 }
 
 type MessageType =
@@ -74,9 +78,8 @@ interface Indicators {
   knowSender: boolean;
 }
 
-export function ScamCheckerPage({
-  onBack,
-}: ScamCheckerPageProps) {
+export function ScamCheckerPage({ onBack, onNavigateToSessions, onNavigateToBooking }: ScamCheckerPageProps) {
+  
   const [step, setStep] = useState(1);
   const [messageType, setMessageType] =
     useState<MessageType | null>(null);
@@ -131,7 +134,11 @@ export function ScamCheckerPage({
       setUploadedFile(file);
     }
   };
-
+  const [isRecording, setIsRecording] = useState(false);
+  const [recordingTime, setRecordingTime] = useState(0);
+  const [showAlreadyClickedHelp, setShowAlreadyClickedHelp] = useState(false);
+  const [needsUrgentHelp, setNeedsUrgentHelp] = useState(false);
+  const [showIndicators, setShowIndicators] = useState(false);
   const loadSampleMessage = (
     type: "high" | "medium" | "low",
   ) => {
@@ -474,515 +481,303 @@ Presented in partnership with Mālama Digital Care`,
     await new Promise((resolve) => setTimeout(resolve, 2000));
 
     const content = messageContent.toLowerCase();
-    let riskScore = 0;
     const reasons: string[] = [];
     const actions: string[] = [];
 
-    // === CRITICAL RED FLAGS (25+ points each) ===
-    if (
-      indicators.threatenedConsequences &&
-      indicators.urgent
-    ) {
-      riskScore += 30;
-      reasons.push(
-        "🚨 CRITICAL: Combined threats with extreme urgency (classic pressure tactic)",
-      );
-    }
+    // === CATEGORY-BASED SCORING (prevents over-counting) ===
+    let categoryScores = {
+      impersonation: 0,      // IRS, bank, tech support, etc.
+      requestedInfo: 0,      // SSN, password, bank info
+      paymentMethod: 0,      // Gift cards, crypto, wire transfer
+      urgencyThreats: 0,     // Urgent, arrest, consequences
+      suspiciousActions: 0,  // Click link, download, remote access
+      redFlags: 0,           // Grammar, generic greeting, sender
+      trustFactors: 0,       // Do you know/trust sender
+    };
 
-    if (indicators.askedForRemoteAccess) {
-      riskScore += 28;
-      reasons.push(
-        "🚨 CRITICAL: Requested remote access to your device",
-      );
-    }
-
-    if (
-      indicators.askedForGiftCards ||
-      indicators.askedForCrypto ||
-      indicators.askedForWireTransfer
-    ) {
-      riskScore += 27;
-      reasons.push(
-        "🚨 CRITICAL: Requested untraceable payment method (gift cards, crypto, or wire transfer)",
-      );
-    }
-
-    if (
-      (content.includes("gift card") ||
-        content.includes("bitcoin") ||
-        content.includes("wire transfer") ||
-        content.includes("venmo") ||
-        content.includes("zelle")) &&
-      indicators.askedForMoney
-    ) {
-      riskScore += 25;
-      reasons.push(
-        "🚨 CRITICAL: Demanded payment via non-standard method",
-      );
-    }
-
-    // === HIGH RISK INDICATORS (15-20 points) ===
+    // === 1. IMPERSONATION CATEGORY (max 25 points) ===
     if (
       indicators.claimedIRS ||
       content.includes("irs") ||
-      content.includes("internal revenue") ||
-      (content.includes("tax") && content.includes("warrant"))
+      content.includes("internal revenue")
     ) {
-      riskScore += 20;
-      reasons.push(
-        "⚠️ HIGH RISK: Claimed to be from IRS (IRS NEVER initiates contact by phone/text/email)",
-      );
+      categoryScores.impersonation = Math.max(categoryScores.impersonation, 25);
+      reasons.push("⚠️ HIGH RISK: Impersonated IRS (IRS never contacts by phone/email/text first)");
     }
-
+    
     if (
-      indicators.askedForSSN ||
-      content.includes("social security number") ||
-      content.includes("ssn")
+      indicators.claimedBank ||
+      (content.includes("bank") || content.includes("paypal") || content.includes("account")) &&
+      (content.includes("locked") || content.includes("suspended") || content.includes("verify"))
     ) {
-      riskScore += 18;
-      reasons.push(
-        "⚠️ HIGH RISK: Requested Social Security Number",
-      );
-    }
-
-    if (
-      indicators.askedForPassword ||
-      (content.includes("password") &&
-        !content.includes("reset password"))
-    ) {
-      riskScore += 17;
-      reasons.push(
-        "⚠️ HIGH RISK: Asked for your password (legitimate companies NEVER do this)",
-      );
-    }
-
-    if (
-      indicators.askedForBankInfo ||
-      (content.includes("account number") &&
-        content.includes("bank"))
-    ) {
-      riskScore += 17;
-      reasons.push(
-        "⚠️ HIGH RISK: Requested banking information",
-      );
-    }
-
-    if (
-      indicators.threatenedConsequences ||
-      content.includes("arrest") ||
-      content.includes("warrant") ||
-      content.includes("suspended") ||
-      content.includes("legal action")
-    ) {
-      riskScore += 16;
-      reasons.push(
-        "⚠️ HIGH RISK: Threatened serious consequences",
-      );
-    }
-
-    if (
-      indicators.claimedBank &&
-      (indicators.clickLink || indicators.askedForPersonalInfo)
-    ) {
-      riskScore += 16;
-      reasons.push(
-        "⚠️ HIGH RISK: Impersonated bank and requested action",
-      );
-    }
-
-    if (
-      indicators.offeredPrize ||
-      (content.includes("won") &&
-        (content.includes("prize") ||
-          content.includes("lottery") ||
-          content.includes("winner") ||
-          content.includes("$")))
-    ) {
-      riskScore += 15;
-      reasons.push(
-        "⚠️ HIGH RISK: Claims you won money/prize unexpectedly",
-      );
-    }
-
-    if (
-      indicators.claimedMedicare ||
-      content.includes("medicare") ||
-      content.includes("medicaid")
-    ) {
-      riskScore += 15;
-      reasons.push(
-        "⚠️ HIGH RISK: Impersonated Medicare/Medicaid",
-      );
-    }
-
-    if (indicators.askedForMoney) {
-      riskScore += 15;
-      reasons.push("⚠️ HIGH RISK: Directly asked for money");
-    }
-
-    // === MEDIUM-HIGH RISK INDICATORS (8-12 points) ===
-    if (
-      indicators.urgent ||
-      content.includes("urgent") ||
-      content.includes("immediately") ||
-      content.includes("right now") ||
-      content.includes("within 24 hours") ||
-      content.includes("act now")
-    ) {
-      riskScore += 12;
-      reasons.push("⚠️ Creates false sense of urgency");
-    }
-
-    if (
-      indicators.clickLink &&
-      (content.includes("http") ||
-        content.includes("click here") ||
-        content.includes("link"))
-    ) {
-      riskScore += 11;
-      reasons.push("⚠️ Asked you to click a suspicious link");
-    }
-
-    if (
-      indicators.download ||
-      content.includes("download") ||
-      content.includes("install") ||
-      content.includes("teamviewer") ||
-      content.includes("anydesk")
-    ) {
-      riskScore += 11;
-      reasons.push("⚠️ Asked you to download/install software");
-    }
-
-    if (
-      indicators.limitedTimeOffer ||
-      content.includes("limited time") ||
-      content.includes("expires") ||
-      content.includes("last chance")
-    ) {
-      riskScore += 10;
-      reasons.push('⚠️ Uses "limited time" pressure tactic');
+      categoryScores.impersonation = Math.max(categoryScores.impersonation, 20);
+      reasons.push("⚠️ HIGH RISK: Claimed to be from bank/financial institution");
     }
 
     if (
       indicators.claimedTechSupport ||
       content.includes("microsoft") ||
       content.includes("apple support") ||
-      content.includes("tech support") ||
       content.includes("virus detected")
     ) {
-      riskScore += 10;
-      reasons.push(
-        "⚠️ Claimed to be tech support (they don't make unsolicited contact)",
-      );
+      categoryScores.impersonation = Math.max(categoryScores.impersonation, 18);
+      reasons.push("⚠️ HIGH RISK: Claimed to be tech support (they don't make unsolicited contact)");
     }
 
-    if (
-      indicators.claimedFamilyFriend &&
-      !indicators.knowSender
-    ) {
-      riskScore += 12;
-      reasons.push(
-        "⚠️ Claims to be family/friend but you don't recognize them (grandparent scam)",
-      );
+    if (indicators.claimedMedicare || content.includes("medicare")) {
+      categoryScores.impersonation = Math.max(categoryScores.impersonation, 18);
+      reasons.push("⚠️ HIGH RISK: Impersonated Medicare/Medicaid");
     }
 
-    if (
-      indicators.romanticInterest &&
-      messageType === "social"
-    ) {
-      riskScore += 10;
-      reasons.push(
-        "⚠️ Unsolicited romantic interest from stranger (potential romance scam)",
-      );
-    }
-
-    if (indicators.suspiciousSender) {
-      riskScore += 9;
-      reasons.push(
-        "⚠️ Sender address/number doesn't match claimed organization",
-      );
-    }
-
-    if (indicators.askedForPersonalInfo) {
-      riskScore += 9;
-      reasons.push("⚠️ Requested personal information");
-    }
-
-    // === MEDIUM RISK INDICATORS (4-7 points) ===
-    if (
-      indicators.claimedUtility ||
-      content.includes("electric") ||
-      content.includes("water bill") ||
-      content.includes("disconnect notice")
-    ) {
-      riskScore += 7;
+    if (indicators.claimedUtility || content.includes("electric") || content.includes("disconnect notice")) {
+      categoryScores.impersonation = Math.max(categoryScores.impersonation, 15);
       reasons.push("⚠ Claimed to be from utility company");
     }
 
+    // === 2. REQUESTED SENSITIVE INFO CATEGORY (max 25 points) ===
     if (
-      indicators.claimedDelivery ||
-      content.includes("package") ||
-      content.includes("delivery") ||
-      content.includes("usps") ||
-      content.includes("fedex") ||
-      content.includes("ups")
+      indicators.askedForSSN ||
+      content.includes("social security number") ||
+      content.includes("social security") ||
+      content.includes("ssn")
     ) {
-      riskScore += 6;
-      reasons.push("⚠ Claims to be about package delivery");
+      categoryScores.requestedInfo = Math.max(categoryScores.requestedInfo, 25);
+      reasons.push("⚠️ HIGH RISK: Requested Social Security Number");
     }
 
     if (
-      (content.includes("verify") ||
-        content.includes("confirm")) &&
-      content.includes("account")
+      indicators.askedForPassword ||
+      (content.includes("password") && content.includes("verify")) ||
+      (content.includes("password") && content.includes("confirm")) ||
+      (content.includes("password") && !content.includes("reset") && !content.includes("forgot"))
     ) {
-      riskScore += 6;
-      reasons.push("⚠ Asks you to verify account information");
+      categoryScores.requestedInfo = Math.max(categoryScores.requestedInfo, 22);
+      reasons.push("⚠️ HIGH RISK: Asked for password (legitimate companies NEVER ask for passwords)");
     }
 
     if (
-      content.includes("unusual activity") ||
-      content.includes("suspicious login") ||
-      content.includes("unauthorized")
+      indicators.askedForBankInfo ||
+      content.includes("account number") ||
+      (content.includes("verify") && content.includes("account"))
     ) {
-      riskScore += 6;
-      reasons.push(
-        "⚠ Claims unusual activity on your account",
-      );
+      categoryScores.requestedInfo = Math.max(categoryScores.requestedInfo, 20);
+      reasons.push("⚠️ HIGH RISK: Requested banking information");
+    }
+
+    if (indicators.askedForPersonalInfo) {
+      categoryScores.requestedInfo = Math.max(categoryScores.requestedInfo, 15);
+      reasons.push("⚠️ Requested personal information");
+    }
+
+    // === 3. PAYMENT METHOD CATEGORY (max 30 points) ===
+    if (
+      indicators.askedForGiftCards ||
+      indicators.askedForCrypto ||
+      indicators.askedForWireTransfer ||
+      content.includes("gift card") ||
+      content.includes("bitcoin") ||
+      content.includes("wire transfer") ||
+      content.includes("venmo") ||
+      content.includes("zelle")
+    ) {
+      categoryScores.paymentMethod = Math.max(categoryScores.paymentMethod, 30);
+      reasons.push("🚨 CRITICAL: Requested untraceable payment method (gift cards, crypto, wire transfer)");
+    } else if (indicators.askedForMoney) {
+      categoryScores.paymentMethod = Math.max(categoryScores.paymentMethod, 15);
+      reasons.push("⚠️ Requested money");
+    }
+
+    // === 4. URGENCY & THREATS CATEGORY (max 20 points) ===
+    if (
+      (indicators.threatenedConsequences || content.includes("arrest") || content.includes("warrant")) &&
+      (indicators.urgent || content.includes("immediately") || content.includes("urgent"))
+    ) {
+      categoryScores.urgencyThreats = Math.max(categoryScores.urgencyThreats, 20);
+      reasons.push("⚠️ HIGH RISK: Combined threats with extreme urgency");
+    } else if (
+      indicators.threatenedConsequences ||
+      content.includes("arrest") ||
+      content.includes("warrant") ||
+      content.includes("legal action")
+    ) {
+      categoryScores.urgencyThreats = Math.max(categoryScores.urgencyThreats, 15);
+      reasons.push("⚠️ Threatened serious consequences");
+    } else if (
+      indicators.urgent ||
+      content.includes("urgent") ||
+      content.includes("immediately") ||
+      content.includes("within 24 hours") ||
+      content.includes("within 12 hours")
+    ) {
+      categoryScores.urgencyThreats = Math.max(categoryScores.urgencyThreats, 12);
+      reasons.push("⚠️ Creates false sense of urgency");
+    }
+
+    if (indicators.limitedTimeOffer || content.includes("limited time")) {
+      categoryScores.urgencyThreats = Math.max(categoryScores.urgencyThreats, 10);
+      reasons.push("⚠️ Uses limited time pressure tactic");
+    }
+
+    // === 5. SUSPICIOUS ACTIONS CATEGORY (max 20 points) ===
+    if (indicators.askedForRemoteAccess) {
+      categoryScores.suspiciousActions = Math.max(categoryScores.suspiciousActions, 20);
+      reasons.push("🚨 CRITICAL: Requested remote access to your device");
     }
 
     if (
-      indicators.genericGreeting ||
-      content.includes("dear customer") ||
-      content.includes("dear valued") ||
-      content.includes("dear member")
+      indicators.clickLink ||
+      (content.includes("click") && content.includes("link")) ||
+      (content.includes("verify") && content.includes("link"))
     ) {
-      riskScore += 5;
-      reasons.push(
-        "⚠ Uses generic greeting instead of your name",
-      );
+      categoryScores.suspiciousActions = Math.max(categoryScores.suspiciousActions, 15);
+      reasons.push("⚠️ Urges you to click a link");
     }
 
-    if (indicators.poorGrammar) {
-      riskScore += 5;
-      reasons.push("⚠ Contains spelling or grammar errors");
+    if (
+      indicators.download ||
+      content.includes("download") ||
+      content.includes("teamviewer")
+    ) {
+      categoryScores.suspiciousActions = Math.max(categoryScores.suspiciousActions, 15);
+      reasons.push("⚠️ Asked you to download software");
     }
 
     if (indicators.callThemBack && indicators.urgent) {
-      riskScore += 7;
-      reasons.push(
-        "⚠ Urgently demands you call a specific number",
-      );
+      categoryScores.suspiciousActions = Math.max(categoryScores.suspiciousActions, 12);
+      reasons.push("⚠️ Urgently demands you call a specific number");
     }
 
-    if (indicators.tooGoodToBeTrue) {
-      riskScore += 8;
-      reasons.push(
-        "⚠ Offer seems too good to be true (it probably is)",
-      );
+    // === 6. RED FLAGS CATEGORY (max 15 points) ===
+    let redFlagCount = 0;
+    
+    if (indicators.poorGrammar) {
+      redFlagCount++;
+      reasons.push("⚠ Contains spelling or grammar errors");
+    }
+    
+    if (indicators.genericGreeting || content.includes("dear customer") || content.includes("dear valued")) {
+      redFlagCount++;
+      reasons.push("⚠ Uses generic greeting instead of your name");
+    }
+    
+    if (indicators.suspiciousSender) {
+      redFlagCount++;
+      reasons.push("⚠ Sender address/number doesn't match claimed organization");
     }
 
-    // === POSITIVE TRUST INDICATORS (reduce risk) ===
+    if (messageType === "email" && content.includes("http://") && !content.includes("https://")) {
+      redFlagCount++;
+      reasons.push('⚠ Link uses unsecure "http://" instead of "https://"');
+    }
+
+    categoryScores.redFlags = Math.min(redFlagCount * 5, 15);
+
+    // === 7. TRUST FACTORS (negative points) ===
     if (indicators.knowSender) {
-      riskScore -= 12;
-      reasons.push(
-        "✓ You personally know and trust this sender",
-      );
+      categoryScores.trustFactors = -15;
+      reasons.push("✓ You personally know and trust this sender");
     }
 
     if (
       content.includes("tea araki") ||
       content.includes("tea from malama") ||
-      content.includes("tea from mālama")
+      content.includes("mālama digital")
     ) {
-      riskScore -= 10;
-      reasons.push(
-        "✓ Message mentions Tea from Mālama Digital Care by name",
-      );
+      categoryScores.trustFactors = Math.min(categoryScores.trustFactors, -10);
+      reasons.push("✓ Message from known Mālama Digital Care contact");
     }
 
-    if (
-      (content.includes("mālama digital") ||
-        content.includes("malama digital")) &&
-      content.includes("confirm")
-    ) {
-      riskScore -= 8;
-      reasons.push(
-        "✓ Appears to be legitimate appointment confirmation",
-      );
-    }
+    // === CALCULATE FINAL SCORE ===
+    let riskScore = 
+      categoryScores.impersonation +
+      categoryScores.requestedInfo +
+      categoryScores.paymentMethod +
+      categoryScores.urgencyThreats +
+      categoryScores.suspiciousActions +
+      categoryScores.redFlags +
+      categoryScores.trustFactors;
 
-    // Don't let score go below 0
-    riskScore = Math.max(0, riskScore);
+    // Cap score between 0 and 100
+    riskScore = Math.max(0, Math.min(100, riskScore));
 
     // === DETERMINE RISK LEVEL ===
     let riskLevel: RiskLevel;
-    if (riskScore >= 25) {
+    if (riskScore >= 60) {
       riskLevel = "high";
-    } else if (riskScore >= 12) {
+    } else if (riskScore >= 30) {
       riskLevel = "medium";
     } else {
       riskLevel = "low";
     }
 
-    // === MESSAGE TYPE SPECIFIC WARNINGS ===
-    if (messageType === "call") {
-      if (riskLevel === "high") {
-        reasons.push(
-          "📞 Phone scams are extremely common - NEVER give info to unsolicited callers",
-        );
-      }
-      if (indicators.callThemBack) {
-        reasons.push(
-          "📞 Legitimate organizations won't pressure you to call back immediately",
-        );
-      }
-    }
-
-    if (messageType === "text" && indicators.clickLink) {
-      reasons.push(
-        "💬 Text message links are commonly used for phishing - very dangerous",
-      );
-    }
-
-    if (messageType === "email") {
-      if (
-        content.includes("http://") ||
-        !content.includes("https://")
-      ) {
-        reasons.push(
-          '📧 Link uses unsecure "http://" instead of "https://"',
-        );
-      }
-    }
-
-    if (
-      messageType === "social" &&
-      indicators.romanticInterest
-    ) {
-      reasons.push(
-        "📱 Romance scams on social media often target seniors - be very careful",
-      );
-    }
-
-    // If no reasons were found, it's likely safe
+    // If no reasons found, it's likely safe
     if (reasons.length === 0) {
       reasons.push("✓ No obvious red flags detected");
-      reasons.push(
-        "✓ Message appears to come from a legitimate source",
-      );
+      reasons.push("✓ Message appears to come from a legitimate source");
     }
 
     // === SET ACTIONS BASED ON RISK LEVEL ===
     if (riskLevel === "high") {
-      actions.push(
-        "🛑 STOP IMMEDIATELY - This is almost certainly a scam",
-      );
-      actions.push(
-        "Do NOT click any links, call any numbers, or provide ANY information",
-      );
-      actions.push(
-        "Do NOT send money, gift cards, or banking information",
-      );
+      actions.push("🛑 STOP IMMEDIATELY - This is almost certainly a scam");
+      actions.push("Do NOT click any links, call any numbers, or provide ANY information");
+      actions.push("Do NOT send money, gift cards, or banking information");
       actions.push("Delete/block this message immediately");
       actions.push(
         "If they claimed to be from a real company, call that company directly using the official number from your bill or their website",
       );
 
-      if (indicators.claimedBank) {
-        actions.push(
-          "📞 Contact your bank immediately at the number on your card (NOT the number in this message)",
-        );
+      if (indicators.claimedBank || content.includes("bank") || content.includes("paypal")) {
+        actions.push("📞 Contact your bank immediately at the number on your card (NOT the number in this message)");
       }
-      if (indicators.claimedIRS) {
-        actions.push(
-          "📞 Report to IRS: 1-800-829-1040 or treasury.gov/tigta",
-        );
+      if (indicators.claimedIRS || content.includes("irs")) {
+        actions.push("📞 Report to IRS: 1-800-829-1040 or treasury.gov/tigta");
       }
-      if (indicators.claimedMedicare) {
-        actions.push(
-          "📞 Report to Medicare: 1-800-MEDICARE (1-800-633-4227)",
-        );
+      if (indicators.claimedMedicare || content.includes("medicare")) {
+        actions.push("📞 Report to Medicare: 1-800-MEDICARE (1-800-633-4227)");
       }
       if (messageType === "call") {
-        actions.push(
-          "📞 Hang up immediately and block the number",
-        );
+        actions.push("📞 Hang up immediately and block the number");
       }
 
-      actions.push(
-        "🚨 Report to FTC at ReportFraud.ftc.gov or 1-877-FTC-HELP",
-      );
-      actions.push(
-        "💬 Tell your family about this - scammers may try others",
-      );
+      actions.push("🚨 Report to FTC at ReportFraud.ftc.gov or 1-877-FTC-HELP");
+      actions.push("💬 Tell your family about this - scammers may try others");
     } else if (riskLevel === "medium") {
-      actions.push(
-        "⚠️ PROCEED WITH CAUTION - This has several warning signs",
-      );
-      actions.push(
-        "Do NOT click links or provide information yet",
-      );
+      actions.push("⚠️ PROCEED WITH CAUTION - This has several warning signs");
+      actions.push("Do NOT click links or provide information yet");
       actions.push(
         "Independently verify the sender (look up the company's real phone number on their official website)",
       );
-      actions.push(
-        "Call the organization using a number YOU look up, not one provided in the message",
-      );
-      actions.push(
-        "Look for these red flags: spelling errors, wrong sender email/number, generic greetings",
-      );
-      actions.push(
-        "Ask yourself: Was I expecting this? Did I initiate contact?",
-      );
-      actions.push(
-        "When in doubt, contact your Mālama technician for help reviewing it",
-      );
-      actions.push(
-        "Trust your gut - if something feels wrong, it probably is",
-      );
+      actions.push("Call the organization using a number YOU look up, not one provided in the message");
+      actions.push("Look for these red flags: spelling errors, wrong sender email/number, generic greetings");
+      actions.push("Ask yourself: Was I expecting this? Did I initiate contact?");
+      actions.push("When in doubt, contact your Mālama technician for help reviewing it");
+      actions.push("Trust your gut - if something feels wrong, it probably is");
     } else {
-      actions.push(
-        "✓ This appears legitimate, but stay vigilant",
-      );
-      actions.push(
-        "Even legitimate-looking messages can be scams - always verify before taking action",
-      );
-      actions.push(
-        "Never share passwords, PINs, Social Security numbers, or banking info via message",
-      );
-      actions.push(
-        "If asked to take urgent action, independently verify by calling the organization",
-      );
-      actions.push(
-        "When unsure, contact the sender through official channels you find yourself",
-      );
+      actions.push("✓ This appears legitimate, but stay vigilant");
+      actions.push("Even legitimate-looking messages can be scams - always verify before taking action");
+      actions.push("Never share passwords, PINs, Social Security numbers, or banking info via message");
+      actions.push("If asked to take urgent action, independently verify by calling the organization");
+      actions.push("When unsure, contact the sender through official channels you find yourself");
     }
 
-    // === EDUCATIONAL TIPS BASED ON MESSAGE TYPE ===
+    // Educational tips based on message type
     if (messageType === "call") {
-      actions.push(
-        "💡 TIP: Legitimate companies won't threaten you or demand immediate payment",
-      );
+      actions.push("💡 TIP: Legitimate companies won't threaten you or demand immediate payment");
     } else if (messageType === "email") {
-      actions.push(
-        "💡 TIP: Hover over links (don't click!) to see the real web address",
-      );
+      actions.push("💡 TIP: Hover over links (don't click!) to see the real web address");
     } else if (messageType === "text") {
-      actions.push(
-        "💡 TIP: Banks and government agencies don't text asking for sensitive information",
-      );
+      actions.push("💡 TIP: Banks and government agencies don't text asking for sensitive information");
     } else if (messageType === "social") {
-      actions.push(
-        "💡 TIP: Verify identities of new online contacts before sharing personal info",
-      );
+      actions.push("💡 TIP: Verify identities of new online contacts before sharing personal info");
     }
 
     setResult({ riskLevel, riskScore, reasons, actions });
     setAnalyzing(false);
+    // Scroll to top after results are ready
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 50);
   };
-
   const resetChecker = () => {
     setStep(1);
     setMessageType(null);
@@ -1250,7 +1045,40 @@ Presented in partnership with Mālama Digital Care`,
         <ol>
           ${result?.actions.map((action) => `<li>${action}</li>`).join("")}
         </ol>
+        {/* BOOK SESSION BUTTON - NEW! */}
+        {(result.riskLevel === 'high' || result.riskLevel === 'medium') && (
+          <div className="mb-8 p-6 rounded-xl border-2" style={{
+            background: '#F0FDFA',
+            borderColor: '#2D9596'
+          }}>
+            <h3 className="text-[22px] font-bold mb-3" style={{ color: '#265073' }}>
+              Want to discuss this with a real person?
+            </h3>
+            <p className="text-[16px] mb-4" style={{ color: '#4B5563' }}>
+              Your upcoming session with Tea is a great time to go over this in detail and make sure you're fully protected.
+            </p>
+            <button
+              onClick={() => {
+                // In real implementation, navigate to booking or sessions page
+                alert('In the live version, this would take you to your upcoming session details or help you book a new one.');
+              }}
+              className="w-full h-14 rounded-lg font-bold text-[18px] transition-all active:scale-95 flex items-center justify-center gap-2"
+              style={{
+                background: '#2D9596',
+                color: '#FFFFFF',
+                boxShadow: '0 4px 12px rgba(45, 149, 150, 0.3)',
+              }}
+            >
+              <Calendar className="w-5 h-5" />
+              Review this in my upcoming session
+            </button>
+            <p className="text-[14px] mt-2 text-center" style={{ color: '#6B7280' }}>
+              Or book an additional session if you need help sooner
+            </p>
+          </div>
+        )}
       </div>
+      
 
       ${
         result?.riskLevel === "high"
@@ -1537,7 +1365,7 @@ Presented in partnership with Mālama Digital Care`,
         {/* Back Button */}
         <button
           onClick={onBack}
-          className="mb-6 text-[18px] hover:underline"
+          className="mb-6 text-[22px] font-medium hover:underline"
           style={{ color: "#2D9596" }}
         >
           ← Back to Dashboard
@@ -1549,27 +1377,38 @@ Presented in partnership with Mālama Digital Care`,
             <div className="text-center mb-12">
               <div className="flex justify-center mb-6">
                 <div
-                  className="w-20 h-20 rounded-full flex items-center justify-center"
+                  className="w-28 h-28 rounded-full flex items-center justify-center"
                   style={{ background: "#DBEAFE" }}
                 >
                   <Shield
-                    className="w-10 h-10"
+                    className="w-14 h-14"
                     style={{ color: "#2D9596" }}
                   />
                 </div>
               </div>
               <h1
-                className="text-[40px] font-bold mb-4"
+                className="text-[40px] font-bold mb-2"
                 style={{ color: "#265073" }}
               >
                 Scam Checker
               </h1>
               <p
-                className="text-[22px]"
+                className="text-[28px] font-bold mb-4"
+                style={{ color: "#DC2626" }}
+              >
+                Meet Kōkua
+              </p>
+              <p
+                className="text-[20px] mb-2"
                 style={{ color: "#4B5563" }}
               >
-                Not sure if a message is real? Let's check it
-                together.
+                Your helper for staying safe online
+              </p>
+              <p
+                className="text-[18px]"
+                style={{ color: "#6B7280" }}
+              >
+                Not sure if a message is real? Let's check it together.
               </p>
             </div>
 
@@ -1744,6 +1583,71 @@ Presented in partnership with Mālama Digital Care`,
                   </p>
                 </div>
 
+                {/* VOICE RECORDING OPTION - NEW! */}
+                <div className="mb-6">
+                  <div className="text-center">
+                    <p className="text-[18px] mb-4" style={{ color: '#265073' }}>
+                      Prefer to describe it instead of typing?
+                    </p>
+                    <button
+                      onClick={() => {
+                        if (!isRecording) {
+                          setIsRecording(true);
+                          setRecordingTime(0);
+                          // In real implementation, start recording
+                        } else {
+                          setIsRecording(false);
+                          // In real implementation, stop recording and convert to text
+                          // Voice messages that vary by message type
+                          const voiceMessages: Record<MessageType, string> = {
+                            text: "[Voice recording: I got a text saying my bank account will be closed unless I verify my information by clicking a link. It says I have 24 hours.]",
+                            email: "[Voice recording: I received an email saying my PayPal account is locked and I need to click a link to verify my social security number and password within 12 hours.]",
+                            call: "[Voice recording: Someone just called saying they're from the IRS and that I owe back taxes. They said police are coming to arrest me if I don't pay with gift cards right away.]",
+                            social: "[Voice recording: Someone on Facebook messaged me saying I won a lottery I never entered. They want my personal information and a processing fee.]",
+                            other: "[Voice recording: I got a letter saying my utilities will be shut off tomorrow unless I pay immediately with gift cards.]",
+                          };
+                          setMessageContent(prevContent => 
+                            prevContent + "\n\n" + (voiceMessages[messageType || 'text'])
+                          );
+                        }
+                      }}
+                      className="relative h-24 w-24 rounded-full flex items-center justify-center transition-all active:scale-95 mx-auto"
+                      style={{
+                        background: isRecording ? '#EF4444' : '#2D9596',
+                        boxShadow: isRecording ? '0 0 0 8px rgba(239, 68, 68, 0.2)' : '0 4px 12px rgba(45, 149, 150, 0.3)',
+                      }}
+                    >
+                     <Mic className="w-10 h-10 text-white" />
+                      {isRecording && (
+                        <div className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 whitespace-nowrap">
+                          <span className="text-[16px] text-red-600 font-bold animate-pulse">
+                            Recording... Tap to stop
+                          </span>
+                        </div>
+                      )}
+                    </button>
+                    <p className="text-[14px] mt-6" style={{ color: '#6B7280' }}>
+                      {isRecording 
+                        ? "Tap the microphone again when you're done speaking"
+                        : "Tap the microphone to describe what happened out loud"}
+                    </p>
+                  </div>
+                </div>
+                
+                {/* DIVIDER */}
+                <div className="relative mb-6">
+                  <div className="absolute inset-0 flex items-center">
+                    <div className="w-full border-t" style={{ borderColor: '#D1D5DB' }}></div>
+                  </div>
+                  <div className="relative flex justify-center text-[18px]">
+                    <span className="px-4 bg-white font-medium" style={{ color: '#4B5563' }}>
+                      OR
+                    </span>
+                  </div>
+                </div>
+
+                
+                
                 {/* Quick Test Samples */}
                 <div className="mb-6">
                   <p
@@ -1794,84 +1698,91 @@ Presented in partnership with Mālama Digital Care`,
               </div>
             )}
 
-            {/* STEP 3: Indicators */}
+            {/* OPTIONAL: Want to add more details? */}
             {messageContent && (
-              <div className="mb-10">
-                <h2
-                  className="text-[24px] font-bold mb-6"
-                  style={{ color: "#265073" }}
+              <div className="mb-8">
+                <button
+                  onClick={() => setShowIndicators(!showIndicators)}
+                  className="w-full text-left p-6 rounded-xl border-2 transition-all hover:shadow-lg"
+                  style={{
+                    borderColor: showIndicators ? '#2D9596' : '#D1D5DB',
+                    background: showIndicators ? '#F0F9FF' : '#FFFFFF',
+                  }}
                 >
-                  Step 3: Check any that apply
-                </h2>
-                <p
-                  className="text-[16px] mb-6"
-                  style={{ color: "#4B5563" }}
-                >
-                  This helps us give you a more accurate
-                  assessment. Select all that describe this
-                  message.
-                </p>
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <h3 className="text-[22px] font-bold" style={{ color: '#265073' }}>
+                        Want to add more details? (Optional)
+                      </h3>
+                      <p className="text-[16px] mt-1" style={{ color: '#6B7280' }}>
+                        We can analyze the message without this, but adding details helps us be more accurate
+                      </p>
+                    </div>
+                    <span className="text-[24px]" style={{ color: '#2D9596' }}>
+                      {showIndicators ? '−' : '+'}
+                    </span>
+                  </div>
+                </button>
 
-                {/* Group indicators by category */}
-                {(() => {
-                  const relevantIndicators =
-                    getRelevantIndicators();
-                  const categories = Array.from(
-                    new Set(
-                      relevantIndicators.map((i) => i.category),
-                    ),
-                  );
-
-                  return categories.map((category) => {
-                    const categoryIndicators =
-                      relevantIndicators.filter(
-                        (i) => i.category === category,
-                      );
-
-                    return (
-                      <div key={category} className="mb-8">
-                        <h3
-                          className="text-[18px] font-bold mb-4"
-                          style={{ color: "#265073" }}
-                        >
-                          {category}
-                        </h3>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                          {categoryIndicators.map(
-                            ({ key, label }) => (
-                              <div
-                                key={key}
-                                className="flex items-center space-x-3 p-4 rounded-lg border-2 hover:bg-gray-50 transition-colors"
-                                style={{
-                                  borderColor: "#D1D5DB",
-                                }}
-                              >
-                                <Checkbox
-                                  id={key}
-                                  checked={indicators[key]}
-                                  onCheckedChange={(checked) =>
-                                    setIndicators({
-                                      ...indicators,
-                                      [key]: checked as boolean,
-                                    })
-                                  }
-                                  className="w-6 h-6"
-                                />
-                                <Label
-                                  htmlFor={key}
-                                  className="text-[16px] cursor-pointer flex-1"
-                                  style={{ color: "#265073" }}
-                                >
-                                  {label}
-                                </Label>
-                              </div>
-                            ),
-                          )}
-                        </div>
-                      </div>
-                    );
-                  });
-                })()}
+                {showIndicators && (
+                  <div className="mt-6">
+                    <h4 className="text-[20px] font-bold mb-4" style={{ color: '#265073' }}>
+                      Check all that apply to this message:
+                    </h4>
+                    {(() => {
+                      return indicatorCategories.map((category) => {
+                        return (
+                          <div
+                            key={category.title}
+                            className="mb-6 p-6 bg-gray-50 rounded-xl"
+                          >
+                            <h4
+                              className="text-[20px] font-bold mb-4"
+                              style={{ color: "#265073" }}
+                            >
+                              {category.title}
+                            </h4>
+                            <div className="space-y-3">
+                              {category.items.map(
+                                ({ key, label }) => (
+                                  <div
+                                    key={key}
+                                    className="flex items-start gap-3"
+                                  >
+                                    <Checkbox
+                                      id={key}
+                                      checked={
+                                        indicators[
+                                          key as keyof Indicators
+                                        ]
+                                      }
+                                      onCheckedChange={(
+                                        checked,
+                                      ) =>
+                                        setIndicators({
+                                          ...indicators,
+                                          [key]: checked === true,
+                                        })
+                                      }
+                                      className="mt-1 w-6 h-6"
+                                    />
+                                    <Label
+                                      htmlFor={key}
+                                      className="text-[16px] cursor-pointer flex-1"
+                                      style={{ color: "#265073" }}
+                                    >
+                                      {label}
+                                    </Label>
+                                  </div>
+                                ),
+                              )}
+                            </div>
+                          </div>
+                        );
+                      });
+                    })()}
+                  </div>
+                )}
               </div>
             )}
 
@@ -2085,14 +1996,133 @@ Presented in partnership with Mālama Digital Care`,
               </ol>
             </div>
 
-            {/* Action Buttons */}
+            
+
+            {/* ALREADY CLICKED EMERGENCY HELP - Shows in results for high/medium risk */}
+            {(result.riskLevel === 'high' || result.riskLevel === 'medium') && (
+              <div className="mb-8">
+                <button
+                  onClick={() => setShowAlreadyClickedHelp(!showAlreadyClickedHelp)}
+                  className="w-full text-left p-6 rounded-xl border-2 transition-all hover:shadow-lg"
+                  style={{
+                    borderColor: showAlreadyClickedHelp ? '#F59E0B' : '#DC2626',
+                    background: showAlreadyClickedHelp ? '#FFFBEB' : '#FEE2E2',
+                  }}
+                >
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <h3 className="text-[20px] font-bold" style={{ color: '#DC2626' }}>
+                        ⚠️ I already clicked a link or shared information
+                      </h3>
+                      <p className="text-[16px] mt-1" style={{ color: '#991B1B' }}>
+                        Click here if you need urgent help
+                      </p>
+                    </div>
+                    <span className="text-[24px]" style={{ color: '#DC2626' }}>
+                      {showAlreadyClickedHelp ? '−' : '+'}
+                    </span>
+                  </div>
+                </button>
+                
+                {showAlreadyClickedHelp && (
+                  <div className="mt-4 p-6 rounded-lg border-2" style={{ 
+                    background: '#FEF3C7',
+                    borderColor: '#F59E0B' 
+                  }}>
+                    <h4 className="text-[20px] font-bold mb-3" style={{ color: '#92400E' }}>
+                      Don't panic - you're doing the right thing by checking
+                    </h4>
+                    <p className="text-[16px] mb-4" style={{ color: '#78350F' }}>
+                      Many people click on things before realizing they might be scams. The important thing is that you're taking action now.
+                    </p>
+                    
+                    <div className="space-y-3 mb-4">
+                      <div className="flex items-start gap-2">
+                        <span className="text-[20px]">✓</span>
+                        <span className="text-[16px]" style={{ color: '#78350F' }}>
+                          <strong>Stay calm.</strong> Taking a moment to think clearly will help you respond better.
+                        </span>
+                      </div>
+                      <div className="flex items-start gap-2">
+                        <span className="text-[20px]">✓</span>
+                        <span className="text-[16px]" style={{ color: '#78350F' }}>
+                          <strong>We can help you.</strong> Our technicians have helped many people in similar situations.
+                        </span>
+                      </div>
+                      <div className="flex items-start gap-2">
+                        <span className="text-[20px]">✓</span>
+                        <span className="text-[16px]" style={{ color: '#78350F' }}>
+                          <strong>Act quickly.</strong> The sooner you take protective steps, the better.
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Urgent Help Button */}
+                    <button
+                      onClick={() => {
+                        setNeedsUrgentHelp(true);
+                        window.location.href = 'tel:+18085551234';
+                      }}
+                      className="w-full h-16 rounded-xl font-bold text-[20px] transition-all active:scale-95 flex items-center justify-center gap-3 shadow-lg hover:shadow-xl"
+                      style={{
+                        background: '#DC2626',
+                        color: '#FFFFFF',
+                        border: 'none',
+                        cursor: 'pointer',
+                      }}
+                    >
+                      <Phone className="w-6 h-6" />
+                      I need emergency help NOW
+                    </button>
+                    
+                    <p className="text-[14px] text-center" style={{ color: '#78350F' }}>
+                      This will prioritize your case and connect you with a technician immediately
+                    </p>
+                  </div>
+                )}
+              </div>
+            )}
+
+
+            {/* BOOK SESSION BUTTON - NEW! */}
+            {(result.riskLevel === 'high' || result.riskLevel === 'medium') && (
+              <div className="mb-8 p-6 rounded-xl border-2" style={{
+                background: '#F0FDFA',
+                borderColor: '#2D9596'
+              }}>
+                <h3 className="text-[22px] font-bold mb-3" style={{ color: '#265073' }}>
+                  Want to discuss this with a real person?
+                </h3>
+                <p className="text-[16px] mb-4" style={{ color: '#4B5563' }}>
+                  Your upcoming session with Tea is a great time to go over this in detail and make sure you're fully protected.
+                </p>
+                <button
+                  onClick={() => {
+                    onNavigateToSessions?.();
+                  }}
+                  className="w-full h-14 rounded-lg font-bold text-[18px] transition-all active:scale-95 flex items-center justify-center gap-2"
+                  style={{
+                    background: '#2D9596',
+                    color: '#FFFFFF',
+                    boxShadow: '0 4px 12px rgba(45, 149, 150, 0.3)',
+                  }}
+                >
+                  <Calendar className="w-5 h-5" />
+                  Review this in my upcoming session
+                </button>
+                <p className="text-[14px] mt-2 text-center" style={{ color: '#6B7280' }}>
+                  Or book an additional session if you need help sooner
+                </p>
+              </div>
+            )}
+            {/* Action Buttons - UPDATED! */}
             <div className="flex flex-wrap gap-4 justify-center">
               <Button
                 onClick={resetChecker}
                 className="h-[60px] px-8 text-[18px] font-bold rounded-lg active:scale-95 transition-transform"
                 style={{
-                  background: "#2D9596",
-                  color: "#FFFFFF",
+                  background: '#2D9596',
+                  color: '#FFFFFF',
                 }}
               >
                 Check Another Message
@@ -2102,18 +2132,21 @@ Presented in partnership with Mālama Digital Care`,
                 variant="outline"
                 className="h-[60px] px-8 text-[18px] font-bold rounded-lg border-2 active:scale-95 transition-transform"
                 style={{
-                  borderColor: "#265073",
-                  color: "#265073",
+                  borderColor: '#265073',
+                  color: '#265073',
                 }}
               >
                 Save This Report
               </Button>
               <Button
-                variant="outline"
+                  onClick={() => {
+                    window.location.href = 'tel:+18085555435';
+                  }}
+
                 className="h-[60px] px-8 text-[18px] font-bold rounded-lg border-2 flex items-center gap-2 active:scale-95 transition-transform"
                 style={{
-                  borderColor: "#10B981",
-                  color: "#10B981",
+                  borderColor: '#10B981',
+                  color: '#FFFFFF',
                 }}
               >
                 <Phone className="w-5 h-5" />

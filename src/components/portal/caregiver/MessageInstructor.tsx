@@ -124,13 +124,14 @@ export function MessageInstructor({ seniorName, instructorName = 'Tea Araki', on
         </Card>
 
         {/* Quick Call Button */}
-        <div className="mb-6 p-4 rounded-lg border-2 flex items-center justify-between" style={{ borderColor: '#E5E7EB', background: '#FFFFFF' }}>
-          <div>
+        <div className="mb-6 p-4 rounded-lg border-2 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4" style={{ borderColor: '#9AD0C2', background: '#E6F7F4' }}>
+          <div className="flex-1">
             <p className="font-bold text-[18px]" style={{ color: '#265073' }}>Need help right now?</p>
-            <p className="text-[14px]" style={{ color: '#6B7280' }}>Call {instructorName} directly during business hours</p>
+            <p className="text-[16px]" style={{ color: '#6B7280' }}>Call {instructorName} directly during business hours</p>
           </div>
           <Button
             onClick={() => window.location.href = `tel:${instructorInfo.phone}`}
+            className="w-full sm:w-auto h-14 text-[18px] font-bold whitespace-nowrap"
             style={{ background: '#2D9596', color: '#FFFFFF' }}
           >
             <Phone className="w-5 h-5 mr-2" />
@@ -200,7 +201,7 @@ export function MessageInstructor({ seniorName, instructorName = 'Tea Araki', on
             <div>
               <Label className="text-[18px] mb-3 block">How urgent is this?</Label>
               <RadioGroup value={urgency} onValueChange={(value: any) => setUrgency(value)}>
-                <div className="flex gap-4">
+                <div className="flex flex-col sm:flex-row gap-4">
                   <div className="flex items-center space-x-2">
                     <RadioGroupItem value="normal" id="normal" />
                     <Label htmlFor="normal" className="text-[16px]">Normal (24 hour response)</Label>
@@ -208,8 +209,8 @@ export function MessageInstructor({ seniorName, instructorName = 'Tea Araki', on
                   <div className="flex items-center space-x-2">
                     <RadioGroupItem value="urgent" id="urgent" />
                     <Label htmlFor="urgent" className="text-[16px]">
-                      <span className="flex items-center gap-2">
-                        Urgent (same day response)
+                      <span className="flex items-center gap-2 flex-wrap">
+                        <span className="whitespace-nowrap">Urgent (same day response)</span>
                         <Badge style={{ background: '#FEE2E2', color: '#DC2626' }}>Will call you</Badge>
                       </span>
                     </Label>

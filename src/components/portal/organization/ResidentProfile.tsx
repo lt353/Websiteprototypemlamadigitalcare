@@ -122,40 +122,44 @@ export function ResidentProfile({ residentName = 'Mary Johnson', onBack }: Resid
         </button>
 
         {/* Header */}
-        <div className="flex items-start gap-6 mb-8">
-          <div
-            className="w-24 h-24 rounded-full flex items-center justify-center flex-shrink-0 text-[36px]"
-            style={{ background: '#E6F7F4', color: '#2D9596' }}
-          >
-            {residentData.name.split(' ').map(n => n[0]).join('')}
-          </div>
-          <div className="flex-1">
-            <div className="flex items-center gap-3 mb-2">
-              <h1 className="text-[36px] font-bold" style={{ color: '#265073' }}>
-                {residentData.name}
-              </h1>
-              <Badge style={{ background: '#D1FAE5', color: '#065F46' }}>Active</Badge>
+        <div className="flex flex-col gap-6 mb-8">
+          <div className="flex items-start gap-4">
+            <div
+              className="w-20 h-20 sm:w-24 sm:h-24 rounded-full flex items-center justify-center flex-shrink-0 text-[28px] sm:text-[36px]"
+              style={{ background: '#E6F7F4', color: '#2D9596' }}
+            >
+              {residentData.name.split(' ').map(n => n[0]).join('')}
             </div>
-            <div className="flex items-center gap-6 text-[16px]" style={{ color: '#6B7280' }}>
-              <div className="flex items-center gap-2">
-                <User className="w-4 h-4" />
-                Room {residentData.room}
+            <div className="flex-1 min-w-0">
+              <div className="flex flex-col sm:flex-row sm:items-center gap-2 mb-2">
+                <h1 className="text-[28px] sm:text-[36px] font-bold" style={{ color: '#265073' }}>
+                  {residentData.name}
+                </h1>
+                <Badge className="w-fit" style={{ background: '#D1FAE5', color: '#065F46' }}>Active</Badge>
               </div>
-              <div className="flex items-center gap-2">
-                <Calendar className="w-4 h-4" />
-                Joined {residentData.joinedDate}
+              <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-6 text-[16px]" style={{ color: '#6B7280' }}>
+                <div className="flex items-center gap-2">
+                  <User className="w-4 h-4" />
+                  Room {residentData.room}
+                </div>
+                <div className="flex items-center gap-2">
+                  <Calendar className="w-4 h-4" />
+                  Joined {residentData.joinedDate}
+                </div>
               </div>
             </div>
           </div>
-          <div className="flex gap-3">
+          <div className="flex flex-col sm:flex-row gap-3">
             <Button
               variant="outline"
+              className="w-full sm:w-auto h-12 text-[16px]"
               onClick={() => toast.info('Email compose window opening...')}
             >
               <Mail className="w-5 h-5 mr-2" />
               Email Resident
             </Button>
             <Button
+              className="w-full sm:w-auto h-12 text-[16px]"
               onClick={() => window.location.href = `tel:${residentData.phone}`}
               style={{ background: '#2D9596', color: '#FFFFFF' }}
             >
@@ -193,11 +197,11 @@ export function ResidentProfile({ residentName = 'Mary Johnson', onBack }: Resid
 
         {/* Tabs */}
         <Tabs value={activeTab} onValueChange={setActiveTab}>
-          <TabsList className="mb-8">
-            <TabsTrigger value="overview" className="text-[16px] px-6 py-3">Overview</TabsTrigger>
-            <TabsTrigger value="sessions" className="text-[16px] px-6 py-3">Session History</TabsTrigger>
-            <TabsTrigger value="progress" className="text-[16px] px-6 py-3">Skills Progress</TabsTrigger>
-            <TabsTrigger value="contact" className="text-[16px] px-6 py-3">Contact Info</TabsTrigger>
+          <TabsList className="mb-8 w-full flex-wrap h-auto gap-2">
+            <TabsTrigger value="overview" className="text-[14px] sm:text-[16px] px-4 sm:px-6 py-3 flex-1 min-w-[120px]">Overview</TabsTrigger>
+            <TabsTrigger value="sessions" className="text-[14px] sm:text-[16px] px-4 sm:px-6 py-3 flex-1 min-w-[140px]">Session History</TabsTrigger>
+            <TabsTrigger value="progress" className="text-[14px] sm:text-[16px] px-4 sm:px-6 py-3 flex-1 min-w-[140px]">Skills Progress</TabsTrigger>
+            <TabsTrigger value="contact" className="text-[14px] sm:text-[16px] px-4 sm:px-6 py-3 flex-1 min-w-[120px]">Contact Info</TabsTrigger>
           </TabsList>
 
           {/* OVERVIEW TAB */}

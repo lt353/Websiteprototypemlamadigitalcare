@@ -2,14 +2,16 @@ import { ArrowLeft, Plus, MoreVertical } from 'lucide-react';
 import { Button } from '../../ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '../../ui/card';
 import { Badge } from '../../ui/badge';
+import { CaregiverBottomNav } from './CaregiverBottomNav';
 
 interface ManageLovedOnesProps {
   onBack: () => void;
   onViewDetails: (seniorName: string) => void;
   onAddSenior: () => void;
+  onNavigate?: (view: string) => void;
 }
 
-export function ManageLovedOnes({ onBack, onViewDetails, onAddSenior }: ManageLovedOnesProps) {
+export function ManageLovedOnes({ onBack, onViewDetails, onAddSenior, onNavigate }: ManageLovedOnesProps) {
   const seniors = [
     {
       name: 'Mary Johnson',
@@ -32,8 +34,8 @@ export function ManageLovedOnes({ onBack, onViewDetails, onAddSenior }: ManageLo
   ];
 
   return (
-    <div className="min-h-screen" style={{ background: '#F9FAFB' }}>
-      <div className="max-w-6xl mx-auto p-8">
+    <div className="min-h-screen pb-24 md:pb-8" style={{ background: '#F9FAFB' }}>
+      <div className="max-w-6xl mx-auto p-4 md:p-8">
         <button
           onClick={onBack}
           className="flex items-center gap-2 mb-6 hover:underline"
@@ -43,21 +45,21 @@ export function ManageLovedOnes({ onBack, onViewDetails, onAddSenior }: ManageLo
           Back to Dashboard
         </button>
 
-        <div className="flex items-center justify-between mb-8">
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6 md:mb-8">
           <div>
-            <h1 className="text-[36px] font-bold mb-2" style={{ color: '#265073' }}>
+            <h1 className="text-2xl md:text-[36px]" style={{ color: '#265073' }}>
               Manage Loved Ones
             </h1>
-            <p className="text-[18px]" style={{ color: '#6B7280' }}>
+            <p className="text-base md:text-[18px]" style={{ color: '#6B7280' }}>
               All the seniors you&apos;re supporting
             </p>
           </div>
           <Button
             onClick={onAddSenior}
-            className="h-14 text-[18px]"
+            className="h-12 md:h-14 text-base md:text-[18px] w-full md:w-auto whitespace-nowrap"
             style={{ background: '#2D9596', color: '#FFFFFF' }}
           >
-            <Plus className="w-5 h-5 mr-2" />
+            <Plus className="w-5 h-5 mr-2 flex-shrink-0" />
             Add Another Senior
           </Button>
         </div>
@@ -129,6 +131,11 @@ export function ManageLovedOnes({ onBack, onViewDetails, onAddSenior }: ManageLo
           ))}
         </div>
       </div>
+
+      {/* Bottom Navigation - Mobile Only */}
+      {onNavigate && (
+        <CaregiverBottomNav currentView="manage-seniors" onNavigate={onNavigate} />
+      )}
     </div>
   );
 }

@@ -1,10 +1,12 @@
 import { useState } from 'react';
-import { User, Bell, CreditCard, Lock, ChevronRight, Check } from 'lucide-react';
+import { User, Bell, CreditCard, Lock, ChevronRight, Check, Gift, Info } from 'lucide-react';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
 import { Label } from '../ui/label';
 import { Switch } from '../ui/switch';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '../ui/dialog';
+import { Badge } from '../ui/badge';
+import { toast } from 'sonner@2.0.3';
 
 interface SettingsPageProps {
   onBack: () => void;
@@ -18,12 +20,25 @@ export function SettingsPage({ onBack }: SettingsPageProps) {
   const [showPauseDialog, setShowPauseDialog] = useState(false);
   const [showPaymentDialog, setShowPaymentDialog] = useState(false);
 
+  // Helper functions for subscription changes
+  const onSubscriptionChange = (action: string) => {
+    if (action === 'pause') {
+      toast.success('Subscription paused successfully!');
+    } else if (action === 'cancel') {
+      toast.success('Subscription cancelled. Access continues until Dec 1, 2025.');
+    }
+  };
+
+  const onPaymentUpdate = () => {
+    toast.success('Payment method updated successfully!');
+  };
+
   return (
     <div className="min-h-screen bg-white p-4 md:p-8">
       <div className="max-w-6xl mx-auto">
         <button
           onClick={onBack}
-          className="mb-6 text-[18px] hover:underline active:scale-95 transition-transform"
+          className="mb-6 text-[22px] font-medium hover:underline"
           style={{ color: '#2D9596' }}
         >
           ← Back to Dashboard
@@ -289,15 +304,15 @@ export function SettingsPage({ onBack }: SettingsPageProps) {
                 <div className="space-y-4">
                   <div>
                     <Label className="text-[18px]">First Name</Label>
-                    <Input className="h-14 text-[18px]" defaultValue="Joyce" />
+                    <Input className="h-14 text-[18px]" defaultValue="Michelle" />
                   </div>
                   <div>
                     <Label className="text-[18px]">Last Name</Label>
-                    <Input className="h-14 text-[18px]" defaultValue="Lopez" />
+                    <Input className="h-14 text-[18px]" defaultValue="Blair" />
                   </div>
                   <div>
                     <Label className="text-[18px]">Email</Label>
-                    <Input className="h-14 text-[18px]" type="email" defaultValue="joyce@example.com" />
+                    <Input className="h-14 text-[18px]" type="email" defaultValue="michelle@example.com" />
                   </div>
                   <div>
                     <Label className="text-[18px]">Phone</Label>
@@ -375,37 +390,125 @@ export function SettingsPage({ onBack }: SettingsPageProps) {
 
         {/* Upgrade Dialog */}
         <Dialog open={showUpgradeDialog} onOpenChange={setShowUpgradeDialog}>
-          <DialogContent className="max-w-md">
+          <DialogContent className="max-w-2xl">
             <DialogHeader>
-              <DialogTitle className="text-[28px]" style={{ color: '#265073' }}>Upgrade to Premium</DialogTitle>
-              <DialogDescription className="text-[16px]" style={{ color: '#4B5563' }}>
-                Get more sessions and priority support
+              <DialogTitle className="text-[32px]" style={{ color: '#265073' }}>Upgrade to Premium Care</DialogTitle>
+              <DialogDescription className="text-[18px]" style={{ color: '#4B5563' }}>
+                Get more sessions, priority support, and exclusive benefits
               </DialogDescription>
             </DialogHeader>
-            <div className="py-6">
-              <p className="text-[18px] mb-4" style={{ color: '#265073' }}>
-                Your new plan includes:
-              </p>
-              <ul className="space-y-2 mb-6">
-                <li className="flex items-start gap-2 text-[16px]" style={{ color: '#4B5563' }}>
-                  <Check className="w-5 h-5 flex-shrink-0 mt-0.5" style={{ color: '#10B981' }} />
-                  <span>2 in-home OR 6 virtual sessions/month</span>
-                </li>
-                <li className="flex items-start gap-2 text-[16px]" style={{ color: '#4B5563' }}>
-                  <Check className="w-5 h-5 flex-shrink-0 mt-0.5" style={{ color: '#10B981' }} />
-                  <span>Priority 24/7 support</span>
-                </li>
-                <li className="flex items-start gap-2 text-[16px]" style={{ color: '#4B5563' }}>
-                  <Check className="w-5 h-5 flex-shrink-0 mt-0.5" style={{ color: '#10B981' }} />
-                  <span>Dedicated technician</span>
-                </li>
-              </ul>
-              <p className="text-[16px] mb-4" style={{ color: '#4B5563' }}>
-                <strong>New monthly charge:</strong> $149
-              </p>
-              <p className="text-[14px]" style={{ color: '#4B5563' }}>
-                Upgrade takes effect immediately. We'll prorate your first month.
-              </p>
+            <div className="py-6 space-y-6">
+              {/* New Member Discount Banner */}
+              <div className="p-4 rounded-lg border-2" style={{ background: '#ECFDF5', borderColor: '#10B981' }}>
+                <div className="flex items-start gap-3">
+                  <Gift className="w-6 h-6 flex-shrink-0 mt-0.5" style={{ color: '#10B981' }} />
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2 mb-2">
+                      <Badge className="text-[14px] px-3 py-1" style={{ background: '#065F46', color: '#FFFFFF' }}>
+                        20% OFF FIRST MONTH
+                      </Badge>
+                    </div>
+                    <p className="text-[16px]" style={{ color: '#065F46' }}>
+                      <strong>Welcome bonus for upgrading!</strong> Get 30% off your first month as a Premium member.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Plan Benefits */}
+              <div>
+                <p className="text-[18px] font-bold mb-3" style={{ color: '#265073' }}>
+                  Your new plan includes:
+                </p>
+                <ul className="space-y-2 mb-6">
+                  <li className="flex items-start gap-2 text-[16px]" style={{ color: '#4B5563' }}>
+                    <Check className="w-5 h-5 flex-shrink-0 mt-0.5" style={{ color: '#10B981' }} />
+                    <span>2 in-home visits OR 6 virtual sessions per month</span>
+                  </li>
+                  <li className="flex items-start gap-2 text-[16px]" style={{ color: '#4B5563' }}>
+                    <Check className="w-5 h-5 flex-shrink-0 mt-0.5" style={{ color: '#10B981' }} />
+                    <span>Priority 24/7 support</span>
+                  </li>
+                  <li className="flex items-start gap-2 text-[16px]" style={{ color: '#4B5563' }}>
+                    <Check className="w-5 h-5 flex-shrink-0 mt-0.5" style={{ color: '#10B981' }} />
+                    <span>Dedicated technician assignment</span>
+                  </li>
+                  <li className="flex items-start gap-2 text-[16px]" style={{ color: '#4B5563' }}>
+                    <Check className="w-5 h-5 flex-shrink-0 mt-0.5" style={{ color: '#10B981' }} />
+                    <span>Custom guides & session recordings</span>
+                  </li>
+                  <li className="flex items-start gap-2 text-[16px]" style={{ color: '#4B5563' }}>
+                    <Check className="w-5 h-5 flex-shrink-0 mt-0.5" style={{ color: '#10B981' }} />
+                    <span>20% off add-on sessions (vs. 15%)</span>
+                  </li>
+                </ul>
+              </div>
+
+              {/* Pricing Breakdown */}
+              <div className="p-5 rounded-lg border-2" style={{ background: '#F0FDFA', borderColor: '#2D9596' }}>
+                <h3 className="text-[20px] font-bold mb-4" style={{ color: '#265073' }}>
+                  💰 Pricing Breakdown
+                </h3>
+                
+                <div className="space-y-3">
+                  {/* First Month with Discount */}
+                  <div className="p-4 rounded-lg" style={{ background: '#FFFFFF' }}>
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-[16px] font-bold" style={{ color: '#265073' }}>
+                        First Month (20% off):
+                      </span>
+                      <div className="flex items-center gap-2">
+                        <span className="text-[18px] line-through" style={{ color: '#9CA3AF' }}>
+                          $149
+                        </span>
+                        <span className="text-[24px] font-bold" style={{ color: '#10B981' }}>
+                          $104
+                        </span>
+                      </div>
+                    </div>
+                    <p className="text-[14px]" style={{ color: '#6B7280' }}>
+                      • Plan: ~~$149~~ → $119 (new member 20% discount)
+                    </p>
+                  </div>
+
+                  {/* Subsequent Months */}
+                  <div className="p-4 rounded-lg" style={{ background: '#FFFFFF' }}>
+                    <div className="flex items-center justify-between">
+                      <span className="text-[16px] font-bold" style={{ color: '#265073' }}>
+                        Subsequent Months:
+                      </span>
+                      <span className="text-[24px] font-bold" style={{ color: '#265073' }}>
+                        $149
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Total Today */}
+                  <div className="pt-3 border-t-2" style={{ borderColor: '#E5E7EB' }}>
+                    <div className="flex items-center justify-between">
+                      <span className="text-[20px] font-bold" style={{ color: '#265073' }}>
+                        Today's Charge:
+                      </span>
+                      <span className="text-[32px] font-bold" style={{ color: '#2D9596' }}>
+                        $119
+                      </span>
+                    </div>
+                    <p className="text-[14px] mt-1" style={{ color: '#6B7280' }}>
+                      Next billing (Dec 1, 2025): $149
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Important Notes */}
+              <div className="flex items-start gap-2 p-3 rounded-lg" style={{ background: '#E0F2F1' }}>
+                <Info className="w-5 h-5 flex-shrink-0 mt-0.5" style={{ color: '#2D9596' }} />
+                <div>
+                  <p className="text-[14px]" style={{ color: '#265073' }}>
+                    <strong>Upgrade takes effect immediately.</strong> Your first in-person assessment (normally $85) is also included at 20% off ($68).
+                  </p>
+                </div>
+              </div>
             </div>
             <DialogFooter className="flex gap-3">
               <Button
@@ -414,17 +517,17 @@ export function SettingsPage({ onBack }: SettingsPageProps) {
                 className="h-12 px-6 text-[16px] font-bold border-2 active:scale-95 transition-transform"
                 style={{ borderColor: '#265073', color: '#265073' }}
               >
-                Cancel
+                Maybe Later
               </Button>
               <Button
                 onClick={() => {
                   setShowUpgradeDialog(false);
-                  alert('Upgraded to Premium! You now have access to all premium features.');
+                  toast.success('Upgraded to Premium! You now have access to all premium features.');
                 }}
                 className="h-12 px-6 text-[16px] font-bold active:scale-95 transition-transform"
                 style={{ background: '#2D9596', color: '#FFFFFF' }}
               >
-                Confirm Upgrade
+                Confirm Upgrade ($119 Today)
               </Button>
             </DialogFooter>
           </DialogContent>
@@ -620,7 +723,7 @@ export function SettingsPage({ onBack }: SettingsPageProps) {
               </div>
               <div>
                 <Label className="text-[16px]">Name on Card</Label>
-                <Input className="h-14 text-[18px]" placeholder="Joyce Lopez" />
+                <Input className="h-14 text-[18px]" placeholder="Michelle Blair" />
               </div>
             </div>
             <DialogFooter className="flex gap-3">

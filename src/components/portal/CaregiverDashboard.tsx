@@ -161,6 +161,21 @@ export function CaregiverDashboard({ currentView, onNavigate, onLogout }: Caregi
             })}
           </nav>
 
+          {/* Logout Button */}
+          <div className="p-3 lg:p-4 border-t" style={{ borderColor: 'rgba(255,255,255,0.1)' }}>
+            <button
+              onClick={onLogout}
+              className="w-full flex items-center gap-3 px-3 lg:px-4 py-3 rounded-lg transition-all hover:bg-red-600"
+              style={{
+                background: '#DC2626',
+                color: '#FFFFFF'
+              }}
+            >
+              <LogOut className="w-5 h-5 flex-shrink-0" />
+              <span className="text-[14px] lg:text-[16px] truncate">Log Out</span>
+            </button>
+          </div>
+
           {/* Footer */}
           <div className="p-4 border-t" style={{ borderColor: 'rgba(255,255,255,0.1)' }}>
             <p className="text-[12px] text-center" style={{ color: 'rgba(255,255,255,0.5)' }}>
@@ -173,6 +188,31 @@ export function CaregiverDashboard({ currentView, onNavigate, onLogout }: Caregi
       {/* MAIN CONTENT */}
       <main className="flex-1 overflow-auto pb-24 md:pb-8">
         <div className="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8">
+          {/* Mobile Header with Logout */}
+          <div className="md:hidden flex items-center justify-between mb-4 pb-4 border-b" style={{ borderColor: '#E5E7EB' }}>
+            <div>
+              <p className="font-semibold text-xl" style={{ color: '#265073' }}>Sarah Miller</p>
+              <p className="text-base" style={{ color: '#6B7280' }}>Caregiver Account</p>
+            </div>
+            <button
+              onClick={onLogout}
+              className="flex items-center gap-2 px-4 py-2.5 rounded-lg transition-all"
+              style={{ 
+                background: '#DC2626',
+                color: '#FFFFFF'
+              }}
+              onMouseDown={(e) => {
+                e.currentTarget.style.transform = 'scale(0.95)';
+              }}
+              onMouseUp={(e) => {
+                e.currentTarget.style.transform = 'scale(1)';
+              }}
+            >
+              <LogOut className="w-5 h-5" />
+              <span className="text-base font-semibold">Log Out</span>
+            </button>
+          </div>
+
           {/* Header */}
           <div className="mb-6 md:mb-8">
             <h1 className="text-[28px] md:text-[36px] font-bold mb-2 break-words" style={{ color: '#265073' }}>
@@ -198,7 +238,7 @@ export function CaregiverDashboard({ currentView, onNavigate, onLogout }: Caregi
                       </CardDescription>
                     </div>
                     <Badge 
-                      className="text-[12px] md:text-[14px] px-2 md:px-3 py-1 flex-shrink-0"
+                      className="text-[13px] md:text-[14px] px-2 md:px-3 py-1 flex-shrink-0"
                       style={{ background: '#D1FAE5', color: '#065F46' }}
                     >
                       Active
@@ -210,13 +250,13 @@ export function CaregiverDashboard({ currentView, onNavigate, onLogout }: Caregi
                   <div className="flex items-start gap-3 p-3 md:p-4 rounded-lg" style={{ background: '#E6F7F4' }}>
                     <Calendar className="w-5 h-5 mt-0.5 flex-shrink-0" style={{ color: '#2D9596' }} />
                     <div className="flex-1 min-w-0">
-                      <p className="font-semibold text-[14px] md:text-[16px]" style={{ color: '#265073' }}>
+                      <p className="font-semibold text-[15px] md:text-[16px]" style={{ color: '#265073' }}>
                         Next Session
                       </p>
-                      <p className="text-[14px] md:text-[16px] break-words" style={{ color: '#6B7280' }}>
+                      <p className="text-[15px] md:text-[16px] break-words" style={{ color: '#6B7280' }}>
                         {senior.nextSession}
                       </p>
-                      <p className="text-[13px] md:text-[14px] mt-1 break-words" style={{ color: '#6B7280' }}>
+                      <p className="text-[14px] md:text-[14px] mt-1 break-words" style={{ color: '#6B7280' }}>
                         Topics: {senior.upcomingTopics}
                       </p>
                     </div>
@@ -226,10 +266,10 @@ export function CaregiverDashboard({ currentView, onNavigate, onLogout }: Caregi
                   <div className="flex items-start gap-3">
                     <CheckCircle2 className="w-5 h-5 mt-0.5 flex-shrink-0" style={{ color: '#16A34A' }} />
                     <div className="flex-1 min-w-0">
-                      <p className="font-semibold text-[14px] md:text-[16px]" style={{ color: '#265073' }}>
+                      <p className="font-semibold text-[15px] md:text-[16px]" style={{ color: '#265073' }}>
                         Recent Progress
                       </p>
-                      <p className="text-[14px] md:text-[16px] break-words" style={{ color: '#6B7280' }}>
+                      <p className="text-[15px] md:text-[16px] break-words" style={{ color: '#6B7280' }}>
                         {senior.progress}
                       </p>
                     </div>
@@ -239,7 +279,7 @@ export function CaregiverDashboard({ currentView, onNavigate, onLogout }: Caregi
                   <div className="flex flex-col sm:flex-row gap-3 pt-2 mt-auto">
                     <Button 
                       onClick={() => onNavigate('loved-one-details', { seniorName: senior.name })}
-                      className="flex-1 text-[14px] md:text-[16px] whitespace-nowrap"
+                      className="flex-1 text-[15px] md:text-[16px] whitespace-nowrap"
                       style={{ background: '#2D9596', color: '#FFFFFF' }}
                     >
                       View Details
@@ -247,7 +287,7 @@ export function CaregiverDashboard({ currentView, onNavigate, onLogout }: Caregi
                     <Button 
                       onClick={() => onNavigate('book-session')}
                       variant="outline"
-                      className="flex-1 text-[14px] md:text-[16px] whitespace-nowrap"
+                      className="flex-1 text-[15px] md:text-[16px] whitespace-nowrap"
                       style={{ borderColor: '#2D9596', color: '#2D9596' }}
                     >
                       Book Session
@@ -268,10 +308,10 @@ export function CaregiverDashboard({ currentView, onNavigate, onLogout }: Caregi
                 <div className="w-12 h-12 rounded-full flex items-center justify-center mb-3 flex-shrink-0" style={{ background: '#E6F7F4' }}>
                   <Users className="w-6 h-6" style={{ color: '#2D9596' }} />
                 </div>
-                <CardTitle className="text-[18px] md:text-[20px] mb-2 break-words" style={{ color: '#265073' }}>
+                <CardTitle className="text-[19px] md:text-[20px] mb-2 break-words" style={{ color: '#265073' }}>
                   Add Another Senior
                 </CardTitle>
-                <CardDescription className="text-[14px] md:text-[16px] break-words">
+                <CardDescription className="text-[15px] md:text-[16px] break-words">
                   Register another loved one for support
                 </CardDescription>
               </CardHeader>
@@ -285,10 +325,10 @@ export function CaregiverDashboard({ currentView, onNavigate, onLogout }: Caregi
                 <div className="w-12 h-12 rounded-full flex items-center justify-center mb-3 flex-shrink-0" style={{ background: '#E6F7F4' }}>
                   <Calendar className="w-6 h-6" style={{ color: '#2D9596' }} />
                 </div>
-                <CardTitle className="text-[18px] md:text-[20px] mb-2 break-words" style={{ color: '#265073' }}>
+                <CardTitle className="text-[19px] md:text-[20px] mb-2 break-words" style={{ color: '#265073' }}>
                   Schedule Session
                 </CardTitle>
-                <CardDescription className="text-[14px] md:text-[16px] break-words">
+                <CardDescription className="text-[15px] md:text-[16px] break-words">
                   Book a new tech support session
                 </CardDescription>
               </CardHeader>
@@ -302,10 +342,10 @@ export function CaregiverDashboard({ currentView, onNavigate, onLogout }: Caregi
                 <div className="w-12 h-12 rounded-full flex items-center justify-center mb-3 flex-shrink-0" style={{ background: '#E6F7F4' }}>
                   <BookOpen className="w-6 h-6" style={{ color: '#2D9596' }} />
                 </div>
-                <CardTitle className="text-[18px] md:text-[20px] mb-2 break-words" style={{ color: '#265073' }}>
+                <CardTitle className="text-[19px] md:text-[20px] mb-2 break-words" style={{ color: '#265073' }}>
                   Learning Resources
                 </CardTitle>
-                <CardDescription className="text-[14px] md:text-[16px] break-words">
+                <CardDescription className="text-[15px] md:text-[16px] break-words">
                   Access guides and tutorials
                 </CardDescription>
               </CardHeader>
