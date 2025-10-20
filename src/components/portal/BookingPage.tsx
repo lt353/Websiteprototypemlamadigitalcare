@@ -69,6 +69,11 @@ export function BookingPage({ onBack, onBookingSuccess }: BookingPageProps) {
   const [bookingTime, setBookingTime] = useState('9:00 AM');
   const [bookingTopics, setBookingTopics] = useState('');
   const [selectedTechnician, setSelectedTechnician] = useState('');
+  const [confirmedBooking, setConfirmedBooking] = useState<any>(null);
+
+  // User has Standard Care plan - assume they have 1 in-home OR 3 virtual sessions in plan
+  const hasActivePlan = true; // User has subscription
+  const subscriberDiscount = 0.15; // 15% discount for add-ons
 
   // Calculate if session is covered and pricing
   const getSessionInfo = (serviceType: ServiceType) => {
@@ -134,6 +139,30 @@ export function BookingPage({ onBack, onBookingSuccess }: BookingPageProps) {
     return 'sessions';
   };
 
+  const handleConfirmBooking = () => {
+    const service = services.find(s => s.id === selectedService);
+    const bookingData = {
+      type: service?.title || '',
+      date: new Date(bookingDate).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }),
+      time: bookingTime,
+      topics: bookingTopics,
+      technician: selectedTechnician || 'No preference',
+      price: service?.includedInPlan ? 'Included in Plan' : service?.discountedPriceDisplay,
+      originalPrice: service?.priceDisplay,
+      isAddon: !service?.includedInPlan,
+      confirmationNumber: 'BOOK-' + Math.random().toString(36).substring(2, 10).toUpperCase()
+    };
+
+    setConfirmedBooking(bookingData);
+    setShowConfirmation(false);
+    setShowSuccess(true);
+    onBookingSuccess(bookingData);
+  };
+
+  const printConfirmation = () => {
+    window.print();
+  };
+
   return (
     <div className="min-h-screen bg-white p-4 md:p-8">
       <div className="max-w-5xl mx-auto">
@@ -152,6 +181,13 @@ export function BookingPage({ onBack, onBookingSuccess }: BookingPageProps) {
           <p className="text-[22px]" style={{ color: '#4B5563' }}>
             Choose the type of help you need
           </p>
+          {hasActivePlan && (
+            <div className="mt-4 inline-block px-6 py-3 rounded-lg" style={{ background: '#D1FAE5' }}>
+              <p className="text-[16px] font-bold" style={{ color: '#065F46' }}>
+                ✓ You have an active Standard Care plan
+              </p>
+            </div>
+          )}
         </div>
 
         {/* Current Plan Overview with Track Selection */}
@@ -952,6 +988,7 @@ export function BookingPage({ onBack, onBookingSuccess }: BookingPageProps) {
                 }}
                 className="h-12 px-6 text-[16px] font-bold active:scale-95 transition-transform"
                 style={{ background: '#2D9596', color: '#FFFFFF' }}
+                disabled={!bookingDate}
               >
                 Save Changes
               </Button>
@@ -1117,6 +1154,77 @@ export function BookingPage({ onBack, onBookingSuccess }: BookingPageProps) {
                 Maybe Later
               </Button>
             </DialogFooter>
+          </DialogContent>
+        </Dialog>
+
+        {/* Success Confirmation Dialog */}
+        <Dialog open={showSuccess} onOpenChange={setShowSuccess}>
+          <DialogContent className="max-w-2xl">
+            <DialogHeader>
+              <DialogTitle className="text-[28px] text-center" style={{ color: '#16A34A' }}>
+                ✓ Booking Confirmed!
+              </DialogTitle>
+            </DialogHeader>
+            <div className="space-y-6 py-6">
+              <div className="text-center">
+                <p className="text-[18px] mb-4" style={{ color: '#265073' }}>
+                  Your session has been successfully booked.
+                </p>
+              </div>
+
+              <div className="p-6 rounded-lg border-2" style={{ borderColor: '#E5E7EB', background: '#F9FAFB' }}>
+                <h3 className="text-[20px] font-bold mb-4" style={{ color: '#265073' }}>Booking Summary</h3>
+                <div className="space-y-2 text-[16px]">
+                  <p><strong>Session Type:</strong> {confirmedBooking?.type}</p>
+                  <p><strong>Date:</strong> {confirmedBooking?.date}</p>
+                  <p><strong>Time:</strong> {confirmedBooking?.time}</p>
+                  {confirmedBooking?.topics && (
+                    <p><strong>Topics:</strong> {confirmedBooking?.topics}</p>
+                  )}
+                  <p><strong>Technician:</strong> {confirmedBooking?.technician}</p>
+                  {confirmedBooking?.isAddon ? (
+                    <>
+                      <p><strong>Original Price:</strong> <span className="line-through">{confirmedBooking?.originalPrice}</span></p>
+                      <p><strong>Your Price:</strong> <span style={{ color: '#16A34A', fontWeight: 'bold' }}>{confirmedBooking?.price}</span> (15% subscriber discount)</p>
+                    </>
+                  ) : (
+                    <p><strong>Price:</strong> <span style={{ color: '#16A34A', fontWeight: 'bold' }}>{confirmedBooking?.price}</span></p>
+                  )}
+                  <p><strong>Confirmation #:</strong> {confirmedBooking?.confirmationNumber}</p>
+                </div>
+              </div>
+
+              <div className="p-4 rounded-lg" style={{ background: '#E6F7F4', border: '1px solid #2D9596' }}>
+                <h4 className="font-bold mb-2" style={{ color: '#265073' }}>What Happens Next:</h4>
+                <ul className="space-y-1 text-[14px]">
+                  <li>✓ Confirmation email sent to your inbox</li>
+                  <li>✓ Our team will call you within 24 hours to confirm</li>
+                  <li>✓ You'll receive a reminder 24 hours before your session</li>
+                  <li>✓ You can reschedule or cancel anytime from your dashboard</li>
+                </ul>
+              </div>
+
+              <div className="flex gap-3">
+                <Button
+                  onClick={printConfirmation}
+                  variant="outline"
+                  className="flex-1"
+                >
+                  <Printer className="w-4 h-4 mr-2" />
+                  Print Confirmation
+                </Button>
+                <Button
+                  onClick={() => {
+                    setShowSuccess(false);
+                    onBack();
+                  }}
+                  style={{ background: '#2D9596', color: '#FFFFFF' }}
+                  className="flex-1"
+                >
+                  Done
+                </Button>
+              </div>
+            </div>
           </DialogContent>
         </Dialog>
       </div>

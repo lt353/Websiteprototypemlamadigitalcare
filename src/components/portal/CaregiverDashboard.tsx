@@ -31,14 +31,28 @@ interface CaregiverDashboardProps {
 export function CaregiverDashboard({ currentView, onNavigate, onLogout }: CaregiverDashboardProps) {
   const [activeView, setActiveView] = useState<CaregiverView>('dashboard');
 
+  // Dynamic date helper functions
+  const getDynamicDate = (daysOffset: number) => {
+    const date = new Date();
+    date.setDate(date.getDate() + daysOffset);
+    return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+  };
+
+  const getDynamicDateTime = (daysOffset: number, time: string) => {
+    const date = new Date();
+    date.setDate(date.getDate() + daysOffset);
+    const dateStr = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    return `${dateStr} at ${time}`;
+  };
+
   // Mock data for seniors being cared for
   const seniors = [
     {
       id: 1,
       name: 'Mary Johnson',
       relationship: 'Mother',
-      nextSession: 'Nov 28, 2025 at 2:00 PM',
-      lastSession: 'Nov 14, 2025',
+      nextSession: getDynamicDateTime(5, '2:00 PM'),
+      lastSession: getDynamicDate(-7),
       status: 'active',
       progress: 'Making great progress with email',
       upcomingTopics: 'Two-Factor Authentication, Calendar App'
@@ -47,8 +61,8 @@ export function CaregiverDashboard({ currentView, onNavigate, onLogout }: Caregi
       id: 2,
       name: 'Robert Johnson',
       relationship: 'Father',
-      nextSession: 'Dec 2, 2025 at 10:00 AM',
-      lastSession: 'Nov 20, 2025',
+      nextSession: getDynamicDateTime(9, '10:00 AM'),
+      lastSession: getDynamicDate(-1),
       status: 'active',
       progress: 'Comfortable with video calls now',
       upcomingTopics: 'Online Banking Security'
@@ -56,10 +70,10 @@ export function CaregiverDashboard({ currentView, onNavigate, onLogout }: Caregi
   ];
 
   const recentActivity = [
-    { date: 'Nov 20, 2025', senior: 'Robert Johnson', activity: 'Completed virtual session on video calling', type: 'success' },
-    { date: 'Nov 14, 2025', senior: 'Mary Johnson', activity: 'Completed in-home session on email management', type: 'success' },
-    { date: 'Nov 10, 2025', senior: 'Mary Johnson', activity: 'Passed scam awareness quiz with 100%', type: 'success' },
-    { date: 'Nov 5, 2025', senior: 'Robert Johnson', activity: 'Session rescheduled to Dec 2', type: 'info' }
+    { date: getDynamicDate(-1), senior: 'Robert Johnson', activity: 'Completed virtual session on video calling', type: 'success' },
+    { date: getDynamicDate(-7), senior: 'Mary Johnson', activity: 'Completed in-home session on email management', type: 'success' },
+    { date: getDynamicDate(-11), senior: 'Mary Johnson', activity: 'Passed scam awareness quiz with 100%', type: 'success' },
+    { date: getDynamicDate(-16), senior: 'Robert Johnson', activity: `Session rescheduled to ${getDynamicDate(9)}`, type: 'info' }
   ];
 
   const navigationItems = [
