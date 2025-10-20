@@ -10,7 +10,7 @@ import { Textarea } from '../../ui/textarea';
 import { Input } from '../../ui/input';
 import { Label } from '../../ui/label';
 import { Checkbox } from '../../ui/checkbox';
-import { toast } from 'sonner@2.0.3';
+import { toast } from 'sonner';
 
 interface LovedOneDetailsProps {
   seniorName: string;
@@ -196,613 +196,432 @@ export function LovedOneDetails({ seniorName, onBack, onNavigateToBooking, onNav
     { name: 'Video Calling', completed: false, inProgress: false }
   ];
 
-  const handleEditSession = () => {
-    setEditSessionData({
-      date: upcomingSessionDate,
-      time: '2:00 PM',
-      topics: 'Two-Factor Authentication, Calendar App',
-      notes: ''
-    });
-    setShowEditSessionModal(true);
-  };
-
-  const handleSaveSessionEdit = () => {
-    setShowEditSessionModal(false);
-    toast.success(`✓ Session updated! ${seniorData.name} and Tea have been notified.`);
-  };
-
-  const handleCancelSession = () => {
-    setShowCancelModal(false);
-    setShowCancelConfirmation(true);
-  };
-
-  const handlePauseServices = () => {
-    setShowPauseModal(false);
-    setShowPauseConfirmation(true);
+  const filterSessions = (filter: 'all' | 'upcoming' | 'completed') => {
+    if (filter === 'all') return sessions;
+    return sessions.filter(session => session.status === filter);
   };
 
   const printConfirmation = () => {
     window.print();
   };
 
-  return (
-    <div className="min-h-screen" style={{ background: '#F9FAFB' }}>
-      <div className="max-w-7xl mx-auto p-8">
-        {/* Back Button */}
-        <button
-          onClick={onBack}
-          className="flex items-center gap-2 mb-6 hover:underline"
-          style={{ color: '#2D9596', fontSize: '16px' }}
-        >
-          <ArrowLeft className="w-5 h-5" />
-          Back to Dashboard
-        </button>
+  const handleContactSave = () => {
+    setIsEditingContact(false);
+    toast.success('Contact information updated successfully');
+  };
 
-        {/* Header Section */}
-        <div className="flex items-start gap-6 mb-8">
-          <div
-            className="w-20 h-20 rounded-full flex items-center justify-center text-[32px] flex-shrink-0"
-            style={{ background: '#E6F7F4' }}
+  const handleEditSession = (session: any) => {
+    setEditSessionData(session);
+    setShowEditSessionModal(true);
+  };
+
+  const handleSaveSessionEdit = () => {
+    toast.success('Session updated successfully');
+    setShowEditSessionModal(false);
+    setEditSessionData(null);
+  };
+
+  return (
+    <div className="min-h-screen" style={{ background: '#F8FAFC' }}>
+      <div className="max-w-7xl mx-auto p-6">
+        {/* Header */}
+        <div className="mb-6">
+          <Button
+            onClick={onBack}
+            variant="ghost"
+            className="mb-4"
           >
-            👤
-          </div>
-          <div className="flex-1">
-            <h1 className="text-[36px] font-bold mb-2" style={{ color: '#265073' }}>
-              {seniorData.name}&apos;s Profile
-            </h1>
-            <p className="text-[18px] mb-3" style={{ color: '#6B7280' }}>
-              {seniorData.relationship} • Active since {seniorData.joinedDate}
-            </p>
-            <Badge style={{ background: '#D1FAE5', color: '#065F46', fontSize: '16px', padding: '6px 12px' }}>
-              Active
-            </Badge>
+            <ArrowLeft className="w-4 h-4 mr-2" />
+            Back to Dashboard
+          </Button>
+
+          <div className="flex items-start justify-between">
+            <div>
+              <h1 className="text-[32px] font-bold mb-2" style={{ color: '#265073' }}>
+                {seniorData.name}'s Care Dashboard
+              </h1>
+              <div className="flex items-center gap-3 text-[16px]">
+                <Badge
+                  className="text-[14px]"
+                  style={{ background: '#D1FAE5', color: '#065F46', border: '1px solid #059669' }}
+                >
+                  Active Member
+                </Badge>
+                <span style={{ color: '#6B7280' }}>
+                  Joined {seniorData.joinedDate} • {seniorData.relationship}
+                </span>
+              </div>
+            </div>
           </div>
         </div>
 
-        {/* Tabs */}
+        {/* Main Content */}
         <Tabs value={activeTab} onValueChange={setActiveTab}>
-          <TabsList className="mb-8 w-full flex-wrap h-auto gap-2">
-            <TabsTrigger value="overview" className="text-[18px] px-6 py-3 flex-1 min-w-[140px]">Overview</TabsTrigger>
-            <TabsTrigger value="sessions" className="text-[18px] px-6 py-3 flex-1 min-w-[140px]">Sessions</TabsTrigger>
-            <TabsTrigger value="progress" className="text-[18px] px-6 py-3 flex-1 min-w-[140px]">Progress</TabsTrigger>
-            <TabsTrigger value="settings" className="text-[18px] px-6 py-3 flex-1 min-w-[140px]">Settings</TabsTrigger>
+          <TabsList className="mb-6">
+            <TabsTrigger value="overview">Overview</TabsTrigger>
+            <TabsTrigger value="sessions">Sessions</TabsTrigger>
+            <TabsTrigger value="progress">Learning Progress</TabsTrigger>
+            <TabsTrigger value="billing">Billing & Plan</TabsTrigger>
+            <TabsTrigger value="contact">Contact Info</TabsTrigger>
+            <TabsTrigger value="settings">Settings</TabsTrigger>
           </TabsList>
 
-          {/* OVERVIEW TAB */}
-          <TabsContent value="overview" className="space-y-8">
-            {/* Current Status Cards */}
-            <div className="grid md:grid-cols-3 gap-6">
-              {/* Next Session */}
-              <Card>
-                <CardHeader>
-                  <div className="w-12 h-12 rounded-full flex items-center justify-center mb-3" style={{ background: '#E6F7F4' }}>
-                    <Calendar className="w-6 h-6" style={{ color: '#2D9596' }} />
+          {/* Overview Tab */}
+          <TabsContent value="overview" className="space-y-6">
+            {/* Next Session Card */}
+            <Card>
+              <CardHeader>
+                <CardTitle>Next Session</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="flex items-start justify-between">
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-2">
+                      <Calendar className="w-5 h-5" style={{ color: '#2D9596' }} />
+                      <span className="text-[18px] font-semibold">{seniorData.nextSession.date}</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Clock className="w-5 h-5" style={{ color: '#6B7280' }} />
+                      <span>{seniorData.nextSession.time}</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <MapPin className="w-5 h-5" style={{ color: '#6B7280' }} />
+                      <span>{seniorData.nextSession.type}</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Users className="w-5 h-5" style={{ color: '#6B7280' }} />
+                      <span>With {seniorData.nextSession.instructor}</span>
+                    </div>
+                    <div className="mt-4">
+                      <p className="text-sm font-semibold mb-1" style={{ color: '#265073' }}>Topics:</p>
+                      <p style={{ color: '#6B7280' }}>{seniorData.nextSession.topics}</p>
+                    </div>
                   </div>
-                  <CardTitle className="text-[20px]">Next Session</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-3">
-                  <div>
-                    <p className="font-semibold text-[16px]" style={{ color: '#265073' }}>{seniorData.nextSession.date}</p>
-                    <p className="text-[16px]" style={{ color: '#6B7280' }}>{seniorData.nextSession.time}</p>
-                  </div>
-                  <div>
-                    <p className="text-[16px]" style={{ color: '#6B7280' }}>
-                      <strong>Type:</strong> {seniorData.nextSession.type}
-                    </p>
-                    <p className="text-[16px]" style={{ color: '#6B7280' }}>
-                      <strong>Instructor:</strong> {seniorData.nextSession.instructor}
-                    </p>
-                  </div>
-                  <div>
-                    <p className="text-[14px]" style={{ color: '#6B7280' }}>
-                      <strong>Topics:</strong> {seniorData.nextSession.topics}
-                    </p>
-                  </div>
-                  <Badge style={{ background: '#D1FAE5', color: '#065F46' }}>
-                    Included in Plan
-                  </Badge>
-                  <div className="flex gap-2 pt-3">
+                  <div className="flex flex-col gap-2">
                     <Button
-                      variant="outline"
-                      size="sm"
-                      className="flex-1"
-                      onClick={handleEditSession}
+                      onClick={() => onNavigateToSessionDetails?.()}
+                      style={{ background: '#2D9596', color: '#FFFFFF' }}
                     >
-                      <Edit className="w-4 h-4 mr-1" />
-                      Edit
+                      View Details
                     </Button>
                     <Button
-                      variant="outline"
-                      size="sm"
-                      className="flex-1"
                       onClick={onNavigateToReschedule}
+                      variant="outline"
                     >
                       Reschedule
                     </Button>
+                    <Button
+                      onClick={() => setShowCancelModal(true)}
+                      variant="outline"
+                      style={{ borderColor: '#DC2626', color: '#DC2626' }}
+                    >
+                      Cancel Session
+                    </Button>
                   </div>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="w-full"
-                    onClick={() => setShowCancelModal(true)}
-                    style={{ borderColor: '#EF4444', color: '#EF4444' }}
-                  >
-                    Cancel
-                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Stats Overview */}
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+              <Card>
+                <CardContent className="pt-6">
+                  <div className="text-center">
+                    <div className="text-[32px] font-bold" style={{ color: '#2D9596' }}>
+                      {seniorData.stats.sessionsCompleted}
+                    </div>
+                    <div className="text-sm" style={{ color: '#6B7280' }}>Sessions Completed</div>
+                  </div>
                 </CardContent>
               </Card>
-
-              {/* Recent Progress */}
               <Card>
-                <CardHeader>
-                  <div className="w-12 h-12 rounded-full flex items-center justify-center mb-3" style={{ background: '#E6F7F4' }}>
-                    <CheckCircle2 className="w-6 h-6" style={{ color: '#2D9596' }} />
-                  </div>
-                  <CardTitle className="text-[20px]">Recent Progress</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-3">
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <p className="text-[24px] font-bold" style={{ color: '#2D9596' }}>{seniorData.stats.sessionsCompleted}</p>
-                      <p className="text-[14px]" style={{ color: '#6B7280' }}>Sessions</p>
+                <CardContent className="pt-6">
+                  <div className="text-center">
+                    <div className="text-[32px] font-bold" style={{ color: '#2D9596' }}>
+                      {seniorData.stats.skillsMastered}
                     </div>
-                    <div>
-                      <p className="text-[24px] font-bold" style={{ color: '#2D9596' }}>{seniorData.stats.skillsMastered}</p>
-                      <p className="text-[14px]" style={{ color: '#6B7280' }}>Skills Mastered</p>
-                    </div>
+                    <div className="text-sm" style={{ color: '#6B7280' }}>Skills Mastered</div>
                   </div>
-                  <div>
-                    <p className="text-[16px]" style={{ color: '#6B7280' }}>
-                      <strong>Last session:</strong> {seniorData.stats.lastSession}
-                    </p>
-                    <p className="text-[16px]" style={{ color: '#6B7280' }}>
-                      <strong>Current focus:</strong> {seniorData.stats.currentFocus}
-                    </p>
-                  </div>
-                  <Button
-                    variant="outline"
-                    className="w-full mt-3"
-                    onClick={() => {
-                      setActiveTab('progress');
-                      setTimeout(() => {
-                        document.getElementById('progress-section')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                      }, 100);
-                    }}
-                  >
-                    View Full Progress
-                  </Button>
                 </CardContent>
               </Card>
-
-              {/* Current Plan */}
               <Card>
-                <CardHeader>
-                  <div className="w-12 h-12 rounded-full flex items-center justify-center mb-3" style={{ background: '#E6F7F4' }}>
-                    <Shield className="w-6 h-6" style={{ color: '#2D9596' }} />
+                <CardContent className="pt-6">
+                  <div className="text-center">
+                    <div className="text-[14px] font-bold" style={{ color: '#265073' }}>
+                      {seniorData.stats.lastSession}
+                    </div>
+                    <div className="text-sm" style={{ color: '#6B7280' }}>Last Session</div>
                   </div>
-                  <CardTitle className="text-[20px]">Current Plan</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-3">
-                  <div>
-                    <p className="font-semibold text-[18px]" style={{ color: '#265073' }}>{seniorData.currentPlan.name}</p>
-                    <p className="text-[16px]" style={{ color: '#6B7280' }}>{seniorData.currentPlan.price}</p>
+                </CardContent>
+              </Card>
+              <Card>
+                <CardContent className="pt-6">
+                  <div className="text-center">
+                    <div className="text-[14px] font-bold" style={{ color: '#265073' }}>
+                      {seniorData.stats.currentFocus}
+                    </div>
+                    <div className="text-sm" style={{ color: '#6B7280' }}>Current Focus</div>
                   </div>
-                  <div>
-                    <p className="text-[16px]" style={{ color: '#6B7280' }}>
-                      <strong>Status:</strong> {seniorData.currentPlan.status}
-                    </p>
-                    <p className="text-[16px]" style={{ color: '#6B7280' }}>
-                      <strong>Next billing:</strong> {seniorData.currentPlan.nextBilling}
-                    </p>
-                  </div>
-                  <Button
-                    variant="outline"
-                    className="w-full mt-3"
-                    onClick={onNavigateToManagePlan}
-                  >
-                    Manage Plan
-                  </Button>
                 </CardContent>
               </Card>
             </div>
-
-            {/* Contact Information */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-[24px]">Contact Information</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                {!isEditingContact ? (
-                  <>
-                    <div className="grid md:grid-cols-2 gap-6">
-                      <div className="flex items-center gap-3">
-                        <Phone className="w-5 h-5" style={{ color: '#2D9596' }} />
-                        <div>
-                          <p className="text-[14px]" style={{ color: '#6B7280' }}>Phone</p>
-                          <p className="text-[16px] font-semibold" style={{ color: '#265073' }}>{contactInfo.phone}</p>
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-3">
-                        <Mail className="w-5 h-5" style={{ color: '#2D9596' }} />
-                        <div>
-                          <p className="text-[14px]" style={{ color: '#6B7280' }}>Email</p>
-                          <p className="text-[16px] font-semibold" style={{ color: '#265073' }}>{contactInfo.email}</p>
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-3">
-                        <MapPin className="w-5 h-5" style={{ color: '#2D9596' }} />
-                        <div>
-                          <p className="text-[14px]" style={{ color: '#6B7280' }}>Address</p>
-                          <p className="text-[16px] font-semibold" style={{ color: '#265073' }}>
-                            {contactInfo.address}, {contactInfo.city}, {contactInfo.state} {contactInfo.zip}
-                          </p>
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-3">
-                        <Users className="w-5 h-5" style={{ color: '#2D9596' }} />
-                        <div>
-                          <p className="text-[14px]" style={{ color: '#6B7280' }}>Emergency Contact</p>
-                          <p className="text-[16px] font-semibold" style={{ color: '#265073' }}>
-                            {contactInfo.emergencyName} ({contactInfo.emergencyPhone})
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                    <Button
-                      variant="outline"
-                      className="mt-4"
-                      onClick={() => setIsEditingContact(true)}
-                    >
-                      Edit Information
-                    </Button>
-                  </>
-                ) : (
-                  <div className="space-y-4">
-                    <div className="grid md:grid-cols-2 gap-4">
-                      <div>
-                        <Label>Phone</Label>
-                        <Input
-                          value={contactInfo.phone}
-                          onChange={(e) => setContactInfo({...contactInfo, phone: e.target.value})}
-                        />
-                      </div>
-                      <div>
-                        <Label>Email</Label>
-                        <Input
-                          type="email"
-                          value={contactInfo.email}
-                          onChange={(e) => setContactInfo({...contactInfo, email: e.target.value})}
-                        />
-                      </div>
-                    </div>
-                    <div>
-                      <Label>Address</Label>
-                      <Input
-                        value={contactInfo.address}
-                        onChange={(e) => setContactInfo({...contactInfo, address: e.target.value})}
-                      />
-                    </div>
-                    <div className="grid grid-cols-3 gap-4">
-                      <div className="col-span-1">
-                        <Label>City</Label>
-                        <Input
-                          value={contactInfo.city}
-                          onChange={(e) => setContactInfo({...contactInfo, city: e.target.value})}
-                        />
-                      </div>
-                      <div>
-                        <Label>State</Label>
-                        <Input
-                          value={contactInfo.state}
-                          onChange={(e) => setContactInfo({...contactInfo, state: e.target.value})}
-                        />
-                      </div>
-                      <div>
-                        <Label>ZIP</Label>
-                        <Input
-                          value={contactInfo.zip}
-                          onChange={(e) => setContactInfo({...contactInfo, zip: e.target.value})}
-                        />
-                      </div>
-                    </div>
-                    <div className="grid md:grid-cols-2 gap-4">
-                      <div>
-                        <Label>Emergency Contact Name</Label>
-                        <Input
-                          value={contactInfo.emergencyName}
-                          onChange={(e) => setContactInfo({...contactInfo, emergencyName: e.target.value})}
-                        />
-                      </div>
-                      <div>
-                        <Label>Emergency Phone</Label>
-                        <Input
-                          value={contactInfo.emergencyPhone}
-                          onChange={(e) => setContactInfo({...contactInfo, emergencyPhone: e.target.value})}
-                        />
-                      </div>
-                    </div>
-                    <div className="flex gap-3">
-                      <Button
-                        style={{ background: '#2D9596', color: '#FFFFFF' }}
-                        onClick={() => {
-                          setIsEditingContact(false);
-                          toast.success('✓ Contact information updated');
-                        }}
-                      >
-                        Save Changes
-                      </Button>
-                      <Button
-                        variant="outline"
-                        onClick={() => setIsEditingContact(false)}
-                      >
-                        Cancel
-                      </Button>
-                    </div>
-                  </div>
-                )}
-              </CardContent>
-            </Card>
-
-            {/* Permissions */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-[24px]">What You Can Access</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-3">
-                  {[
-                    { label: 'View upcoming sessions', granted: true },
-                    { label: 'Book and manage sessions', granted: true },
-                    { label: 'View session summaries', granted: true },
-                    { label: 'Access session recordings', granted: true },
-                    { label: 'View detailed session notes', granted: false }
-                  ].map((permission, i) => (
-                    <div key={i} className="flex items-center gap-3">
-                      {permission.granted ? (
-                        <CheckCircle2 className="w-5 h-5" style={{ color: '#16A34A' }} />
-                      ) : (
-                        <div className="w-5 h-5 rounded-full border-2" style={{ borderColor: '#9CA3AF' }}></div>
-                      )}
-                      <span className="text-[16px]" style={{ color: permission.granted ? '#265073' : '#9CA3AF' }}>
-                        {permission.label}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-                <Button
-                  variant="outline"
-                  className="mt-6"
-                  onClick={() => setShowAccessModal(true)}
-                >
-                  Request Additional Access
-                </Button>
-              </CardContent>
-            </Card>
 
             {/* Quick Actions */}
-            <div className="grid md:grid-cols-3 gap-4">
-              <Button
-                onClick={onNavigateToBooking}
-                style={{ background: '#2D9596', color: '#FFFFFF', height: '56px', fontSize: '18px' }}
-              >
-                Book Session
-              </Button>
-              <Button
-                variant="outline"
-                style={{ height: '56px', fontSize: '18px' }}
-                onClick={onNavigateToMessageInstructor || (() => toast.info('Message Instructor page coming soon!'))}
-              >
-                Message Instructor
-              </Button>
-              <Button
-                variant="outline"
-                style={{ height: '56px', fontSize: '18px' }}
-                onClick={() => toast.info('Learning Resources feature available in main portal dashboard')}
-              >
-                View Learning Resources
-              </Button>
-            </div>
-          </TabsContent>
-
-          {/* SESSIONS TAB */}
-          <TabsContent value="sessions" className="space-y-6">
-            {/* Filter Bar */}
-            <div className="flex flex-wrap gap-3 mb-6">
-              <Button 
-                variant={sessionFilter === 'upcoming' ? 'default' : 'outline'}
-                onClick={() => setSessionFilter('upcoming')}
-                className="text-[16px] h-12 flex-1 min-w-[140px]"
-                style={sessionFilter === 'upcoming' ? { background: '#2D9596', color: '#FFFFFF' } : {}}
-              >
-                Upcoming ({sessions.filter(s => s.status === 'upcoming').length})
-              </Button>
-              <Button
-                variant={sessionFilter === 'completed' ? 'default' : 'outline'}
-                onClick={() => setSessionFilter('completed')}
-                className="text-[16px] h-12 flex-1 min-w-[140px]"
-                style={sessionFilter === 'completed' ? { background: '#2D9596', color: '#FFFFFF' } : {}}
-              >
-                Completed ({sessions.filter(s => s.status === 'completed').length})
-              </Button>
-              <Button
-                variant={sessionFilter === 'all' ? 'default' : 'outline'}
-                onClick={() => setSessionFilter('all')}
-                className="text-[16px] h-12 flex-1 min-w-[100px]"
-                style={sessionFilter === 'all' ? { background: '#2D9596', color: '#FFFFFF' } : {}}
-              >
-                All ({sessions.length})
-              </Button>
-            </div>
-
-            {/* Sessions List */}
-            <div className="space-y-4">
-              {sessions
-                .filter(session => sessionFilter === 'all' || session.status === sessionFilter)
-                .map((session) => (
-                <Card key={session.id}>
-                  <CardContent className="p-6">
-                    <div className="flex items-start justify-between mb-4">
-                      <div className="flex-1">
-                        <div className="flex items-center gap-3 mb-3">
-                          <Badge style={{
-                            background: session.status === 'upcoming' ? '#E0F2FE' : '#F3F4F6',
-                            color: session.status === 'upcoming' ? '#0284C7' : '#6B7280'
-                          }}>
-                            {session.status === 'upcoming' ? 'Upcoming' : 'Completed'}
-                          </Badge>
-                          <Badge style={{
-                            background: session.coverage === 'included' ? '#D1FAE5' : '#FEF3C7',
-                            color: session.coverage === 'included' ? '#065F46' : '#92400E'
-                          }}>
-                            {session.coverage === 'included' ? 'Included in Plan' : 'Add-on (+15% Discount)'}
-                          </Badge>
-                          <span className="text-[18px] font-bold" style={{ color: '#265073' }}>
-                            {session.date}
-                          </span>
-                        </div>
-                        <p className="text-[16px] mb-2" style={{ color: '#6B7280' }}>
-                          {session.time}
-                        </p>
-                        {session.status === 'upcoming' && (
-                          <>
-                            <p className="text-[16px]" style={{ color: '#6B7280' }}>
-                              <strong>Type:</strong> {session.type}
-                            </p>
-                            <p className="text-[16px]" style={{ color: '#6B7280' }}>
-                              <strong>Location:</strong> {session.location}
-                            </p>
-                          </>
-                        )}
-                        {session.type && session.status === 'completed' && (
-                          <p className="text-[16px]" style={{ color: '#6B7280' }}>
-                            <strong>Type:</strong> {session.type}
-                          </p>
-                        )}
-                        <p className="text-[16px]" style={{ color: '#6B7280' }}>
-                          <strong>Topics:</strong> {session.topics}
-                        </p>
-                        <p className="text-[16px]" style={{ color: '#6B7280' }}>
-                          <strong>Instructor:</strong> {session.instructor}
-                        </p>
-                        {session.status === 'completed' && session.rating && (
-                          <div className="mt-2">
-                            <span className="text-[16px]" style={{ color: '#6B7280' }}>
-                              Rating: {'⭐'.repeat(session.rating)}
-                            </span>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                    <div className="flex flex-wrap gap-3">
-                      {session.status === 'upcoming' ? (
-                        <>
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={handleEditSession}
-                          >
-                            <Edit className="w-4 h-4 mr-1" />
-                            Edit
-                          </Button>
-                          <Button
-                            variant="outline"
-                            size="sm"
-                          <Button 
-                            variant="outline" 
-                            className="text-[16px] h-12 flex-1 min-w-[140px]"
-                            onClick={onNavigateToReschedule}
-                          >
-                            Reschedule
-                          </Button>
-                          <Button
-                            variant="outline"
-                            size="sm"
-                          <Button 
-                            variant="outline" 
-                            className="text-[16px] h-12 flex-1 min-w-[100px]"
-                            onClick={() => setShowCancelModal(true)}
-                          >
-                            Cancel
-                          </Button>
-                          <Button
-                            variant="outline"
-                            size="sm"
-                          <Button 
-                            variant="outline" 
-                            className="text-[16px] h-12 flex-1 min-w-[140px]"
-                            onClick={onNavigateToSessionDetails || (() => toast.info('Session details page coming soon!'))}
-                          >
-                            View Details
-                          </Button>
-                        </>
-                      ) : (
-                        <>
-                          <Button
-                            variant="outline"
-                            size="sm"
-                          <Button 
-                            variant="outline" 
-                            className="text-[16px] h-12 flex-1 min-w-[140px]"
-                            onClick={onNavigateToSessionSummary || (() => toast.info('Session summary page coming soon!'))}
-                          >
-                            View Summary
-                          </Button>
-                          <Button
-                            variant="outline"
-                            size="sm"
-                          <Button 
-                            variant="outline" 
-                            className="text-[16px] h-12 flex-1 min-w-[160px]"
-                            onClick={() => toast.info('Video player coming soon!')}
-                          >
-                            Watch Recording
-                          </Button>
-                          <Button
-                            variant="outline"
-                            size="sm"
-                          <Button 
-                            variant="outline" 
-                            className="text-[16px] h-12 flex-1 min-w-[160px]"
-                            onClick={() => {
-                              toast.success('✓ Downloading guide...');
-                              // Trigger download
-                            }}
-                          >
-                            Download Guide
-                          </Button>
-                        </>
-                      )}
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </TabsContent>
-
-          {/* PROGRESS TAB */}
-          <TabsContent value="progress" className="space-y-8" id="progress-section">
             <Card>
               <CardHeader>
-                <CardTitle className="text-[24px]">Skills Progress</CardTitle>
-                <CardDescription className="text-[16px]">Track {seniorData.name}&apos;s learning journey</CardDescription>
+                <CardTitle>Quick Actions</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                  <Button
+                    onClick={onNavigateToBooking}
+                    variant="outline"
+                    className="h-auto py-4"
+                  >
+                    <div className="text-center">
+                      <Calendar className="w-6 h-6 mx-auto mb-2" style={{ color: '#2D9596' }} />
+                      <div className="text-sm">Book Session</div>
+                    </div>
+                  </Button>
+                  <Button
+                    onClick={() => onNavigateToMessageInstructor?.()}
+                    variant="outline"
+                    className="h-auto py-4"
+                  >
+                    <div className="text-center">
+                      <Mail className="w-6 h-6 mx-auto mb-2" style={{ color: '#2D9596' }} />
+                      <div className="text-sm">Message Instructor</div>
+                    </div>
+                  </Button>
+                  <Button
+                    onClick={() => setActiveTab('progress')}
+                    variant="outline"
+                    className="h-auto py-4"
+                  >
+                    <div className="text-center">
+                      <CheckCircle2 className="w-6 h-6 mx-auto mb-2" style={{ color: '#2D9596' }} />
+                      <div className="text-sm">View Progress</div>
+                    </div>
+                  </Button>
+                  <Button
+                    onClick={() => setActiveTab('billing')}
+                    variant="outline"
+                    className="h-auto py-4"
+                  >
+                    <div className="text-center">
+                      <Shield className="w-6 h-6 mx-auto mb-2" style={{ color: '#2D9596' }} />
+                      <div className="text-sm">Manage Plan</div>
+                    </div>
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Recent Sessions */}
+            <Card>
+              <CardHeader>
+                <CardTitle>Recent Sessions</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
-                  {skills.map((skill, i) => (
-                    <div key={i} className="flex items-center gap-4 p-4 rounded-lg" style={{ background: '#F9FAFB' }}>
-                      {skill.completed ? (
-                        <CheckCircle2 className="w-6 h-6 flex-shrink-0" style={{ color: '#16A34A' }} />
-                      ) : skill.inProgress ? (
-                        <Clock className="w-6 h-6 flex-shrink-0" style={{ color: '#F59E0B' }} />
-                      ) : (
-                        <div className="w-6 h-6 rounded-full border-2 flex-shrink-0" style={{ borderColor: '#E5E7EB' }}></div>
-                      )}
-                      <div className="flex-1">
-                        <p className="text-[18px] font-semibold" style={{ color: '#265073' }}>{skill.name}</p>
-                        {skill.inProgress && (
-                          <p className="text-[14px]" style={{ color: '#F59E0B' }}>In Progress</p>
-                        )}
+                  {sessions.slice(1, 4).map((session) => (
+                    <div key={session.id} className="flex items-center justify-between p-4 rounded-lg border">
+                      <div>
+                        <div className="font-semibold" style={{ color: '#265073' }}>{session.topics}</div>
+                        <div className="text-sm" style={{ color: '#6B7280' }}>
+                          {session.date} • {session.time} • {session.instructor}
+                        </div>
                       </div>
+                      <Button
+                        onClick={() => onNavigateToSessionSummary?.()}
+                        variant="outline"
+                        size="sm"
+                      >
+                        View Summary
+                      </Button>
+                    </div>
+                  ))}
+                </div>
+                <Button
+                  onClick={() => setActiveTab('sessions')}
+                  variant="link"
+                  className="w-full mt-4"
+                  style={{ color: '#2D9596' }}
+                >
+                  View All Sessions →
+                </Button>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          {/* Sessions Tab */}
+          <TabsContent value="sessions" className="space-y-6">
+            <Card>
+              <CardHeader>
+                <div className="flex items-center justify-between">
+                  <CardTitle>Session History</CardTitle>
+                  <div className="flex gap-2">
+                    <Button
+                      onClick={() => setSessionFilter('all')}
+                      variant={sessionFilter === 'all' ? 'default' : 'outline'}
+                      size="sm"
+                    >
+                      All
+                    </Button>
+                    <Button
+                      onClick={() => setSessionFilter('upcoming')}
+                      variant={sessionFilter === 'upcoming' ? 'default' : 'outline'}
+                      size="sm"
+                    >
+                      Upcoming
+                    </Button>
+                    <Button
+                      onClick={() => setSessionFilter('completed')}
+                      variant={sessionFilter === 'completed' ? 'default' : 'outline'}
+                      size="sm"
+                    >
+                      Completed
+                    </Button>
+                  </div>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  {filterSessions(sessionFilter).map((session) => (
+                    <div
+                      key={session.id}
+                      className="flex items-start gap-4 p-4 rounded-lg border"
+                    >
+                      <div className="flex flex-col items-center bg-gray-100 rounded-lg p-3 min-w-[80px]">
+                        <div className="text-xs font-semibold" style={{ color: '#6B7280' }}>
+                          {session.dateShort.month}
+                        </div>
+                        <div className="text-2xl font-bold" style={{ color: '#265073' }}>
+                          {session.dateShort.day}
+                        </div>
+                        <div className="text-xs" style={{ color: '#6B7280' }}>
+                          {session.dateShort.year}
+                        </div>
+                      </div>
+                      <div className="flex-1">
+                        <div className="flex items-start justify-between mb-2">
+                          <div>
+                            <div className="font-semibold text-lg" style={{ color: '#265073' }}>
+                              {session.topics}
+                            </div>
+                            <div className="text-sm" style={{ color: '#6B7280' }}>
+                              {session.time} • {session.type}
+                            </div>
+                          </div>
+                          <Badge
+                            className={session.status === 'upcoming' ? 'bg-blue-100 text-blue-800' : 'bg-green-100 text-green-800'}
+                          >
+                            {session.status === 'upcoming' ? 'Upcoming' : 'Completed'}
+                          </Badge>
+                        </div>
+                        <div className="text-sm" style={{ color: '#6B7280' }}>
+                          <span className="font-semibold">Instructor:</span> {session.instructor}
+                        </div>
+                        {session.location && (
+                          <div className="text-sm" style={{ color: '#6B7280' }}>
+                            <span className="font-semibold">Location:</span> {session.location}
+                          </div>
+                        )}
+                        {session.duration && (
+                          <div className="text-sm" style={{ color: '#6B7280' }}>
+                            <span className="font-semibold">Duration:</span> {session.duration}
+                          </div>
+                        )}
+                        {session.rating && (
+                          <div className="flex items-center gap-1 mt-2">
+                            {[...Array(5)].map((_, i) => (
+                              <span key={i} className={i < session.rating ? 'text-yellow-400' : 'text-gray-300'}>
+                                ★
+                              </span>
+                            ))}
+                          </div>
+                        )}
+                        <div className="flex gap-2 mt-3">
+                          {session.status === 'upcoming' ? (
+                            <>
+                              <Button
+                                onClick={() => handleEditSession(session)}
+                                variant="outline"
+                                size="sm"
+                              >
+                                <Edit className="w-4 h-4 mr-1" />
+                                Edit
+                              </Button>
+                              <Button
+                                onClick={() => setShowCancelModal(true)}
+                                variant="outline"
+                                size="sm"
+                                style={{ borderColor: '#DC2626', color: '#DC2626' }}
+                              >
+                                Cancel
+                              </Button>
+                            </>
+                          ) : (
+                            <Button
+                              onClick={() => onNavigateToSessionSummary?.()}
+                              variant="outline"
+                              size="sm"
+                            >
+                              View Summary
+                            </Button>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+
+            <div className="flex justify-center">
+              <Button
+                onClick={onNavigateToBooking}
+                style={{ background: '#2D9596', color: '#FFFFFF' }}
+                size="lg"
+              >
+                <Calendar className="w-4 h-4 mr-2" />
+                Book New Session
+              </Button>
+            </div>
+          </TabsContent>
+
+          {/* Learning Progress Tab */}
+          <TabsContent value="progress" className="space-y-6">
+            <Card>
+              <CardHeader>
+                <CardTitle>Skills Progress</CardTitle>
+                <CardDescription>Track {seniorData.name}'s learning journey</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  {skills.map((skill, index) => (
+                    <div key={index} className="flex items-center justify-between p-4 rounded-lg border">
+                      <div className="flex items-center gap-3">
+                        {skill.completed ? (
+                          <CheckCircle2 className="w-6 h-6" style={{ color: '#16A34A' }} />
+                        ) : skill.inProgress ? (
+                          <Clock className="w-6 h-6" style={{ color: '#F59E0B' }} />
+                        ) : (
+                          <div className="w-6 h-6 rounded-full border-2" style={{ borderColor: '#D1D5DB' }} />
+                        )}
+                        <span className="font-medium" style={{ color: '#265073' }}>{skill.name}</span>
+                      </div>
+                      <Badge
+                        className={
+                          skill.completed
+                            ? 'bg-green-100 text-green-800'
+                            : skill.inProgress
+                            ? 'bg-yellow-100 text-yellow-800'
+                            : 'bg-gray-100 text-gray-800'
+                        }
+                      >
+                        {skill.completed ? 'Completed' : skill.inProgress ? 'In Progress' : 'Not Started'}
+                      </Badge>
                     </div>
                   ))}
                 </div>
@@ -811,225 +630,407 @@ export function LovedOneDetails({ seniorName, onBack, onNavigateToBooking, onNav
 
             <Card>
               <CardHeader>
-                <CardTitle className="text-[24px]">Learning Streak</CardTitle>
+                <CardTitle>Recent Achievements</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="text-center py-8">
-                  <p className="text-[48px]">🔥</p>
-                  <p className="text-[32px] font-bold" style={{ color: '#2D9596' }}>7 Day Streak</p>
-                  <p className="text-[16px]" style={{ color: '#6B7280' }}>Keep up the great work!</p>
+                <div className="space-y-3">
+                  <div className="flex items-center gap-3 p-3 rounded-lg" style={{ background: '#D1FAE5' }}>
+                    <div className="text-2xl">🎉</div>
+                    <div>
+                      <div className="font-semibold" style={{ color: '#065F46' }}>
+                        Mastered Password Management
+                      </div>
+                      <div className="text-sm" style={{ color: '#059669' }}>
+                        {lastSessionDate}
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-3 p-3 rounded-lg" style={{ background: '#D1FAE5' }}>
+                    <div className="text-2xl">⭐</div>
+                    <div>
+                      <div className="font-semibold" style={{ color: '#065F46' }}>
+                        5-Star Session Rating
+                      </div>
+                      <div className="text-sm" style={{ color: '#059669' }}>
+                        Last 4 sessions
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </CardContent>
             </Card>
           </TabsContent>
 
-          {/* SETTINGS TAB */}
-          <TabsContent value="settings" className="space-y-8">
+          {/* Billing & Plan Tab */}
+          <TabsContent value="billing" className="space-y-6">
             <Card>
               <CardHeader>
-                <CardTitle className="text-[24px]">Notification Preferences</CardTitle>
+                <CardTitle>Current Plan</CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4">
-                {[
-                  'Email me 3 days before sessions',
-                  'Text me 1 day before sessions',
-                  'Notify me when progress updates are posted'
-                ].map((pref, i) => (
-                  <div key={i} className="flex items-center gap-3">
-                    <input type="checkbox" defaultChecked className="w-5 h-5" />
-                    <label className="text-[16px]">{pref}</label>
+              <CardContent>
+                <div className="flex items-start justify-between">
+                  <div>
+                    <h3 className="text-2xl font-bold mb-2" style={{ color: '#265073' }}>
+                      {seniorData.currentPlan.name}
+                    </h3>
+                    <div className="text-3xl font-bold mb-4" style={{ color: '#2D9596' }}>
+                      {seniorData.currentPlan.price}
+                    </div>
+                    <div className="space-y-2">
+                      <div className="flex items-center gap-2">
+                        <CheckCircle2 className="w-5 h-5" style={{ color: '#16A34A' }} />
+                        <span>2 monthly sessions included</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <CheckCircle2 className="w-5 h-5" style={{ color: '#16A34A' }} />
+                        <span>24/7 support access</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <CheckCircle2 className="w-5 h-5" style={{ color: '#16A34A' }} />
+                        <span>Progress tracking</span>
+                      </div>
+                    </div>
                   </div>
-                ))}
+                  <div className="flex flex-col gap-2">
+                    <Button
+                      onClick={onNavigateToManagePlan}
+                      style={{ background: '#2D9596', color: '#FFFFFF' }}
+                    >
+                      Change Plan
+                    </Button>
+                    <Button
+                      onClick={() => setShowPauseModal(true)}
+                      variant="outline"
+                    >
+                      Pause Services
+                    </Button>
+                  </div>
+                </div>
               </CardContent>
             </Card>
 
             <Card>
               <CardHeader>
-                <CardTitle className="text-[24px]">Account Management</CardTitle>
+                <CardTitle>Billing Information</CardTitle>
               </CardHeader>
-              <CardContent className="space-y-3">
-                <Button
-                  variant="outline"
-                  className="w-full justify-start"
-                  onClick={onNavigateToUpdatePayment || (() => toast.info('Payment method page coming soon!'))}
-                >
-                  Update Payment Method
-                </Button>
-                <Button
-                  variant="outline"
-                  className="w-full justify-start"
-                  onClick={onNavigateToManagePlan}
-                >
-                  Change Plan
-                </Button>
-                <Button
-                  variant="outline"
-                  className="w-full justify-start"
-                  onClick={() => setShowPauseModal(true)}
-                >
-                  Pause Services
-                </Button>
-                <Button
-                  variant="destructive"
-                  className="w-full justify-start"
-                  onClick={() => setShowRemoveModal(true)}
-                >
-                  Remove from My Care
-                </Button>
+              <CardContent>
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between p-4 rounded-lg border">
+                    <div>
+                      <div className="font-semibold" style={{ color: '#265073' }}>Payment Method</div>
+                      <div className="text-sm" style={{ color: '#6B7280' }}>Visa ending in 4242</div>
+                    </div>
+                    <Button
+                      onClick={() => onNavigateToUpdatePayment?.()}
+                      variant="outline"
+                      size="sm"
+                    >
+                      Update
+                    </Button>
+                  </div>
+                  <div className="flex items-center justify-between p-4 rounded-lg border">
+                    <div>
+                      <div className="font-semibold" style={{ color: '#265073' }}>Next Billing Date</div>
+                      <div className="text-sm" style={{ color: '#6B7280' }}>{seniorData.currentPlan.nextBilling}</div>
+                    </div>
+                  </div>
+                  <div className="flex items-center justify-between p-4 rounded-lg border">
+                    <div>
+                      <div className="font-semibold" style={{ color: '#265073' }}>Plan Status</div>
+                      <div className="text-sm" style={{ color: '#16A34A' }}>{seniorData.currentPlan.status}</div>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          {/* Contact Info Tab */}
+          <TabsContent value="contact" className="space-y-6">
+            <Card>
+              <CardHeader>
+                <div className="flex items-center justify-between">
+                  <CardTitle>Contact Information</CardTitle>
+                  {!isEditingContact ? (
+                    <Button
+                      onClick={() => setIsEditingContact(true)}
+                      variant="outline"
+                      size="sm"
+                    >
+                      <Edit className="w-4 h-4 mr-2" />
+                      Edit
+                    </Button>
+                  ) : (
+                    <div className="flex gap-2">
+                      <Button
+                        onClick={() => setIsEditingContact(false)}
+                        variant="outline"
+                        size="sm"
+                      >
+                        Cancel
+                      </Button>
+                      <Button
+                        onClick={handleContactSave}
+                        style={{ background: '#2D9596', color: '#FFFFFF' }}
+                        size="sm"
+                      >
+                        Save Changes
+                      </Button>
+                    </div>
+                  )}
+                </div>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-6">
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <Label>Phone Number</Label>
+                      {isEditingContact ? (
+                        <Input
+                          value={contactInfo.phone}
+                          onChange={(e) => setContactInfo({ ...contactInfo, phone: e.target.value })}
+                        />
+                      ) : (
+                        <div className="mt-2 flex items-center gap-2">
+                          <Phone className="w-4 h-4" style={{ color: '#6B7280' }} />
+                          <span>{contactInfo.phone}</span>
+                        </div>
+                      )}
+                    </div>
+                    <div>
+                      <Label>Email Address</Label>
+                      {isEditingContact ? (
+                        <Input
+                          value={contactInfo.email}
+                          onChange={(e) => setContactInfo({ ...contactInfo, email: e.target.value })}
+                        />
+                      ) : (
+                        <div className="mt-2 flex items-center gap-2">
+                          <Mail className="w-4 h-4" style={{ color: '#6B7280' }} />
+                          <span>{contactInfo.email}</span>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  <div>
+                    <Label>Home Address</Label>
+                    {isEditingContact ? (
+                      <div className="space-y-2 mt-2">
+                        <Input
+                          value={contactInfo.address}
+                          onChange={(e) => setContactInfo({ ...contactInfo, address: e.target.value })}
+                          placeholder="Street Address"
+                        />
+                        <div className="grid grid-cols-3 gap-2">
+                          <Input
+                            value={contactInfo.city}
+                            onChange={(e) => setContactInfo({ ...contactInfo, city: e.target.value })}
+                            placeholder="City"
+                          />
+                          <Input
+                            value={contactInfo.state}
+                            onChange={(e) => setContactInfo({ ...contactInfo, state: e.target.value })}
+                            placeholder="State"
+                          />
+                          <Input
+                            value={contactInfo.zip}
+                            onChange={(e) => setContactInfo({ ...contactInfo, zip: e.target.value })}
+                            placeholder="ZIP"
+                          />
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="mt-2 flex items-center gap-2">
+                        <MapPin className="w-4 h-4" style={{ color: '#6B7280' }} />
+                        <span>{contactInfo.address}, {contactInfo.city}, {contactInfo.state} {contactInfo.zip}</span>
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="border-t pt-6">
+                    <h3 className="text-lg font-semibold mb-4" style={{ color: '#265073' }}>
+                      Emergency Contact
+                    </h3>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div>
+                        <Label>Name</Label>
+                        {isEditingContact ? (
+                          <Input
+                            value={contactInfo.emergencyName}
+                            onChange={(e) => setContactInfo({ ...contactInfo, emergencyName: e.target.value })}
+                          />
+                        ) : (
+                          <div className="mt-2">{contactInfo.emergencyName}</div>
+                        )}
+                      </div>
+                      <div>
+                        <Label>Phone Number</Label>
+                        {isEditingContact ? (
+                          <Input
+                            value={contactInfo.emergencyPhone}
+                            onChange={(e) => setContactInfo({ ...contactInfo, emergencyPhone: e.target.value })}
+                          />
+                        ) : (
+                          <div className="mt-2">{contactInfo.emergencyPhone}</div>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          {/* Settings Tab */}
+          <TabsContent value="settings" className="space-y-6">
+            <Card>
+              <CardHeader>
+                <CardTitle>Account Settings</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between p-4 rounded-lg border">
+                    <div>
+                      <div className="font-semibold" style={{ color: '#265073' }}>Access Permissions</div>
+                      <div className="text-sm" style={{ color: '#6B7280' }}>
+                        You have view-only access to {seniorData.name}'s account
+                      </div>
+                    </div>
+                    <Button
+                      onClick={() => setShowAccessModal(true)}
+                      variant="outline"
+                      size="sm"
+                    >
+                      Request More Access
+                    </Button>
+                  </div>
+                  <div className="flex items-center justify-between p-4 rounded-lg border">
+                    <div>
+                      <div className="font-semibold" style={{ color: '#265073' }}>Notification Preferences</div>
+                      <div className="text-sm" style={{ color: '#6B7280' }}>
+                        Manage how you receive updates
+                      </div>
+                    </div>
+                    <Button variant="outline" size="sm">
+                      Configure
+                    </Button>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle style={{ color: '#DC2626' }}>Danger Zone</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between p-4 rounded-lg border" style={{ borderColor: '#DC2626' }}>
+                    <div>
+                      <div className="font-semibold" style={{ color: '#DC2626' }}>Pause Services</div>
+                      <div className="text-sm" style={{ color: '#6B7280' }}>
+                        Temporarily pause all services for {seniorData.name}
+                      </div>
+                    </div>
+                    <Button
+                      onClick={() => setShowPauseModal(true)}
+                      variant="outline"
+                      size="sm"
+                      style={{ borderColor: '#DC2626', color: '#DC2626' }}
+                    >
+                      Pause
+                    </Button>
+                  </div>
+                  <div className="flex items-center justify-between p-4 rounded-lg border" style={{ borderColor: '#DC2626' }}>
+                    <div>
+                      <div className="font-semibold" style={{ color: '#DC2626' }}>Remove from Care</div>
+                      <div className="text-sm" style={{ color: '#6B7280' }}>
+                        Remove {seniorData.name} from your care dashboard
+                      </div>
+                    </div>
+                    <Button
+                      onClick={() => setShowRemoveModal(true)}
+                      variant="outline"
+                      size="sm"
+                      style={{ borderColor: '#DC2626', color: '#DC2626' }}
+                    >
+                      Remove
+                    </Button>
+                  </div>
+                </div>
               </CardContent>
             </Card>
           </TabsContent>
         </Tabs>
 
-        {/* Edit Session Dialog */}
-        <Dialog open={showEditSessionModal} onOpenChange={setShowEditSessionModal}>
+        {/* Cancel Session Modal */}
+        <Dialog open={showCancelModal} onOpenChange={setShowCancelModal}>
           <DialogContent className="max-w-2xl">
             <DialogHeader>
               <DialogTitle className="text-[24px]" style={{ color: '#265073' }}>
-                Edit Session Details
+                Cancel Session
               </DialogTitle>
-              <DialogDescription className="text-[16px]">
-                Update the details for {seniorData.name}&apos;s upcoming session
+              <DialogDescription>
+                Are you sure you want to cancel this session?
               </DialogDescription>
             </DialogHeader>
             <div className="space-y-4 py-4">
-              <div>
-                <Label className="text-[16px]">Date</Label>
-                <Input
-                  type="date"
-                  defaultValue={new Date(Date.now() + 5 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]}
-                  className="mt-2"
-                />
+              <div className="p-4 rounded-lg border-2" style={{ borderColor: '#E5E7EB' }}>
+                <div className="font-semibold mb-2" style={{ color: '#265073' }}>Session Details:</div>
+                <div className="space-y-1 text-sm">
+                  <p><strong>Date:</strong> {seniorData.nextSession.date}</p>
+                  <p><strong>Time:</strong> {seniorData.nextSession.time}</p>
+                  <p><strong>Type:</strong> {seniorData.nextSession.type}</p>
+                  <p><strong>Instructor:</strong> {seniorData.nextSession.instructor}</p>
+                </div>
               </div>
+
               <div>
-                <Label className="text-[16px]">Time</Label>
-                <select className="w-full h-12 px-4 rounded-lg border-2 mt-2" style={{ borderColor: '#E5E7EB' }}>
-                  <option>9:00 AM</option>
-                  <option>10:00 AM</option>
-                  <option>11:00 AM</option>
-                  <option>12:00 PM</option>
-                  <option>1:00 PM</option>
-                  <option selected>2:00 PM</option>
-                  <option>3:00 PM</option>
-                  <option>4:00 PM</option>
-                </select>
-              </div>
-              <div>
-                <Label className="text-[16px]">Topics to Cover</Label>
+                <Label className="mb-2 block">Reason for cancellation (optional):</Label>
                 <Textarea
-                  defaultValue="Two-Factor Authentication, Calendar App"
-                  className="mt-2 min-h-[80px]"
+                  value={cancelMessage}
+                  onChange={(e) => setCancelMessage(e.target.value)}
+                  placeholder="Let us know why you're canceling..."
+                  className="min-h-[100px]"
                 />
               </div>
-              <div>
-                <Label className="text-[16px]">Additional Notes for Instructor (Optional)</Label>
-                <Textarea
-                  placeholder="Any special requests or focus areas..."
-                  className="mt-2 min-h-[60px]"
-                />
+
+              <div className="p-3 rounded-lg" style={{ background: '#FEF3C7' }}>
+                <p className="text-sm">
+                  <strong>Note:</strong> Cancellations made less than 24 hours before the session may not be eligible for a refund.
+                </p>
               </div>
             </div>
             <DialogFooter>
               <Button
+                onClick={() => {
+                  setShowCancelModal(false);
+                  setCancelMessage('');
+                }}
                 variant="outline"
-                onClick={() => setShowEditSessionModal(false)}
               >
-                Cancel
+                Keep Session
               </Button>
               <Button
-                onClick={handleSaveSessionEdit}
-                style={{ background: '#2D9596', color: '#FFFFFF' }}
+                onClick={() => {
+                  setShowCancelModal(false);
+                  setShowCancelConfirmation(true);
+                  setCancelMessage('');
+                }}
+                style={{ background: '#DC2626', color: '#FFFFFF' }}
               >
-                Save Changes
+                Yes, Cancel Session
               </Button>
             </DialogFooter>
           </DialogContent>
         </Dialog>
 
-        {/* Cancel Session Modal */}
-        <AlertDialog open={showCancelModal} onOpenChange={setShowCancelModal}>
-          <AlertDialogContent className="max-w-2xl">
-            <AlertDialogHeader>
-              <AlertDialogTitle className="text-[24px]" style={{ color: '#265073' }}>
-                Cancel this session?
-              </AlertDialogTitle>
-              <AlertDialogDescription className="text-[16px]">
-                <div className="space-y-4 mt-4">
-                  <div className="p-4 rounded-lg" style={{ background: '#FEF3C7', borderLeft: '4px solid #F59E0B' }}>
-                    <p className="font-semibold" style={{ color: '#92400E' }}>Session Details:</p>
-                    <p style={{ color: '#92400E' }}>{upcomingSessionDate} at 2:00 PM</p>
-                    <p style={{ color: '#92400E' }}>Two-Factor Authentication, Calendar App</p>
-                    <p style={{ color: '#92400E' }}>In-home visit with Tea Araki</p>
-                  </div>
-
-                  <div className="space-y-2">
-                    <p className="font-semibold" style={{ color: '#265073' }}>Important Information:</p>
-                    <ul className="space-y-1 text-[16px]" style={{ color: '#6B7280' }}>
-                      <li>• Canceling less than 24 hours before = $20 late cancellation fee</li>
-                      <li>• This session: 5 days away (no fee)</li>
-                      <li>• {seniorData.name} will be notified immediately</li>
-                    </ul>
-                  </div>
-
-                  <div className="space-y-2">
-                    <label className="font-semibold" style={{ color: '#265073' }}>
-                      Message to {seniorData.name} (optional):
-                    </label>
-                    <Textarea
-                      value={cancelMessage}
-                      onChange={(e) => setCancelMessage(e.target.value)}
-                      defaultValue={`Hi Mom, I need to cancel your ${upcomingSessionDate} session. Let's reschedule soon!`}
-                      className="min-h-[100px]"
-                    />
-                  </div>
-                </div>
-              </AlertDialogDescription>
-            </AlertDialogHeader>
-            <div className="space-y-4">
-              <div className="p-4 rounded-lg" style={{ background: '#FEF3C7', borderLeft: '4px solid #F59E0B' }}>
-                <p className="font-semibold" style={{ color: '#92400E' }}>Session Details:</p>
-                <p style={{ color: '#92400E' }}>December 1, 2025 at 2:00 PM</p>
-                <p style={{ color: '#92400E' }}>Two-Factor Authentication, Calendar App</p>
-                <p style={{ color: '#92400E' }}>In-home visit with Tea Araki</p>
-              </div>
-
-              <div className="space-y-2">
-                <p className="font-semibold" style={{ color: '#265073' }}>Important Information:</p>
-                <ul className="space-y-1 text-[16px]" style={{ color: '#6B7280' }}>
-                  <li>• Canceling less than 24 hours before = $20 late cancellation fee</li>
-                  <li>• This session: 48 hours away (no fee)</li>
-                  <li>• {seniorData.name} will be notified immediately</li>
-                </ul>
-              </div>
-
-              <div className="space-y-2">
-                <label className="font-semibold" style={{ color: '#265073' }}>
-                  Message to {seniorData.name} (optional):
-                </label>
-                <Textarea
-                  defaultValue={`Hi Mom, I need to cancel your December 1 session. Let's reschedule soon!`}
-                  className="min-h-[100px]"
-                />
-              </div>
-            </div>
-            <AlertDialogFooter>
-              <AlertDialogCancel className="text-[16px]">Never Mind</AlertDialogCancel>
-              <AlertDialogAction
-                onClick={handleCancelSession}
-                className="text-[16px]"
-                style={{ background: '#DC2626', color: '#FFFFFF' }}
-              >
-                Cancel Session
-              </AlertDialogAction>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialog>
-
-        {/* Cancel Confirmation Dialog with Print */}
+        {/* Cancel Confirmation Modal */}
         <Dialog open={showCancelConfirmation} onOpenChange={setShowCancelConfirmation}>
           <DialogContent className="max-w-2xl">
             <DialogHeader>
-              <DialogTitle className="text-[28px] text-center" style={{ color: '#16A34A' }}>
+              <DialogTitle className="text-[24px]" style={{ color: '#16A34A' }}>
                 ✓ Session Canceled
               </DialogTitle>
             </DialogHeader>
@@ -1043,12 +1044,11 @@ export function LovedOneDetails({ seniorName, onBack, onNavigateToBooking, onNav
               <div className="p-6 rounded-lg border-2" style={{ borderColor: '#E5E7EB', background: '#F9FAFB' }}>
                 <h3 className="text-[20px] font-bold mb-4" style={{ color: '#265073' }}>Cancellation Summary</h3>
                 <div className="space-y-2 text-[16px]">
+                  <p><strong>Original Date:</strong> {seniorData.nextSession.date}</p>
+                  <p><strong>Time:</strong> {seniorData.nextSession.time}</p>
                   <p><strong>Senior:</strong> {seniorData.name}</p>
-                  <p><strong>Canceled Session:</strong> {upcomingSessionDate} at 2:00 PM</p>
-                  <p><strong>Topics:</strong> Two-Factor Authentication, Calendar App</p>
-                  <p><strong>Instructor Notified:</strong> Tea Araki</p>
-                  <p><strong>Cancellation Fee:</strong> $0 (more than 24 hours notice)</p>
-                  <p><strong>Confirmation #:</strong> CANC-{Math.random().toString(36).substring(2, 10).toUpperCase()}</p>
+                  <p><strong>Status:</strong> Canceled</p>
+                  <p><strong>Confirmation #:</strong> CANCEL-{Math.random().toString(36).substring(2, 10).toUpperCase()}</p>
                 </div>
               </div>
 
@@ -1060,6 +1060,14 @@ export function LovedOneDetails({ seniorName, onBack, onNavigateToBooking, onNav
                 >
                   <Printer className="w-4 h-4 mr-2" />
                   Print Confirmation
+                </Button>
+                <Button
+                  onClick={onNavigateToBooking}
+                  variant="outline"
+                  className="flex-1"
+                >
+                  <Calendar className="w-4 h-4 mr-2" />
+                  Book New Session
                 </Button>
                 <Button
                   onClick={() => setShowCancelConfirmation(false)}
@@ -1074,79 +1082,63 @@ export function LovedOneDetails({ seniorName, onBack, onNavigateToBooking, onNav
         </Dialog>
 
         {/* Pause Services Modal */}
-        <AlertDialog open={showPauseModal} onOpenChange={setShowPauseModal}>
-          <AlertDialogContent className="max-w-2xl">
-            <AlertDialogHeader>
-              <AlertDialogTitle className="text-[24px]" style={{ color: '#265073' }}>
-                ⏸️ Pause Services for {seniorData.name}?
-              </AlertDialogTitle>
-            </AlertDialogHeader>
-            <div className="space-y-4">
-              <div className="p-4 rounded-lg" style={{ background: '#E6F7F4', border: '1px solid #9AD0C2' }}>
-                <p className="font-semibold mb-2" style={{ color: '#265073' }}>What Happens When You Pause:</p>
-                <div className="space-y-1">
-                  <div className="flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4" style={{ color: '#16A34A' }} />
-                    <span>No charges while paused</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4" style={{ color: '#16A34A' }} />
-                    <span>Current sessions will be honored</span>
-                  </div>
-
-                  <div>
-                    <Label className="mb-2 block">Message to {seniorData.name} (Optional):</Label>
-                    <Textarea
-                      value={pauseMessage}
-                      onChange={(e) => setPauseMessage(e.target.value)}
-                      placeholder={`Let ${seniorData.name} know why you're pausing her services...`}
-                      className="min-h-[80px]"
-                    />
-                  <div className="flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4" style={{ color: '#16A34A' }} />
-                    <span>{seniorData.name} keeps access to learning resources</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4" style={{ color: '#16A34A' }} />
-                    <span>You can resume anytime</span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="p-4 rounded-lg" style={{ background: '#FEF3C7', border: '1px solid #F59E0B' }}>
-                <p className="font-semibold mb-2" style={{ color: '#92400E' }}>Note:</p>
-                <div className="space-y-1">
-                  <p style={{ color: '#92400E' }}>⚠️ {seniorData.name} won't be able to book new sessions</p>
-                  <p style={{ color: '#92400E' }}>⚠️ Scheduled future sessions will be canceled</p>
-                </div>
+        <Dialog open={showPauseModal} onOpenChange={setShowPauseModal}>
+          <DialogContent className="max-w-2xl">
+            <DialogHeader>
+              <DialogTitle className="text-[24px]" style={{ color: '#265073' }}>
+                Pause Services for {seniorData.name}
+              </DialogTitle>
+            </DialogHeader>
+            <div className="space-y-4 py-4">
+              <div className="p-4 rounded-lg" style={{ background: '#FEF3C7', border: '2px solid #F59E0B' }}>
+                <p className="font-semibold mb-2" style={{ color: '#92400E' }}>What happens when you pause?</p>
+                <ul className="space-y-1 text-sm" style={{ color: '#92400E' }}>
+                  <li>• All scheduled sessions will be canceled</li>
+                  <li>• Billing will be paused immediately</li>
+                  <li>• You can resume services anytime</li>
+                  <li>• Progress and history will be preserved</li>
+                </ul>
               </div>
 
               <div>
-                <Label className="mb-2 block">Message to {seniorData.name} (Optional):</Label>
-                <Textarea 
-                  placeholder={`Let ${seniorData.name} know why you're pausing her services...`}
-                  className="min-h-[80px]"
+                <Label className="mb-2 block">Reason for pausing (optional):</Label>
+                <Textarea
+                  value={pauseMessage}
+                  onChange={(e) => setPauseMessage(e.target.value)}
+                  placeholder="Let us know why you're pausing services..."
+                  className="min-h-[100px]"
                 />
               </div>
             </div>
-            <AlertDialogFooter>
-              <AlertDialogCancel className="text-[16px]">Never Mind</AlertDialogCancel>
-              <AlertDialogAction
-                onClick={handlePauseServices}
-                className="text-[16px]"
+            <DialogFooter>
+              <Button
+                onClick={() => {
+                  setShowPauseModal(false);
+                  setPauseMessage('');
+                }}
+                variant="outline"
+              >
+                Cancel
+              </Button>
+              <Button
+                onClick={() => {
+                  setShowPauseModal(false);
+                  setShowPauseConfirmation(true);
+                  setPauseMessage('');
+                }}
                 style={{ background: '#F59E0B', color: '#FFFFFF' }}
               >
                 Pause Services
-              </AlertDialogAction>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialog>
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
 
-        {/* Pause Confirmation Dialog with Print */}
+        {/* Pause Confirmation Modal */}
         <Dialog open={showPauseConfirmation} onOpenChange={setShowPauseConfirmation}>
           <DialogContent className="max-w-2xl">
             <DialogHeader>
-              <DialogTitle className="text-[28px] text-center" style={{ color: '#F59E0B' }}>
+              <DialogTitle className="text-[24px]" style={{ color: '#16A34A' }}>
                 ⏸️ Services Paused
               </DialogTitle>
             </DialogHeader>
@@ -1213,14 +1205,6 @@ export function LovedOneDetails({ seniorName, onBack, onNavigateToBooking, onNav
                 </div>
               </div>
 
-                  <div className="space-y-2">
-                    <Label>Type "{seniorData.name}" to confirm:</Label>
-                    <Input
-                      value={removeConfirmName}
-                      onChange={(e) => setRemoveConfirmName(e.target.value)}
-                      placeholder={seniorData.name}
-                    />
-                  </div>
               <div>
                 <p className="font-semibold mb-2" style={{ color: '#265073' }}>Note:</p>
                 <div className="space-y-1">
@@ -1231,7 +1215,7 @@ export function LovedOneDetails({ seniorName, onBack, onNavigateToBooking, onNav
 
               <div className="space-y-2">
                 <Label>Type "{seniorData.name}" to confirm:</Label>
-                <Input 
+                <Input
                   value={removeConfirmName}
                   onChange={(e) => setRemoveConfirmName(e.target.value)}
                   placeholder={seniorData.name}
@@ -1284,13 +1268,6 @@ export function LovedOneDetails({ seniorName, onBack, onNavigateToBooking, onNav
                     <CheckCircle2 className="w-4 h-4" style={{ color: '#16A34A' }} />
                     <span>View session history</span>
                   </div>
-
-                  <div>
-                    <Label className="mb-2 block">Why do you need this access?</Label>
-                    <Textarea
-                      placeholder={`Tell ${seniorData.name} why you'd like additional permissions. This helps her feel comfortable approving your request.`}
-                      className="min-h-[100px]"
-                    />
                   <div className="flex items-center gap-2">
                     <CheckCircle2 className="w-4 h-4" style={{ color: '#16A34A' }} />
                     <span>Book sessions</span>
@@ -1318,7 +1295,7 @@ export function LovedOneDetails({ seniorName, onBack, onNavigateToBooking, onNav
 
               <div>
                 <Label className="mb-2 block">Why do you need this access?</Label>
-                <Textarea 
+                <Textarea
                   placeholder={`Tell ${seniorData.name} why you'd like additional permissions. This helps her feel comfortable approving your request.`}
                   className="min-h-[100px]"
                 />
