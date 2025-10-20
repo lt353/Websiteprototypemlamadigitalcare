@@ -27,8 +27,7 @@ export function BookSessionCaregiver({ onBack, onSuccess }: BookSessionCaregiver
   const subscriberDiscount = 0.15;
 
   const seniors = [
-    { id: '1', name: 'Mary Johnson', relationship: 'Mother' },
-    { id: '2', name: 'Robert Johnson', relationship: 'Father' }
+    { id: '1', name: 'Mary Johnson', relationship: 'Mother' }
   ];
 
   const sessionTypes = [

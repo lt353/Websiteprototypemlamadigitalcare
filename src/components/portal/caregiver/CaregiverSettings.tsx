@@ -203,8 +203,8 @@ export function CaregiverSettings({ onBack, onNavigate }: CaregiverSettingsProps
               <CardContent>
                 <div className="space-y-3">
                   {[
-                    { date: 'Nov 1, 2025', amount: '$158', description: 'Monthly subscription (2 seniors)' },
-                    { date: 'Oct 1, 2025', amount: '$158', description: 'Monthly subscription (2 seniors)' }
+                    { date: 'Nov 1, 2025', amount: '$79', description: 'Monthly subscription (Mary Johnson)' },
+                    { date: 'Oct 1, 2025', amount: '$79', description: 'Monthly subscription (Mary Johnson)' }
                   ].map((item, i) => (
                     <div key={i} className="flex flex-col sm:flex-row justify-between gap-3 p-3 md:p-4 rounded-lg" style={{ background: '#F9FAFB' }}>
                       <div className="flex-1">
