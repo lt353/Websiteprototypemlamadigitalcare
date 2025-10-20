@@ -179,6 +179,7 @@ export function CaregiverRouter({ onLogout }: CaregiverRouterProps) {
             setCurrentView('loved-one-details');
           }}
           onAddSenior={() => setCurrentView('add-senior')}
+          onNavigate={handleNavigate}
         />
       );
 
@@ -186,6 +187,7 @@ export function CaregiverRouter({ onLogout }: CaregiverRouterProps) {
       return (
         <LearningResourcesCaregiver
           onBack={handleBackToDashboard}
+          onNavigate={handleNavigate}
         />
       );
 
@@ -193,6 +195,7 @@ export function CaregiverRouter({ onLogout }: CaregiverRouterProps) {
       return (
         <CaregiverSettings
           onBack={handleBackToDashboard}
+          onNavigate={handleNavigate}
         />
       );
 

@@ -7,12 +7,14 @@ import { Input } from '../../ui/input';
 import { Label } from '../../ui/label';
 import { RadioGroup, RadioGroupItem } from '../../ui/radio-group';
 import { toast } from 'sonner@2.0.3';
+import { CaregiverBottomNav } from './CaregiverBottomNav';
 
 interface CaregiverSettingsProps {
   onBack: () => void;
+  onNavigate?: (view: string) => void;
 }
 
-export function CaregiverSettings({ onBack }: CaregiverSettingsProps) {
+export function CaregiverSettings({ onBack, onNavigate }: CaregiverSettingsProps) {
   const [paymentResponsibility, setPaymentResponsibility] = useState<'senior' | 'caregiver' | 'split'>('senior');
   return (
     <div className="min-h-screen pb-24 md:pb-8" style={{ background: '#F9FAFB' }}>
@@ -258,6 +260,11 @@ export function CaregiverSettings({ onBack }: CaregiverSettingsProps) {
           </TabsContent>
         </Tabs>
       </div>
+
+      {/* Bottom Navigation - Mobile Only */}
+      {onNavigate && (
+        <CaregiverBottomNav currentView="settings" onNavigate={onNavigate} />
+      )}
     </div>
   );
 }

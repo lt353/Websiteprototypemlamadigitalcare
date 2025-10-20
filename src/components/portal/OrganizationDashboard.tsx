@@ -162,6 +162,21 @@ export function OrganizationDashboard({ currentView, onNavigate, onLogout }: Org
             })}
           </nav>
 
+          {/* Logout Button */}
+          <div className="p-4 border-t" style={{ borderColor: 'rgba(255,255,255,0.1)' }}>
+            <button
+              onClick={onLogout}
+              className="w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all hover:bg-red-600"
+              style={{
+                background: '#DC2626',
+                color: '#FFFFFF'
+              }}
+            >
+              <LogOut className="w-5 h-5 flex-shrink-0" />
+              <span style={{ fontSize: '16px' }}>Log Out</span>
+            </button>
+          </div>
+
           {/* Footer */}
           <div className="p-4 border-t" style={{ borderColor: 'rgba(255,255,255,0.1)' }}>
             <p className="text-[12px] text-center" style={{ color: 'rgba(255,255,255,0.5)' }}>
@@ -174,6 +189,31 @@ export function OrganizationDashboard({ currentView, onNavigate, onLogout }: Org
       {/* MAIN CONTENT */}
       <main className="flex-1 overflow-auto pb-24 md:pb-8">
         <div className="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8">
+          {/* Mobile Header with Logout */}
+          <div className="md:hidden flex items-center justify-between mb-4 pb-4 border-b" style={{ borderColor: '#E5E7EB' }}>
+            <div>
+              <p className="font-semibold text-xl" style={{ color: '#265073' }}>Sunset Senior Living</p>
+              <p className="text-base" style={{ color: '#6B7280' }}>Organization Portal</p>
+            </div>
+            <button
+              onClick={onLogout}
+              className="flex items-center gap-2 px-4 py-2.5 rounded-lg transition-all"
+              style={{ 
+                background: '#DC2626',
+                color: '#FFFFFF'
+              }}
+              onMouseDown={(e) => {
+                e.currentTarget.style.transform = 'scale(0.95)';
+              }}
+              onMouseUp={(e) => {
+                e.currentTarget.style.transform = 'scale(1)';
+              }}
+            >
+              <LogOut className="w-5 h-5" />
+              <span className="text-base font-semibold">Log Out</span>
+            </button>
+          </div>
+
           {/* Header */}
           <div className="mb-6 md:mb-8">
             <h1 className="text-[28px] md:text-[36px] font-bold mb-2 break-words" style={{ color: '#265073' }}>
@@ -197,8 +237,8 @@ export function OrganizationDashboard({ currentView, onNavigate, onLogout }: Org
                 }}
               >
                 <CardHeader className="pb-3 p-3 md:p-6">
-                  <CardDescription className="text-[12px] md:text-[14px]">{stat.label}</CardDescription>
-                  <CardTitle className="text-[24px] md:text-[32px]" style={{ color: '#265073' }}>
+                  <CardDescription className="text-[14px] md:text-[14px]">{stat.label}</CardDescription>
+                  <CardTitle className="text-[26px] md:text-[32px]" style={{ color: '#265073' }}>
                     {stat.value}
                   </CardTitle>
                 </CardHeader>
@@ -207,7 +247,7 @@ export function OrganizationDashboard({ currentView, onNavigate, onLogout }: Org
                     {stat.trend === 'up' && (
                       <TrendingUp className="w-4 h-4 flex-shrink-0" style={{ color: '#16A34A' }} />
                     )}
-                    <p className="text-[12px] md:text-[14px] leading-tight" style={{ color: stat.trend === 'up' ? '#16A34A' : '#6B7280' }}>
+                    <p className="text-[13px] md:text-[14px] leading-tight" style={{ color: stat.trend === 'up' ? '#16A34A' : '#6B7280' }}>
                       {stat.change}
                     </p>
                   </div>
@@ -221,17 +261,17 @@ export function OrganizationDashboard({ currentView, onNavigate, onLogout }: Org
             <CardHeader>
               <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
                 <div className="flex-1">
-                  <CardTitle className="text-[20px] md:text-[24px]" style={{ color: '#265073' }}>
+                  <CardTitle className="text-[21px] md:text-[24px]" style={{ color: '#265073' }}>
                     Upcoming Workshops
                   </CardTitle>
-                  <CardDescription className="text-[14px] md:text-[16px]">
+                  <CardDescription className="text-[15px] md:text-[16px]">
                     Scheduled classes and events for your community
                   </CardDescription>
                 </div>
                 <Button 
                   onClick={() => onNavigate('schedule')}
                   style={{ background: '#2D9596', color: '#FFFFFF' }}
-                  className="w-full sm:w-auto text-[14px] md:text-[16px]"
+                  className="w-full sm:w-auto text-[15px] md:text-[16px]"
                 >
                   Schedule New Workshop
                 </Button>
@@ -248,11 +288,11 @@ export function OrganizationDashboard({ currentView, onNavigate, onLogout }: Org
                     <div className="flex flex-col sm:flex-row items-start justify-between gap-3 mb-4">
                       <div className="flex-1 min-w-0">
                         <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 mb-2">
-                          <h3 className="text-[18px] md:text-[20px] font-bold break-words" style={{ color: '#265073' }}>
+                          <h3 className="text-[19px] md:text-[20px] font-bold break-words" style={{ color: '#265073' }}>
                             {workshop.title}
                           </h3>
                           <Badge 
-                            className="text-[12px] md:text-[14px] self-start"
+                            className="text-[13px] md:text-[14px] self-start"
                             style={{ 
                               background: workshop.type === 'Free Community Workshop' ? '#D1FAE5' : '#E0F2FE',
                               color: workshop.type === 'Free Community Workshop' ? '#065F46' : '#0284C7'
@@ -261,7 +301,7 @@ export function OrganizationDashboard({ currentView, onNavigate, onLogout }: Org
                             {workshop.type}
                           </Badge>
                         </div>
-                        <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-6 text-[14px] md:text-[16px]" style={{ color: '#6B7280' }}>
+                        <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-6 text-[15px] md:text-[16px]" style={{ color: '#6B7280' }}>
                           <div className="flex items-center gap-2">
                             <Calendar className="w-4 h-4 flex-shrink-0" />
                             <span className="break-words">{workshop.date}</span>

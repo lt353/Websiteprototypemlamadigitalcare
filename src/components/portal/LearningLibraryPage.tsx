@@ -129,15 +129,15 @@ export function LearningLibraryPage({ onBack }: LearningLibraryPageProps) {
       <div className="max-w-6xl mx-auto">
         <button
           onClick={onBack}
-          className="mb-6 text-[18px] hover:underline active:scale-95 transition-transform"
+          className="mb-6 text-[22px] font-medium hover:underline"
           style={{ color: '#2D9596' }}
         >
           ← Back to Dashboard
         </button>
 
         <div className="text-center mb-12">
-          <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6" style={{ background: '#F3E8FF' }}>
-            <BookOpen className="w-10 h-10" style={{ color: '#A855F7' }} />
+          <div className="w-28 h-28 rounded-full flex items-center justify-center mx-auto mb-6" style={{ background: '#F3E8FF' }}>
+            <BookOpen className="w-14 h-14" style={{ color: '#A855F7' }} />
           </div>
           <h1 className="text-[40px] font-bold mb-4" style={{ color: '#265073' }}>
             Learning Library

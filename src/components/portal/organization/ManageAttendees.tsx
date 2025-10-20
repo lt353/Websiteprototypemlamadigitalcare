@@ -174,19 +174,19 @@ export function ManageAttendees({ workshopTitle = 'Scam Prevention Workshop', on
         {/* Residents List */}
         <Card className="mb-6">
           <CardHeader>
-            <div className="flex items-center justify-between">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
               <CardTitle className="text-[24px]">All Residents</CardTitle>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 w-full sm:w-auto">
                 <Button
                   variant="outline"
-                  size="sm"
+                  className="flex-1 sm:flex-none text-[16px] h-12"
                   onClick={() => setSelectedResidents(allResidents.map(r => r.id))}
                 >
                   Select All
                 </Button>
                 <Button
                   variant="outline"
-                  size="sm"
+                  className="flex-1 sm:flex-none text-[16px] h-12"
                   onClick={() => setSelectedResidents([])}
                 >
                   Clear All
@@ -199,41 +199,45 @@ export function ManageAttendees({ workshopTitle = 'Scam Prevention Workshop', on
               {filteredResidents.map((resident) => (
                 <div
                   key={resident.id}
-                  className="flex items-center gap-4 p-4 rounded-lg border-2 transition-all"
+                  className="flex flex-col sm:flex-row items-start sm:items-center gap-3 p-4 rounded-lg border-2 transition-all"
                   style={{
                     borderColor: selectedResidents.includes(resident.id) ? '#2D9596' : '#E5E7EB',
                     background: selectedResidents.includes(resident.id) ? '#E6F7F4' : '#FFFFFF'
                   }}
                 >
-                  <Checkbox
-                    id={`resident-${resident.id}`}
-                    checked={selectedResidents.includes(resident.id)}
-                    onCheckedChange={() => handleToggleResident(resident.id)}
-                    className="w-5 h-5"
-                  />
+                  <div className="flex items-start gap-3 w-full sm:flex-1">
+                    <Checkbox
+                      id={`resident-${resident.id}`}
+                      checked={selectedResidents.includes(resident.id)}
+                      onCheckedChange={() => handleToggleResident(resident.id)}
+                      className="w-5 h-5 mt-1"
+                    />
 
-                  <div className="flex-1">
-                    <div className="flex items-center gap-3 mb-1">
-                      <p className="text-[18px] font-bold" style={{ color: '#265073' }}>
-                        {resident.name}
-                      </p>
-                      <Badge variant="outline" className="text-[12px]">
-                        Room {resident.room}
-                      </Badge>
-                      {resident.attended && (
-                        <Badge style={{ background: '#D1FAE5', color: '#065F46' }}>
-                          ✓ Attended Last
-                        </Badge>
-                      )}
-                    </div>
-                    <div className="flex items-center gap-4 text-[14px]" style={{ color: '#6B7280' }}>
-                      <div className="flex items-center gap-1">
-                        <Mail className="w-4 h-4" />
-                        {resident.email}
+                    <div className="flex-1 min-w-0">
+                      <div className="mb-1">
+                        <p className="text-[18px] font-bold mb-2" style={{ color: '#265073' }}>
+                          {resident.name}
+                        </p>
+                        <div className="flex flex-wrap items-center gap-2">
+                          <Badge variant="outline" className="text-[12px]">
+                            Room {resident.room}
+                          </Badge>
+                          {resident.attended && (
+                            <Badge className="text-[12px] whitespace-nowrap" style={{ background: '#D1FAE5', color: '#065F46' }}>
+                              ✓ Attended
+                            </Badge>
+                          )}
+                        </div>
                       </div>
-                      <div className="flex items-center gap-1">
-                        <Phone className="w-4 h-4" />
-                        {resident.phone}
+                      <div className="flex flex-col gap-1 text-[14px]" style={{ color: '#6B7280' }}>
+                        <div className="flex items-center gap-1 break-all">
+                          <Mail className="w-4 h-4 flex-shrink-0" />
+                          <span className="break-all">{resident.email}</span>
+                        </div>
+                        <div className="flex items-center gap-1">
+                          <Phone className="w-4 h-4 flex-shrink-0" />
+                          {resident.phone}
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -241,7 +245,7 @@ export function ManageAttendees({ workshopTitle = 'Scam Prevention Workshop', on
                   {selectedResidents.includes(resident.id) ? (
                     <Button
                       variant="ghost"
-                      size="sm"
+                      className="w-full sm:w-auto h-12 text-[16px]"
                       onClick={() => handleToggleResident(resident.id)}
                       style={{ color: '#DC2626' }}
                     >
@@ -251,7 +255,7 @@ export function ManageAttendees({ workshopTitle = 'Scam Prevention Workshop', on
                   ) : (
                     <Button
                       variant="outline"
-                      size="sm"
+                      className="w-full sm:w-auto h-12 text-[16px]"
                       onClick={() => handleToggleResident(resident.id)}
                       disabled={enrolledCount >= maxCapacity}
                     >
@@ -274,21 +278,21 @@ export function ManageAttendees({ workshopTitle = 'Scam Prevention Workshop', on
         </Card>
 
         {/* Action Buttons */}
-        <div className="flex gap-4">
+        <div className="flex flex-col sm:flex-row gap-4">
           <Button
             variant="outline"
             onClick={onBack}
-            className="flex-1 h-16 text-[18px] font-bold"
+            className="w-full sm:flex-1 h-16 text-[18px] font-bold"
           >
             Cancel
           </Button>
           <Button
             onClick={handleSaveChanges}
-            className="flex-1 h-16 text-[18px] font-bold"
+            className="w-full sm:flex-1 h-16 text-[16px] sm:text-[18px] font-bold"
             style={{ background: '#2D9596', color: '#FFFFFF' }}
           >
-            <CheckCircle2 className="w-5 h-5 mr-2" />
-            Save Changes ({enrolledCount} enrolled)
+            <CheckCircle2 className="w-5 h-5 mr-2 flex-shrink-0" />
+            <span className="whitespace-nowrap">Save Changes ({enrolledCount} enrolled)</span>
           </Button>
         </div>
       </div>

@@ -104,10 +104,10 @@ export function WorkshopDetails({ onBack, onNavigateToManageAttendees, onNavigat
         </div>
 
         <Tabs defaultValue="overview">
-          <TabsList className="mb-8">
-            <TabsTrigger value="overview" className="text-[18px] px-6 py-3">Overview</TabsTrigger>
-            <TabsTrigger value="attendees" className="text-[18px] px-6 py-3">Attendees</TabsTrigger>
-            <TabsTrigger value="materials" className="text-[18px] px-6 py-3">Materials</TabsTrigger>
+          <TabsList className="mb-8 w-full flex-wrap h-auto gap-2">
+            <TabsTrigger value="overview" className="text-[18px] px-6 py-3 flex-1 min-w-[140px]">Overview</TabsTrigger>
+            <TabsTrigger value="attendees" className="text-[18px] px-6 py-3 flex-1 min-w-[140px]">Attendees</TabsTrigger>
+            <TabsTrigger value="materials" className="text-[18px] px-6 py-3 flex-1 min-w-[140px]">Materials</TabsTrigger>
           </TabsList>
 
           <TabsContent value="overview" className="space-y-6">
@@ -146,26 +146,32 @@ export function WorkshopDetails({ onBack, onNavigateToManageAttendees, onNavigat
               </CardContent>
             </Card>
 
-            <div className="flex gap-4">
+            <div className="flex flex-wrap gap-3">
               <Button 
                 variant="outline"
                 onClick={onNavigateToEdit}
+                className="text-[16px] h-12 flex-1 min-w-[140px]"
               >
                 Edit Workshop
               </Button>
               <Button 
                 variant="outline"
                 onClick={() => setShowRescheduleModal(true)}
+                className="text-[16px] h-12 flex-1 min-w-[140px]"
               >
                 Reschedule
               </Button>
-              <Button variant="outline">
+              <Button 
+                variant="outline"
+                className="text-[16px] h-12 flex-1 min-w-[160px]"
+              >
                 <Download className="w-4 h-4 mr-2" />
                 Download Flyer
               </Button>
               <Button 
                 variant="destructive"
                 onClick={() => setShowCancelModal(true)}
+                className="text-[16px] h-12 flex-1 min-w-[160px]"
               >
                 Cancel Workshop
               </Button>
@@ -175,9 +181,10 @@ export function WorkshopDetails({ onBack, onNavigateToManageAttendees, onNavigat
           <TabsContent value="attendees">
             <Card>
               <CardHeader>
-                <div className="flex items-center justify-between">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                   <CardTitle className="text-[24px]">Registered Attendees</CardTitle>
                   <Button 
+                    className="w-full sm:w-auto h-12 text-[16px] whitespace-nowrap"
                     style={{ background: '#2D9596', color: '#FFFFFF' }}
                     onClick={onNavigateToManageAttendees}
                   >
@@ -189,14 +196,14 @@ export function WorkshopDetails({ onBack, onNavigateToManageAttendees, onNavigat
               <CardContent>
                 <div className="space-y-3">
                   {attendees.map((attendee, i) => (
-                    <div key={i} className="flex items-center justify-between p-4 rounded-lg" style={{ background: '#F9FAFB' }}>
-                      <div>
+                    <div key={i} className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 p-4 rounded-lg" style={{ background: '#F9FAFB' }}>
+                      <div className="flex-1">
                         <p className="text-[18px] font-semibold" style={{ color: '#265073' }}>{attendee.name}</p>
                         <p className="text-[16px]" style={{ color: '#6B7280' }}>{attendee.unit}</p>
                       </div>
-                      <div className="flex gap-3">
-                        <Badge style={{ background: '#D1FAE5', color: '#065F46' }}>{attendee.status}</Badge>
-                        <Button variant="ghost" size="sm">Remove</Button>
+                      <div className="flex gap-3 w-full sm:w-auto">
+                        <Badge className="text-[14px]" style={{ background: '#D1FAE5', color: '#065F46' }}>{attendee.status}</Badge>
+                        <Button variant="ghost" className="text-[14px]">Remove</Button>
                       </div>
                     </div>
                   ))}

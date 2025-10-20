@@ -5,12 +5,14 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '../../ui/tabs';
 import { Badge } from '../../ui/badge';
 import { useState } from 'react';
 import { toast } from 'sonner@2.0.3';
+import { CaregiverBottomNav } from './CaregiverBottomNav';
 
 interface LearningResourcesCaregiverProps {
   onBack: () => void;
+  onNavigate?: (view: string) => void;
 }
 
-export function LearningResourcesCaregiver({ onBack }: LearningResourcesCaregiverProps) {
+export function LearningResourcesCaregiver({ onBack, onNavigate }: LearningResourcesCaregiverProps) {
   const [activeTab, setActiveTab] = useState('quick-guides');
 
   // A. Quick Reference Guides (Downloadable & Printable)
@@ -346,8 +348,8 @@ export function LearningResourcesCaregiver({ onBack }: LearningResourcesCaregive
   };
 
   return (
-    <div className="min-h-screen" style={{ background: '#F9FAFB' }}>
-      <div className="max-w-7xl mx-auto p-8">
+    <div className="min-h-screen pb-24 md:pb-8" style={{ background: '#F9FAFB' }}>
+      <div className="max-w-7xl mx-auto p-4 md:p-8">
         <button
           onClick={onBack}
           className="flex items-center gap-2 mb-6 hover:underline transition-all"
@@ -357,44 +359,48 @@ export function LearningResourcesCaregiver({ onBack }: LearningResourcesCaregive
           Back to Dashboard
         </button>
 
-        <div className="mb-8">
-          <h1 style={{ color: '#265073' }}>
+        <div className="mb-6 md:mb-8">
+          <h1 className="text-2xl md:text-4xl" style={{ color: '#265073' }}>
             Learning Resources
           </h1>
-          <p className="mt-2" style={{ color: '#6B7280' }}>
+          <p className="mt-2 text-sm md:text-base" style={{ color: '#6B7280' }}>
             Comprehensive guides, videos, and tools to help your kūpuna thrive with technology
           </p>
         </div>
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-          <TabsList className="grid grid-cols-2 lg:grid-cols-4 gap-2 h-auto p-2" style={{ background: '#FFFFFF' }}>
+          <TabsList className="grid grid-cols-2 lg:grid-cols-4 gap-2 h-auto p-2 w-full overflow-x-auto" style={{ background: '#FFFFFF' }}>
             <TabsTrigger 
               value="quick-guides" 
-              className="px-4 py-3 data-[state=active]:bg-[#2D9596] data-[state=active]:text-white"
+              className="px-2 md:px-4 py-3 data-[state=active]:bg-[#2D9596] data-[state=active]:text-white text-xs md:text-sm whitespace-nowrap"
             >
-              <FileText className="w-5 h-5 mr-2" />
-              Quick Guides
+              <FileText className="w-4 h-4 md:w-5 md:h-5 mr-1 md:mr-2" />
+              <span className="hidden sm:inline">Quick Guides</span>
+              <span className="sm:hidden">Guides</span>
             </TabsTrigger>
             <TabsTrigger 
               value="emergency" 
-              className="px-4 py-3 data-[state=active]:bg-[#2D9596] data-[state=active]:text-white"
+              className="px-2 md:px-4 py-3 data-[state=active]:bg-[#2D9596] data-[state=active]:text-white text-xs md:text-sm whitespace-nowrap"
             >
-              <AlertCircle className="w-5 h-5 mr-2" />
-              Emergency Cards
+              <AlertCircle className="w-4 h-4 md:w-5 md:h-5 mr-1 md:mr-2" />
+              <span className="hidden sm:inline">Emergency Cards</span>
+              <span className="sm:hidden">Emergency</span>
             </TabsTrigger>
             <TabsTrigger 
               value="videos" 
-              className="px-4 py-3 data-[state=active]:bg-[#2D9596] data-[state=active]:text-white"
+              className="px-2 md:px-4 py-3 data-[state=active]:bg-[#2D9596] data-[state=active]:text-white text-xs md:text-sm whitespace-nowrap"
             >
-              <Video className="w-5 h-5 mr-2" />
-              Video Library
+              <Video className="w-4 h-4 md:w-5 md:h-5 mr-1 md:mr-2" />
+              <span className="hidden sm:inline">Video Library</span>
+              <span className="sm:hidden">Videos</span>
             </TabsTrigger>
             <TabsTrigger 
               value="teaching" 
-              className="px-4 py-3 data-[state=active]:bg-[#2D9596] data-[state=active]:text-white"
+              className="px-2 md:px-4 py-3 data-[state=active]:bg-[#2D9596] data-[state=active]:text-white text-xs md:text-sm whitespace-nowrap"
             >
-              <BookOpen className="w-5 h-5 mr-2" />
-              Teaching Tools
+              <BookOpen className="w-4 h-4 md:w-5 md:h-5 mr-1 md:mr-2" />
+              <span className="hidden sm:inline">Teaching Tools</span>
+              <span className="sm:hidden">Teaching</span>
             </TabsTrigger>
           </TabsList>
 
@@ -411,42 +417,42 @@ export function LearningResourcesCaregiver({ onBack }: LearningResourcesCaregive
                 <div className="grid gap-4 md:grid-cols-2">
                   {quickGuides.map((guide, index) => (
                     <Card key={index} className="hover:shadow-lg transition-shadow">
-                      <CardContent className="p-6">
-                        <div className="flex items-start gap-4">
+                      <CardContent className="p-4 md:p-6">
+                        <div className="flex flex-col sm:flex-row items-start gap-4">
                           <div 
                             className="w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0"
                             style={{ background: '#E6F7F4' }}
                           >
                             <FileText className="w-6 h-6" style={{ color: '#2D9596' }} />
                           </div>
-                          <div className="flex-1 min-w-0">
-                            <h4 className="mb-2" style={{ color: '#265073' }}>
+                          <div className="flex-1 min-w-0 w-full">
+                            <h4 className="mb-2 text-base md:text-lg break-words" style={{ color: '#265073' }}>
                               {guide.title}
                             </h4>
-                            <p className="mb-3" style={{ color: '#6B7280', fontSize: '16px' }}>
+                            <p className="mb-3 text-sm md:text-base break-words" style={{ color: '#6B7280' }}>
                               {guide.description}
                             </p>
-                            <div className="flex items-center gap-4 mb-4" style={{ fontSize: '14px', color: '#6B7280' }}>
+                            <div className="flex flex-wrap items-center gap-2 mb-4 text-xs md:text-sm" style={{ color: '#6B7280' }}>
                               <span>{guide.pages} pages</span>
                               <span>•</span>
-                              <span>Updated {guide.updated}</span>
+                              <span className="break-words">Updated {guide.updated}</span>
                             </div>
-                            <div className="flex gap-2">
+                            <div className="flex flex-col sm:flex-row gap-2 w-full">
                               <Button
                                 onClick={() => handleDownload(guide.title)}
-                                className="flex-1 hover:text-white transition-colors"
+                                className="flex-1 hover:text-white transition-colors text-sm md:text-base whitespace-nowrap"
                                 style={{ background: '#2D9596', color: '#FFFFFF' }}
                               >
-                                <Download className="w-4 h-4 mr-2" />
-                                Download PDF
+                                <Download className="w-4 h-4 mr-2 flex-shrink-0" />
+                                <span className="truncate">Download PDF</span>
                               </Button>
                               <Button
                                 onClick={() => handlePrint(guide.title)}
                                 variant="outline"
-                                className="flex-1 hover:bg-[#2D9596] hover:text-white hover:border-[#2D9596] transition-colors"
+                                className="flex-1 hover:bg-[#2D9596] hover:text-white hover:border-[#2D9596] transition-colors text-sm md:text-base whitespace-nowrap"
                               >
-                                <Printer className="w-4 h-4 mr-2" />
-                                Print
+                                <Printer className="w-4 h-4 mr-2 flex-shrink-0" />
+                                <span className="truncate">Print</span>
                               </Button>
                             </div>
                           </div>
@@ -736,6 +742,11 @@ export function LearningResourcesCaregiver({ onBack }: LearningResourcesCaregive
           </TabsContent>
         </Tabs>
       </div>
+
+      {/* Bottom Navigation - Mobile Only */}
+      {onNavigate && (
+        <CaregiverBottomNav currentView="resources" onNavigate={onNavigate} />
+      )}
     </div>
   );
 }

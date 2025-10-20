@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Header } from './components/Header';
 import { Footer } from './components/Footer';
 import { HomePage } from './components/HomePage';
@@ -11,6 +11,7 @@ import { CareersPage } from './components/CareersPage';
 import { LoginPage } from './components/portal/LoginPage';
 import { RegisterPage } from './components/portal/RegisterPage';
 import { CustomerDashboard } from './components/portal/CustomerDashboard';
+import { KupunaPortalLayout } from './components/portal/KupunaPortalLayout';
 import { CaregiverRouter } from './components/portal/caregiver/CaregiverRouter';
 import { OrganizationRouter } from './components/portal/organization/OrganizationRouter';
 import { ScamCheckerPage } from './components/portal/ScamCheckerPage';
@@ -20,10 +21,13 @@ import { LearningLibraryPage } from './components/portal/LearningLibraryPage';
 import { SessionsPage } from './components/portal/SessionsPage';
 import { SettingsPage } from './components/portal/SettingsPage';
 import { SuccessPage } from './components/portal/SuccessPage';
+import { VideoPreJoinScreen } from './components/portal/VideoPreJoinScreen';
+import { VideoCallScreen } from './components/portal/VideoCallScreen';
+import { PostSessionScreen } from './components/portal/PostSessionScreen';
 import { Toaster } from './components/ui/sonner';
 
 type Page = 'home' | 'about' | 'services' | 'contact' | 'workshops' | 'partners' | 'careers' | 'login' | 'register' | 'portal';
-type PortalView = 'dashboard' | 'scam-checker' | 'tech-helper' | 'booking' | 'library' | 'sessions' | 'settings' | 'success';
+type PortalView = 'dashboard' | 'scam-checker' | 'tech-helper' | 'booking' | 'library' | 'sessions' | 'settings' | 'success' | 'video-prejoin' | 'video-call' | 'post-session';
 type UserType = 'kupuna' | 'caregiver' | 'organization';
 
 interface SuccessData {
@@ -31,6 +35,10 @@ interface SuccessData {
   title: string;
   message: string;
   details?: Array<{ label: string; value: string }>;
+  coverageInfo?: {
+    isCovered: boolean;
+    additionalCost: number;
+  };
 }
 
 export default function App() {
@@ -68,7 +76,6 @@ export default function App() {
   const handleNavigate = (page: Page) => {
     setCurrentPage(page);
     window.location.hash = page;
-    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleLogin = (selectedUserType?: UserType) => {
@@ -104,7 +111,11 @@ export default function App() {
         { label: 'Preferred Time', value: bookingData.time },
         { label: 'Topics', value: bookingData.topics || 'To be discussed' },
         { label: 'Confirmation', value: 'We will call you to confirm' }
-      ]
+      ],
+      coverageInfo: bookingData.isCovered !== undefined ? {
+        isCovered: bookingData.isCovered,
+        additionalCost: bookingData.additionalCost
+      } : undefined
     });
   };
 
@@ -246,55 +257,125 @@ export default function App() {
     }
 
     // For kupuna (seniors), show full portal with all features
-    switch (portalView) {
-      case 'success':
-        return successData ? (
-          <SuccessPage
-            type={successData.type}
-            title={successData.title}
-            message={successData.message}
-            details={successData.details}
-            onContinue={() => handlePortalNavigate('dashboard')}
-          />
-        ) : null;
-      case 'scam-checker':
-        return <ScamCheckerPage onBack={() => handlePortalNavigate('dashboard')} />;
-      case 'tech-helper':
-        return <TechHelperPage onBack={() => handlePortalNavigate('dashboard')} />;
-      case 'booking':
-        return <BookingPage onBack={() => handlePortalNavigate('dashboard')} onBookingSuccess={handleBookingSuccess} />;
-      case 'library':
-        return <LearningLibraryPage onBack={() => handlePortalNavigate('dashboard')} />;
-      case 'sessions':
-        return (
-          <SessionsPage 
-            onBack={() => handlePortalNavigate('dashboard')} 
-            onNavigateToBooking={() => handlePortalNavigate('booking')}
-            onRescheduleSuccess={handleRescheduleSuccess}
-            onCancelSuccess={handleCancelSuccess}
-            upcomingSession={upcomingSession}
-          />
-        );
-      case 'settings':
-        return (
-          <SettingsPage 
-            onBack={() => handlePortalNavigate('dashboard')}
-            onSubscriptionChange={handleSubscriptionChange}
-            onPaymentUpdate={handlePaymentUpdate}
-            currentPlan={currentPlan}
-            isPaused={isPaused}
-          />
-        );
-      case 'dashboard':
-      default:
-        return (
-          <CustomerDashboard
-            currentView={portalView}
-            onNavigate={handlePortalNavigate}
-            onLogout={handleLogout}
-          />
-        );
+    // Wrap all pages in KupunaPortalLayout except dashboard which already has it
+    const renderKupunaPage = () => {
+      switch (portalView) {
+        case 'success':
+          return successData ? (
+            <SuccessPage
+              type={successData.type}
+              title={successData.title}
+              message={successData.message}
+              details={successData.details}
+              coverageInfo={successData.coverageInfo}
+              onContinue={() => handlePortalNavigate('dashboard')}
+            />
+          ) : null;
+        case 'scam-checker':
+          return (
+            <ScamCheckerPage 
+              onBack={() => handlePortalNavigate('dashboard')}
+              onNavigateToSessions={() => handlePortalNavigate('sessions')}
+              onNavigateToBooking={(context) => {
+                handlePortalNavigate('booking');
+              }}
+            />
+          );
+        case 'tech-helper':
+          return (
+            <TechHelperPage 
+              onBack={() => handlePortalNavigate('dashboard')}
+              onNavigateToBooking={(context) => {
+                handlePortalNavigate('booking');
+              }}
+            />
+          );
+        case 'booking':
+          return (
+            <BookingPage 
+              onBack={() => handlePortalNavigate('dashboard')} 
+              onBookingSuccess={handleBookingSuccess}
+             
+            />
+          );
+        case 'library':
+          return <LearningLibraryPage onBack={() => handlePortalNavigate('dashboard')} />;
+        case 'sessions':
+          return (
+            <SessionsPage 
+              onBack={() => handlePortalNavigate('dashboard')} 
+              onNavigateToBooking={() => handlePortalNavigate('booking')}
+              onRescheduleSuccess={handleRescheduleSuccess}
+              onCancelSuccess={handleCancelSuccess}
+              upcomingSession={upcomingSession}
+            />
+          );
+        case 'settings':
+          return (
+            <SettingsPage 
+              onBack={() => handlePortalNavigate('dashboard')}
+              onSubscriptionChange={handleSubscriptionChange}
+              onPaymentUpdate={handlePaymentUpdate}
+              currentPlan={currentPlan}
+              isPaused={isPaused}
+            />
+          );
+        case 'video-prejoin':
+          return (
+            <VideoPreJoinScreen
+              instructorName="Tea Araki"
+              sessionDate="Nov 28"
+              sessionTime="2:00 PM"
+              onJoin={() => handlePortalNavigate('video-call')}
+              onCancel={() => handlePortalNavigate('dashboard')}
+            />
+          );
+        case 'video-call':
+          return (
+            <VideoCallScreen
+              instructorName="Tea Araki"
+              sessionDate="Nov 28"
+              sessionTime="2:00 PM"
+              onLeaveCall={() => handlePortalNavigate('post-session')}
+            />
+          );
+        case 'post-session':
+          return (
+            <PostSessionScreen
+              instructorName="Tea Araki"
+              sessionDate="Nov 28"
+              sessionTime="2:00 PM"
+              sessionDuration="45 minutes"
+              onReturnToDashboard={() => handlePortalNavigate('dashboard')}
+            />
+          );
+        case 'dashboard':
+        default:
+          return (
+            <CustomerDashboard
+              currentView={portalView}
+              onNavigate={handlePortalNavigate}
+              onLogout={handleLogout}
+            />
+          );
+      }
+    };
+
+    // Dashboard, video-prejoin, video-call, and post-session handle their own layout
+    if (portalView === 'dashboard' || portalView === 'video-prejoin' || portalView === 'video-call' || portalView === 'post-session') {
+      return renderKupunaPage();
     }
+
+    // Wrap all other pages in the persistent layout
+    return (
+      <KupunaPortalLayout
+        currentView={portalView}
+        onNavigate={handlePortalNavigate}
+        onLogout={handleLogout}
+      >
+        {renderKupunaPage()}
+      </KupunaPortalLayout>
+    );
   };
 
   // Auth pages (login/register) don't show header/footer

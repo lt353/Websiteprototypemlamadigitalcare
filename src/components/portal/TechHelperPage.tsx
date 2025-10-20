@@ -1,17 +1,20 @@
 import { useState } from 'react';
-import { MessageCircle, Smartphone, Monitor, Mail, Lock, Camera, Globe, Phone, Volume2, Settings, HelpCircle, Bookmark, Printer, Star } from 'lucide-react';
-
+import { MessageCircle, Smartphone, Monitor, Mail, Lock, Camera, Globe, Phone, Volume2, Settings, HelpCircle, Bookmark, Printer, Star, Calendar, Mic } from 'lucide-react';
 interface TechHelperPageProps {
   onBack: () => void;
+  onNavigateToBooking?: (context?: { topic?: string; question?: string; fromHelper?: boolean }) => void;
 }
 
 type Category = 'phone' | 'computer' | 'email' | 'password' | 'photos' | 'internet' | 'calling' | 'sound' | 'settings' | 'other';
 
-export function TechHelperPage({ onBack }: TechHelperPageProps) {
+export function TechHelperPage({ onBack, onNavigateToBooking }: TechHelperPageProps) {
   const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
   const [customQuestion, setCustomQuestion] = useState('');
-  const [chatHistory, setChatHistory] = useState<{ role: 'user' | 'assistant'; content: string; showDeviceButtons?: boolean; questionKey?: string; device?: string }[]>([]);
+  const [chatHistory, setChatHistory] = useState<{ role: 'user' | 'assistant'; content: string; showDeviceButtons?: boolean; questionKey?: string; device?: string; needsInPersonHelp?: boolean }[]>([]);
   const [isTyping, setIsTyping] = useState(false);
+  const [isRecordingQuestion, setIsRecordingQuestion] = useState(false);
+  const [showBookingPrompt, setShowBookingPrompt] = useState(false);
+  const [bookingContext, setBookingContext] = useState('');
   // Demo saved answers to showcase the feature
   const [savedAnswers, setSavedAnswers] = useState<Array<{ question: string; answer: string; device?: string; timestamp: number }>>([
     {
@@ -76,8 +79,7 @@ If you can't remember your password:
     }
   ]);
   const [showSavedLibrary, setShowSavedLibrary] = useState(false);
-  const [deviceContext, setDeviceContext] = useState<{ osVersion?: string; deviceLooksD different?: boolean }>({});
-
+  const [deviceContext, setDeviceContext] = useState<{ osVersion?: string; deviceLooksDifferent?: boolean }>({});
   const categories = [
     { id: 'phone' as Category, icon: Smartphone, label: 'Phone/Tablet Help', emoji: '📱' },
     { id: 'computer' as Category, icon: Monitor, label: 'Computer Help', emoji: '💻' },
@@ -114,12 +116,14 @@ If you can't remember your password:
       'How do I add a contact?'
     ],
     password: [
-      'I forgot my password',
-      'How do I change my password?',
-      'Should I write down my passwords?',
-      'What makes a strong password?',
-      'How do password managers work?'
-    ],
+  'I forgot my password',
+  'How do I change my password?',
+  'Should I write down my passwords?',
+  'What makes a strong password?',
+  'How do password managers work?',  
+  'I\'m having trouble remembering all my passwords', 
+  'What\'s the best way to keep track of passwords?',  
+],
     photos: [
       'How do I take a photo?',
       'How do I share photos with family?',
@@ -274,6 +278,21 @@ If you can't remember your password:
       'How do I connect to Wi-Fi?',
       'How do I reset my Wi-Fi?',
       'How do I turn Wi-Fi on/off?'
+    ],
+    'How do password managers work?': [
+      'What\'s the best way to keep track of passwords?',
+      'I\'m having trouble remembering all my passwords',
+      'What makes a strong password?'
+    ],
+    'I\'m having trouble remembering all my passwords': [
+      'How do password managers work?',
+      'What\'s the best way to keep track of passwords?',
+      'Should I write down my passwords?'
+    ],
+    'What\'s the best way to keep track of passwords?': [
+      'How do password managers work?',
+      'I\'m having trouble remembering all my passwords',
+      'Should I write down my passwords?'
     ]
   };
 
@@ -286,6 +305,38 @@ If you can't remember your password:
     'How do I connect to Wi-Fi?',
     'How do I adjust the volume?'
   ];
+
+  // Topics that require in-person help - makes the booking prompt reusable
+  const requiresInPersonHelp = (question: string): boolean => {
+    const lowerQuestion = question.toLowerCase();
+    return (
+      lowerQuestion.includes('password manager') ||
+      lowerQuestion.includes('remembering passwords') ||
+      lowerQuestion.includes('keep track of passwords') ||
+      lowerQuestion.includes('backup') ||
+      lowerQuestion.includes('cloud storage') ||
+      lowerQuestion.includes('set up') ||
+      lowerQuestion.includes('organize photos') ||
+      lowerQuestion.includes('transfer') ||
+      lowerQuestion.includes('sync') ||
+      lowerQuestion.includes('security') ||
+      lowerQuestion.includes('virus') ||
+      lowerQuestion.includes('malware') ||
+      lowerQuestion.includes('slow computer') ||
+      lowerQuestion.includes('running slow')
+    );
+  };
+
+  // Get context for booking based on question
+  const getBookingContext = (question: string): string => {
+    const lowerQuestion = question.toLowerCase();
+    if (lowerQuestion.includes('password')) return 'password-manager-setup';
+    if (lowerQuestion.includes('photo')) return 'photo-organization';
+    if (lowerQuestion.includes('backup') || lowerQuestion.includes('cloud')) return 'backup-setup';
+    if (lowerQuestion.includes('slow') || lowerQuestion.includes('virus')) return 'computer-maintenance';
+    if (lowerQuestion.includes('transfer') || lowerQuestion.includes('sync')) return 'device-sync';
+    return 'general-tech-help';
+  };
 
   const getDeviceOptions = (question: string, category?: Category): string[] => {
     if (category === 'phone') return ['iPhone', 'Android'];
@@ -305,6 +356,149 @@ If you can't remember your password:
     const key = `${question}|${device}`;
     
     const answers: Record<string, string> = {
+      // ============ PASSWORD MANAGER ANSWERS - NEW! ============
+    'How do password managers work?': `Great question! A password manager is like a secure digital notebook that remembers all your passwords for you.
+
+    Think of it like this:
+    - Instead of remembering 20 different passwords
+    - You only remember ONE master password
+    - The password manager remembers all the rest!
+    
+    How it works:
+    
+    1. You create ONE strong master password
+       - This is the only one you need to remember
+       - Make it something memorable but secure
+    
+    2. The password manager stores all your other passwords
+       - Bank passwords
+       - Email passwords
+       - Shopping site passwords
+       - Everything!
+    
+    3. When you need to log in somewhere:
+       - The password manager fills it in for you automatically
+       - You don't have to remember or type it
+    
+    Benefits for you:
+    ✓ No more forgetting passwords
+    ✓ No more writing passwords on sticky notes
+    ✓ Every account can have a different, strong password
+    ✓ Much more secure than reusing the same password
+    ✓ Works on your phone AND computer
+    
+    Popular ones we recommend:
+    - LastPass (what most of our clients use)
+    - 1Password 
+    - Dashlane
+    
+    **Important:** Setting up a password manager is something we do together in an in-person session. We'll:
+    - Install it on all your devices
+    - Set up your master password
+    - Add all your important accounts
+    - Show you how to use it
+    - Make sure you're comfortable
+    
+    This usually takes about 60-90 minutes, and after that, you'll wonder how you ever managed without it!
+    
+    Would you like to book a session to set this up together?`,
+    
+        'I\'m having trouble remembering all my passwords': `You're definitely not alone - this is one of the most common problems we help with!
+    
+    Here's what's probably happening:
+    - You have passwords for email, bank, shopping, social media
+    - Some sites make you change passwords regularly
+    - You're trying to remember 10, 20, or even 30 different passwords
+    - It's overwhelming!
+    
+    The old ways that DON'T work well:
+    ❌ Writing them all on paper (gets lost, not secure)
+    ❌ Using the same password everywhere (not safe!)
+    ❌ Trying to remember them all (too stressful!)
+    
+    The BETTER solution - Password Manager:
+    
+    This is a special app that:
+    ✓ Remembers ALL your passwords for you
+    ✓ You only need to remember ONE master password
+    ✓ Fills in passwords automatically
+    ✓ Works on your phone and computer
+    ✓ Very secure and encrypted
+    
+    Real example from our client Susan:
+    "I was writing passwords on sticky notes everywhere. Tea helped me set up a password manager. Now I just remember one password, and it handles everything else. Life-changing!"
+    
+    **What happens next:**
+    Setting this up correctly is important, so we do it together in person:
+    - We'll sit down together (60-90 minutes)
+    - Install the password manager on your devices
+    - Add all your important accounts
+    - Create a strong master password you'll remember
+    - Practice using it until you're confident
+    - Answer all your questions
+    
+    After setup, you'll be able to:
+    - Log into websites easily
+    - Not worry about forgetting passwords
+    - Have strong, unique passwords for everything
+    - Access your passwords on any device
+    
+    The peace of mind is worth it!
+    
+    Ready to set this up? We can book a session where I'll walk you through everything step by step.`,
+    
+        'What\'s the best way to keep track of passwords?': `Excellent question! Let's talk about the best modern solution: a Password Manager.
+    
+    Why NOT to use these old methods:
+    ❌ Sticky notes on your monitor (anyone can see them!)
+    ❌ Notebook by your computer (can get lost)
+    ❌ Same password for everything (if one gets hacked, they all do!)
+    ❌ Simple passwords like "Password123" (too easy to guess)
+    
+    The BEST modern solution: Password Manager
+    
+    What it is:
+    A secure app that stores and remembers ALL your passwords for you.
+    
+    How it helps YOU:
+    1. **One password to remember**
+       - Just remember your "master password"
+       - The app remembers everything else
+    
+    2. **Auto-fill everywhere**
+       - Opens websites and fills in your info automatically
+       - Works on your phone AND computer
+       - No more typing long passwords!
+    
+    3. **Strong & unique passwords**
+       - Every account gets its own strong password
+       - You don't have to create or remember them
+       - Much more secure
+    
+    4. **Access anywhere**
+       - Your passwords sync across all your devices
+       - Phone, computer, tablet - all work together
+    
+    Real success story:
+    "I'm 72 and was SO frustrated with passwords. Michele at Mālama helped me set up LastPass. Now my grandson is jealous of how easy I have it!" - Patricia
+    
+    **Setting it up:**
+    This is definitely something we do TOGETHER in person because:
+    - It needs to be set up correctly to be secure
+    - We'll practice using it until you're comfortable
+    - We'll add all your accounts together
+    - You'll leave feeling confident
+    
+    The session takes about 60-90 minutes, and we'll:
+    ✓ Install the password manager
+    ✓ Create your master password (one you'll remember!)
+    ✓ Add your important accounts (email, bank, etc.)
+    ✓ Show you how to use it daily
+    ✓ Make sure it works on all your devices
+    
+    After this session, managing passwords becomes EASY instead of stressful!
+    
+    Interested in setting this up? Let's schedule a session!`,
       // ============ SCREENSHOT ANSWERS ============
       'How do I take a screenshot?|iPhone': `Let me show you how to take a screenshot on your iPhone.
 
@@ -2741,7 +2935,7 @@ What specifically is giving you trouble?`;
 
   const askQuestion = async (question: string) => {
     if (!question.trim()) return;
-
+    const needsHelp = requiresInPersonHelp(question);
     setChatHistory([...chatHistory, { role: 'user', content: question }]);
     setIsTyping(true);
     setCustomQuestion('');
@@ -2753,14 +2947,20 @@ What specifically is giving you trouble?`;
         role: 'assistant', 
         content: `I'll help you with that! First, which device are you using?`,
         showDeviceButtons: true,
-        questionKey: question
+        questionKey: question, 
+        needsInPersonHelp: needsHelp 
       }]);
       setIsTyping(false);
       return;
     }
 
     const response = getDirectAnswer(question);
-    setChatHistory(prev => [...prev, { role: 'assistant', content: response }]);
+    setChatHistory(prev => [...prev, { 
+      role: 'assistant', 
+      content: response,
+      questionKey: question,
+      needsInPersonHelp: needsHelp 
+    }]);
     setIsTyping(false);
   };
 
@@ -2770,7 +2970,8 @@ What specifically is giving you trouble?`;
 
     setTimeout(() => {
       const response = getAnswerForDevice(questionKey, device);
-      setChatHistory(prev => [...prev, { role: 'assistant', content: response, device, questionKey }]);
+      const needsHelp = requiresInPersonHelp(questionKey);
+      setChatHistory(prev => [...prev, { role: 'assistant', content: response, device, questionKey, needsInPersonHelp: needsHelp }]);
       setIsTyping(false);
     }, 600);
   };
@@ -2892,7 +3093,7 @@ What specifically is giving you trouble?`;
             className="text-[22px] font-medium hover:underline"
             style={{ color: '#2D9596' }}
           >
-            ← Back
+            ← Back to Dashboard
           </button>
           {savedAnswers.length > 0 && (
             <button
@@ -2962,10 +3163,16 @@ What specifically is giving you trouble?`;
                   <MessageCircle className="w-14 h-14" style={{ color: '#2D9596' }} />
                 </div>
               </div>
-              <h1 className="text-[48px] font-bold mb-4" style={{ color: '#265073' }}>
+              <h1 className="text-[48px] font-bold mb-2" style={{ color: '#265073' }}>
                 Tech Helper
               </h1>
-              <p className="text-[26px] leading-relaxed" style={{ color: '#4B5563' }}>
+              <p className="text-[32px] font-bold mb-4" style={{ color: '#2D9596' }}>
+                Meet Alakaʻi
+              </p>
+              <p className="text-[24px] leading-relaxed" style={{ color: '#4B5563' }}>
+                Your guide to technology
+              </p>
+              <p className="text-[20px] leading-relaxed mt-2" style={{ color: '#6B7280' }}>
                 We'll walk through it together, step by step!
               </p>
             </div>
@@ -3008,7 +3215,25 @@ What specifically is giving you trouble?`;
             <p className="text-[24px] mb-8 leading-relaxed" style={{ color: '#4B5563' }}>
               Pick a question below, or type your own:
             </p>
+            
 
+            {/* PASSWORD MANAGER HIGHLIGHT BANNER - ADD THIS WHOLE SECTION */}
+            {selectedCategory === 'password' && (
+              <div className="mb-6 p-4 rounded-lg border-2" style={{
+                background: '#FFFBEB',
+                borderColor: '#F59E0B'
+              }}>
+                <p className="text-[16px] font-bold mb-2" style={{ color: '#92400E' }}>
+                  💡 POPULAR: Many of our clients find password managers life-changing!
+                </p>
+                <p className="text-[14px]" style={{ color: '#78350F' }}>
+                  Tap any password question below to learn more
+                </p>
+              </div>
+            )}
+            {/* END OF ADDED SECTION */}
+
+          
             <div className="space-y-4 mb-10">
               {commonQuestions[selectedCategory].map((question, index) => (
                 <button
@@ -3022,6 +3247,55 @@ What specifically is giving you trouble?`;
               ))}
             </div>
 
+           
+            <div className="mb-6">
+              <div className="text-center mb-4">
+                <p className="text-[18px] mb-4" style={{ color: '#265073' }}>
+                  Ask your question by speaking:
+                </p>
+                <button
+                  onClick={() => {
+                    if (!isRecordingQuestion) {
+                      setIsRecordingQuestion(true);
+                    } else {
+                      setIsRecordingQuestion(false);
+                      setCustomQuestion("How do I keep track of all my passwords? I keep forgetting them and it's very frustrating.");
+                    }
+                  }}
+                  className="relative h-24 w-24 rounded-full flex items-center justify-center transition-all active:scale-95 mx-auto"
+                  style={{
+                    background: isRecordingQuestion ? '#EF4444' : '#2D9596',
+                    boxShadow: isRecordingQuestion ? '0 0 0 8px rgba(239, 68, 68, 0.2)' : '0 4px 12px rgba(45, 149, 150, 0.3)',
+                  }}
+                >
+                  <Mic className="w-10 h-10 text-white" />
+                  {isRecordingQuestion && (
+                    <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 whitespace-nowrap">
+                      <span className="text-[16px] text-red-600 font-bold animate-pulse">
+                        Recording... Tap to stop
+                      </span>
+                    </div>
+                  )}
+                </button>
+                <p className="text-[14px] mt-8" style={{ color: '#6B7280' }}>
+                  {isRecordingQuestion 
+                    ? "Tap the microphone again when you're done speaking"
+                    : "Tap the microphone to ask your question out loud"}
+                </p>
+              </div>
+            </div>
+            
+            {/* DIVIDER */}
+            <div className="relative mb-6">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t" style={{ borderColor: '#D1D5DB' }}></div>
+              </div>
+              <div className="relative flex justify-center text-[18px]">
+                <span className="px-4 bg-white font-medium" style={{ color: '#4B5563' }}>
+                  OR type it:
+                </span>
+              </div>
+            </div>
             <div className="mt-10 p-8 rounded-2xl border-3" style={{ borderColor: '#2D9596', background: '#F0F9FF' }}>
               <h3 className="text-[26px] font-bold mb-6" style={{ color: '#265073' }}>
                 💬 Or describe your problem in your own words:
@@ -3142,6 +3416,74 @@ What specifically is giving you trouble?`;
                       {message.content}
                     </div>
                   </div>
+
+                  {/* REUSABLE BOOKING PROMPT - Shows for any question that needs in-person help */}
+                  {message.role === 'assistant' && message.needsInPersonHelp && !message.showDeviceButtons && (
+                    <div className="flex justify-start mt-4">
+                      <div className="max-w-[85%] p-6 rounded-xl border-2" style={{
+                        background: '#F0FDFA',
+                        borderColor: '#2D9596'
+                      }}>
+                        <h4 className="text-[20px] font-bold mb-3" style={{ color: '#265073' }}>
+                          Ready to set this up?
+                        </h4>
+                        <p className="text-[16px] mb-4" style={{ color: '#4B5563' }}>
+                          This is something we do together in person to make sure everything works perfectly and you feel confident.
+                        </p>
+                        
+                        <div className="space-y-3 mb-4">
+                          <div className="flex items-start gap-2">
+                            <span className="text-[20px]">✓</span>
+                            <span className="text-[16px]" style={{ color: '#4B5563' }}>
+                              We'll work through this together step-by-step
+                            </span>
+                          </div>
+                          <div className="flex items-start gap-2">
+                            <span className="text-[20px]">✓</span>
+                            <span className="text-[16px]" style={{ color: '#4B5563' }}>
+                              Make sure it's set up correctly on all your devices
+                            </span>
+                          </div>
+                          <div className="flex items-start gap-2">
+                            <span className="text-[20px]">✓</span>
+                            <span className="text-[16px]" style={{ color: '#4B5563' }}>
+                              Practice using it until you're comfortable
+                            </span>
+                          </div>
+                          <div className="flex items-start gap-2">
+                            <span className="text-[20px]">✓</span>
+                            <span className="text-[16px]" style={{ color: '#4B5563' }}>
+                              Usually takes 60-90 minutes
+                            </span>
+                          </div>
+                        </div>
+
+                        <button
+                          onClick={() => {
+                            const context = getBookingContext(message.questionKey || '');
+                            onNavigateToBooking?.({ 
+                              topic: context,
+                              question: message.questionKey,
+                              fromHelper: true 
+                            });
+                          }}
+                          className="w-full h-14 rounded-lg font-bold text-[18px] transition-all active:scale-95 flex items-center justify-center gap-2"
+                          style={{
+                            background: '#2D9596',
+                            color: '#FFFFFF',
+                            boxShadow: '0 4px 12px rgba(45, 149, 150, 0.3)',
+                          }}
+                        >
+                          <Calendar className="w-5 h-5" />
+                          Book a session to set this up together
+                        </button>
+
+                        <p className="text-[14px] mt-3 text-center" style={{ color: '#6B7280' }}>
+                          Or discuss it in your upcoming session.
+                        </p>
+                      </div>
+                    </div>
+                  )}
                   
                   {/* Save and Print Buttons for Assistant Answers */}
                   {message.role === 'assistant' && !message.showDeviceButtons && message.content.length > 100 && (
@@ -3231,6 +3573,7 @@ What specifically is giving you trouble?`;
             </div>
 
             <div className="sticky bottom-0 bg-white pt-6 border-t-2" style={{ borderColor: '#D1D5DB' }}>
+              
               <textarea
                 value={customQuestion}
                 onChange={(e) => setCustomQuestion(e.target.value)}

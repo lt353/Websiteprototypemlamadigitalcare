@@ -24,15 +24,16 @@ export function ResidentProgress({ onBack, onNavigateToResident }: ResidentProgr
         <div className="space-y-4">
           {residents.map((r, i) => (
             <Card key={i}>
-              <CardContent className="p-6 flex items-center justify-between">
-                <div className="flex-1">
-                  <p className="text-[20px] font-bold" style={{ color: '#265073' }}>{r.name} • {r.unit}</p>
+              <CardContent className="p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                <div className="flex-1 min-w-0 w-full sm:w-auto">
+                  <p className="text-[20px] font-bold mb-2" style={{ color: '#265073' }}>{r.name} • {r.unit}</p>
                   <p className="text-[16px]" style={{ color: '#6B7280' }}>
                     {r.sessions} sessions • {r.skills} skills • Last: {r.lastAttended}
                   </p>
                 </div>
                 <Button 
                   variant="outline"
+                  className="w-full sm:w-auto h-12 text-[16px] whitespace-nowrap"
                   onClick={onNavigateToResident ? () => onNavigateToResident(r.name) : undefined}
                 >
                   View Profile

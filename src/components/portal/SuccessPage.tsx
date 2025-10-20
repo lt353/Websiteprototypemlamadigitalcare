@@ -7,11 +7,15 @@ interface SuccessPageProps {
   title: string;
   message: string;
   details?: Array<{ label: string; value: string }>;
+  coverageInfo?: {
+    isCovered: boolean;
+    additionalCost: number;
+  };
   onContinue: () => void;
   onPrint?: () => void;
 }
 
-export function SuccessPage({ type, title, message, details, onContinue, onPrint }: SuccessPageProps) {
+export function SuccessPage({ type, title, message, details, coverageInfo, onContinue, onPrint }: SuccessPageProps) {
   const handlePrint = () => {
     if (onPrint) {
       onPrint();
@@ -93,6 +97,41 @@ END:VCALENDAR`;
             {message}
           </p>
         </div>
+
+        {/* Coverage Info Card - Show if booking type */}
+        {type === 'booking' && coverageInfo && (
+          <div 
+            className="rounded-xl border-2 p-6 mb-6" 
+            style={{ 
+              borderColor: coverageInfo.isCovered ? '#10B981' : '#F59E0B',
+              background: coverageInfo.isCovered ? '#ECFDF5' : '#FFFBEB'
+            }}
+          >
+            <div className="flex items-center gap-3 mb-3">
+              {coverageInfo.isCovered ? (
+                <>
+                  <CheckCircle className="w-6 h-6" style={{ color: '#10B981' }} />
+                  <h3 className="text-[22px] font-bold" style={{ color: '#065F46' }}>
+                    ✓ Covered by Your Plan
+                  </h3>
+                </>
+              ) : (
+                <>
+                  <CheckCircle className="w-6 h-6" style={{ color: '#F59E0B' }} />
+                  <h3 className="text-[22px] font-bold" style={{ color: '#92400E' }}>
+                    Add-on Payment Applied
+                  </h3>
+                </>
+              )}
+            </div>
+            <p className="text-[18px]" style={{ color: coverageInfo.isCovered ? '#047857' : '#B45309' }}>
+              {coverageInfo.isCovered 
+                ? 'This session used 1 of your plan sessions. No additional payment needed.'
+                : `This session required an add-on payment of ${coverageInfo.additionalCost}. Payment will be processed separately.`
+              }
+            </p>
+          </div>
+        )}
 
         {/* Details Card */}
         {details && details.length > 0 && (

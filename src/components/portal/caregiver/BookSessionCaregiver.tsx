@@ -236,14 +236,17 @@ export function BookSessionCaregiver({ onBack, onSuccess }: BookSessionCaregiver
                 <CardTitle>Preferred Time</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="grid grid-cols-3 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                   {['Morning (9am-12pm)', 'Afternoon (12pm-4pm)', 'Evening (4pm-7pm)'].map((time) => (
                     <Button
                       key={time}
                       variant="outline"
                       onClick={() => setSelectedTime(time)}
-                      className={selectedTime === time ? 'border-2' : ''}
-                      style={{ borderColor: selectedTime === time ? '#2D9596' : undefined }}
+                      className={`h-auto py-3 text-sm sm:text-base whitespace-normal ${selectedTime === time ? 'border-2' : ''}`}
+                      style={{ 
+                        borderColor: selectedTime === time ? '#2D9596' : undefined,
+                        background: selectedTime === time ? '#E6F7F4' : undefined
+                      }}
                     >
                       {time}
                     </Button>
