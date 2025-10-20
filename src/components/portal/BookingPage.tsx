@@ -65,6 +65,7 @@ export function BookingPage({ onBack, onBookingSuccess }: BookingPageProps) {
   const [showCoverageReview, setShowCoverageReview] = useState(false);
   const [showUpgradeDialog, setShowUpgradeDialog] = useState(false);
   const [showTrackChangeDialog, setShowTrackChangeDialog] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
   const [bookingDate, setBookingDate] = useState('');
   const [bookingTime, setBookingTime] = useState('9:00 AM');
   const [bookingTopics, setBookingTopics] = useState('');
