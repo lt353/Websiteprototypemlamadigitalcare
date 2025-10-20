@@ -1,10 +1,11 @@
 import { useState } from 'react';
-import { ArrowLeft, Calendar, CheckCircle2, Phone, Mail, MapPin, Shield, Clock, Users } from 'lucide-react';
+import { ArrowLeft, Calendar, CheckCircle2, Phone, Mail, MapPin, Shield, Clock, Users, Edit, Printer } from 'lucide-react';
 import { Button } from '../../ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../../ui/tabs';
 import { Badge } from '../../ui/badge';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '../../ui/alert-dialog';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '../../ui/dialog';
 import { Textarea } from '../../ui/textarea';
 import { Input } from '../../ui/input';
 import { Label } from '../../ui/label';
@@ -26,12 +27,18 @@ interface LovedOneDetailsProps {
 export function LovedOneDetails({ seniorName, onBack, onNavigateToBooking, onNavigateToReschedule, onNavigateToManagePlan, onNavigateToUpdatePayment, onNavigateToSessionDetails, onNavigateToSessionSummary, onNavigateToMessageInstructor }: LovedOneDetailsProps) {
   const [activeTab, setActiveTab] = useState('overview');
   const [showCancelModal, setShowCancelModal] = useState(false);
+  const [showCancelConfirmation, setShowCancelConfirmation] = useState(false);
   const [showAccessModal, setShowAccessModal] = useState(false);
   const [showPauseModal, setShowPauseModal] = useState(false);
+  const [showPauseConfirmation, setShowPauseConfirmation] = useState(false);
   const [showRemoveModal, setShowRemoveModal] = useState(false);
+  const [showEditSessionModal, setShowEditSessionModal] = useState(false);
   const [isEditingContact, setIsEditingContact] = useState(false);
   const [sessionFilter, setSessionFilter] = useState<'all' | 'upcoming' | 'completed'>('all');
   const [removeConfirmName, setRemoveConfirmName] = useState('');
+  const [cancelMessage, setCancelMessage] = useState('');
+  const [pauseMessage, setPauseMessage] = useState('');
+  const [editSessionData, setEditSessionData] = useState<any>(null);
   const [contactInfo, setContactInfo] = useState({
     phone: '(808) 555-0123',
     email: 'mary.johnson@email.com',
@@ -42,6 +49,33 @@ export function LovedOneDetails({ seniorName, onBack, onNavigateToBooking, onNav
     state: 'HI',
     zip: '96814'
   });
+
+  // Helper function for dynamic dates
+  const getDynamicDate = (daysOffset: number) => {
+    const date = new Date();
+    date.setDate(date.getDate() + daysOffset);
+    return date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+  };
+
+  const getShortDate = (daysOffset: number) => {
+    const date = new Date();
+    date.setDate(date.getDate() + daysOffset);
+    return {
+      month: date.toLocaleDateString('en-US', { month: 'short' }).toUpperCase(),
+      day: date.getDate().toString().padStart(2, '0'),
+      year: date.getFullYear().toString()
+    };
+  };
+
+  // Calculate next billing date (1st of next month)
+  const getNextBillingDate = () => {
+    const today = new Date();
+    const nextMonth = new Date(today.getFullYear(), today.getMonth() + 1, 1);
+    return nextMonth.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+  };
+
+  const upcomingSessionDate = getDynamicDate(5);
+  const lastSessionDate = getDynamicDate(-7);
 
   // Mock data for the senior
   const seniorData = {
@@ -54,7 +88,7 @@ export function LovedOneDetails({ seniorName, onBack, onNavigateToBooking, onNav
     address: '123 Main St, Kailua, HI 96734',
     emergencyContact: 'You (Sarah Miller)',
     nextSession: {
-      date: 'December 1, 2025',
+      date: upcomingSessionDate,
       time: '2:00 PM HST',
       type: 'In-Home Visit',
       instructor: 'Tea Araki',
@@ -63,14 +97,14 @@ export function LovedOneDetails({ seniorName, onBack, onNavigateToBooking, onNav
     stats: {
       sessionsCompleted: 5,
       skillsMastered: 12,
-      lastSession: 'Nov 15, 2025',
+      lastSession: lastSessionDate,
       currentFocus: 'Password Management'
     },
     currentPlan: {
       name: 'Standard Care',
       price: '$79/month',
       status: 'Active',
-      nextBilling: 'Dec 1, 2025'
+      nextBilling: getNextBillingDate()
     }
   };
 
@@ -78,22 +112,79 @@ export function LovedOneDetails({ seniorName, onBack, onNavigateToBooking, onNav
     {
       id: 1,
       status: 'upcoming',
-      date: 'December 1, 2025',
+      date: getDynamicDate(5),
+      dateShort: getShortDate(5),
       time: '2:00 PM - 3:30 PM',
       type: 'In-Home Visit',
       instructor: 'Tea Araki',
       topics: 'Two-Factor Authentication, Calendar App',
-      location: '123 Main St, Kailua'
+      location: '123 Main St, Kailua',
+      coverage: 'included' // included in plan
     },
     {
       id: 2,
       status: 'completed',
-      date: 'November 15, 2025',
+      date: getDynamicDate(-7),
+      dateShort: getShortDate(-7),
       time: '2:00 PM - 3:30 PM',
+      type: 'In-Home Visit',
       topics: 'Password Management, Account Security',
       instructor: 'Tea Araki',
       duration: '90 minutes',
-      rating: 5
+      rating: 5,
+      coverage: 'included'
+    },
+    {
+      id: 3,
+      status: 'completed',
+      date: getDynamicDate(-14),
+      dateShort: getShortDate(-14),
+      time: '10:00 AM - 11:00 AM',
+      type: 'Virtual Session',
+      topics: 'Email Organization, Spam Recognition',
+      instructor: 'Lindsay Trenton',
+      duration: '60 minutes',
+      rating: 5,
+      coverage: 'included'
+    },
+    {
+      id: 4,
+      status: 'completed',
+      date: getDynamicDate(-21),
+      dateShort: getShortDate(-21),
+      time: '3:00 PM - 4:00 PM',
+      type: 'Virtual Session',
+      topics: 'Zoom Basics, Video Calling',
+      instructor: 'DJ Sable',
+      duration: '60 minutes',
+      rating: 5,
+      coverage: 'included'
+    },
+    {
+      id: 5,
+      status: 'completed',
+      date: getDynamicDate(-28),
+      dateShort: getShortDate(-28),
+      time: '2:00 PM - 3:30 PM',
+      type: 'In-Home Visit',
+      topics: 'iPhone Basics, Photo Organization',
+      instructor: 'Tea Araki',
+      duration: '90 minutes',
+      rating: 5,
+      coverage: 'addon' // this was an add-on session
+    },
+    {
+      id: 6,
+      status: 'completed',
+      date: getDynamicDate(-35),
+      dateShort: getShortDate(-35),
+      time: '1:00 PM - 2:00 PM',
+      type: 'Virtual Session',
+      topics: 'Facebook Privacy Settings',
+      instructor: 'Lindsay Trenton',
+      duration: '60 minutes',
+      rating: 4,
+      coverage: 'included'
     }
   ];
 
@@ -104,6 +195,35 @@ export function LovedOneDetails({ seniorName, onBack, onNavigateToBooking, onNav
     { name: 'Two-Factor Authentication', completed: false, inProgress: true },
     { name: 'Video Calling', completed: false, inProgress: false }
   ];
+
+  const handleEditSession = () => {
+    setEditSessionData({
+      date: upcomingSessionDate,
+      time: '2:00 PM',
+      topics: 'Two-Factor Authentication, Calendar App',
+      notes: ''
+    });
+    setShowEditSessionModal(true);
+  };
+
+  const handleSaveSessionEdit = () => {
+    setShowEditSessionModal(false);
+    toast.success(`✓ Session updated! ${seniorData.name} and Tea have been notified.`);
+  };
+
+  const handleCancelSession = () => {
+    setShowCancelModal(false);
+    setShowCancelConfirmation(true);
+  };
+
+  const handlePauseServices = () => {
+    setShowPauseModal(false);
+    setShowPauseConfirmation(true);
+  };
+
+  const printConfirmation = () => {
+    window.print();
+  };
 
   return (
     <div className="min-h-screen" style={{ background: '#F9FAFB' }}>
@@ -120,7 +240,7 @@ export function LovedOneDetails({ seniorName, onBack, onNavigateToBooking, onNav
 
         {/* Header Section */}
         <div className="flex items-start gap-6 mb-8">
-          <div 
+          <div
             className="w-20 h-20 rounded-full flex items-center justify-center text-[32px] flex-shrink-0"
             style={{ background: '#E6F7F4' }}
           >
@@ -178,24 +298,37 @@ export function LovedOneDetails({ seniorName, onBack, onNavigateToBooking, onNav
                       <strong>Topics:</strong> {seniorData.nextSession.topics}
                     </p>
                   </div>
+                  <Badge style={{ background: '#D1FAE5', color: '#065F46' }}>
+                    Included in Plan
+                  </Badge>
                   <div className="flex gap-2 pt-3">
-                    <Button 
-                      variant="outline" 
-                      size="sm" 
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="flex-1"
+                      onClick={handleEditSession}
+                    >
+                      <Edit className="w-4 h-4 mr-1" />
+                      Edit
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="sm"
                       className="flex-1"
                       onClick={onNavigateToReschedule}
                     >
                       Reschedule
                     </Button>
-                    <Button 
-                      variant="outline" 
-                      size="sm" 
-                      className="flex-1"
-                      onClick={() => setShowCancelModal(true)}
-                    >
-                      Cancel
-                    </Button>
                   </div>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="w-full"
+                    onClick={() => setShowCancelModal(true)}
+                    style={{ borderColor: '#EF4444', color: '#EF4444' }}
+                  >
+                    Cancel
+                  </Button>
                 </CardContent>
               </Card>
 
@@ -226,8 +359,8 @@ export function LovedOneDetails({ seniorName, onBack, onNavigateToBooking, onNav
                       <strong>Current focus:</strong> {seniorData.stats.currentFocus}
                     </p>
                   </div>
-                  <Button 
-                    variant="outline" 
+                  <Button
+                    variant="outline"
                     className="w-full mt-3"
                     onClick={() => {
                       setActiveTab('progress');
@@ -262,8 +395,8 @@ export function LovedOneDetails({ seniorName, onBack, onNavigateToBooking, onNav
                       <strong>Next billing:</strong> {seniorData.currentPlan.nextBilling}
                     </p>
                   </div>
-                  <Button 
-                    variant="outline" 
+                  <Button
+                    variant="outline"
                     className="w-full mt-3"
                     onClick={onNavigateToManagePlan}
                   >
@@ -315,8 +448,8 @@ export function LovedOneDetails({ seniorName, onBack, onNavigateToBooking, onNav
                         </div>
                       </div>
                     </div>
-                    <Button 
-                      variant="outline" 
+                    <Button
+                      variant="outline"
                       className="mt-4"
                       onClick={() => setIsEditingContact(true)}
                     >
@@ -328,14 +461,14 @@ export function LovedOneDetails({ seniorName, onBack, onNavigateToBooking, onNav
                     <div className="grid md:grid-cols-2 gap-4">
                       <div>
                         <Label>Phone</Label>
-                        <Input 
+                        <Input
                           value={contactInfo.phone}
                           onChange={(e) => setContactInfo({...contactInfo, phone: e.target.value})}
                         />
                       </div>
                       <div>
                         <Label>Email</Label>
-                        <Input 
+                        <Input
                           type="email"
                           value={contactInfo.email}
                           onChange={(e) => setContactInfo({...contactInfo, email: e.target.value})}
@@ -344,7 +477,7 @@ export function LovedOneDetails({ seniorName, onBack, onNavigateToBooking, onNav
                     </div>
                     <div>
                       <Label>Address</Label>
-                      <Input 
+                      <Input
                         value={contactInfo.address}
                         onChange={(e) => setContactInfo({...contactInfo, address: e.target.value})}
                       />
@@ -352,21 +485,21 @@ export function LovedOneDetails({ seniorName, onBack, onNavigateToBooking, onNav
                     <div className="grid grid-cols-3 gap-4">
                       <div className="col-span-1">
                         <Label>City</Label>
-                        <Input 
+                        <Input
                           value={contactInfo.city}
                           onChange={(e) => setContactInfo({...contactInfo, city: e.target.value})}
                         />
                       </div>
                       <div>
                         <Label>State</Label>
-                        <Input 
+                        <Input
                           value={contactInfo.state}
                           onChange={(e) => setContactInfo({...contactInfo, state: e.target.value})}
                         />
                       </div>
                       <div>
                         <Label>ZIP</Label>
-                        <Input 
+                        <Input
                           value={contactInfo.zip}
                           onChange={(e) => setContactInfo({...contactInfo, zip: e.target.value})}
                         />
@@ -375,21 +508,21 @@ export function LovedOneDetails({ seniorName, onBack, onNavigateToBooking, onNav
                     <div className="grid md:grid-cols-2 gap-4">
                       <div>
                         <Label>Emergency Contact Name</Label>
-                        <Input 
+                        <Input
                           value={contactInfo.emergencyName}
                           onChange={(e) => setContactInfo({...contactInfo, emergencyName: e.target.value})}
                         />
                       </div>
                       <div>
                         <Label>Emergency Phone</Label>
-                        <Input 
+                        <Input
                           value={contactInfo.emergencyPhone}
                           onChange={(e) => setContactInfo({...contactInfo, emergencyPhone: e.target.value})}
                         />
                       </div>
                     </div>
                     <div className="flex gap-3">
-                      <Button 
+                      <Button
                         style={{ background: '#2D9596', color: '#FFFFFF' }}
                         onClick={() => {
                           setIsEditingContact(false);
@@ -398,7 +531,7 @@ export function LovedOneDetails({ seniorName, onBack, onNavigateToBooking, onNav
                       >
                         Save Changes
                       </Button>
-                      <Button 
+                      <Button
                         variant="outline"
                         onClick={() => setIsEditingContact(false)}
                       >
@@ -436,8 +569,8 @@ export function LovedOneDetails({ seniorName, onBack, onNavigateToBooking, onNav
                     </div>
                   ))}
                 </div>
-                <Button 
-                  variant="outline" 
+                <Button
+                  variant="outline"
                   className="mt-6"
                   onClick={() => setShowAccessModal(true)}
                 >
@@ -448,20 +581,20 @@ export function LovedOneDetails({ seniorName, onBack, onNavigateToBooking, onNav
 
             {/* Quick Actions */}
             <div className="grid md:grid-cols-3 gap-4">
-              <Button 
+              <Button
                 onClick={onNavigateToBooking}
                 style={{ background: '#2D9596', color: '#FFFFFF', height: '56px', fontSize: '18px' }}
               >
                 Book Session
               </Button>
-              <Button 
+              <Button
                 variant="outline"
                 style={{ height: '56px', fontSize: '18px' }}
                 onClick={onNavigateToMessageInstructor || (() => toast.info('Message Instructor page coming soon!'))}
               >
                 Message Instructor
               </Button>
-              <Button 
+              <Button
                 variant="outline"
                 style={{ height: '56px', fontSize: '18px' }}
                 onClick={() => toast.info('Learning Resources feature available in main portal dashboard')}
@@ -475,21 +608,21 @@ export function LovedOneDetails({ seniorName, onBack, onNavigateToBooking, onNav
           <TabsContent value="sessions" className="space-y-6">
             {/* Filter Bar */}
             <div className="flex gap-4 mb-6">
-              <Button 
+              <Button
                 variant={sessionFilter === 'upcoming' ? 'default' : 'outline'}
                 onClick={() => setSessionFilter('upcoming')}
                 style={sessionFilter === 'upcoming' ? { background: '#2D9596', color: '#FFFFFF' } : {}}
               >
                 Upcoming ({sessions.filter(s => s.status === 'upcoming').length})
               </Button>
-              <Button 
+              <Button
                 variant={sessionFilter === 'completed' ? 'default' : 'outline'}
                 onClick={() => setSessionFilter('completed')}
                 style={sessionFilter === 'completed' ? { background: '#2D9596', color: '#FFFFFF' } : {}}
               >
                 Completed ({sessions.filter(s => s.status === 'completed').length})
               </Button>
-              <Button 
+              <Button
                 variant={sessionFilter === 'all' ? 'default' : 'outline'}
                 onClick={() => setSessionFilter('all')}
                 style={sessionFilter === 'all' ? { background: '#2D9596', color: '#FFFFFF' } : {}}
@@ -508,11 +641,17 @@ export function LovedOneDetails({ seniorName, onBack, onNavigateToBooking, onNav
                     <div className="flex items-start justify-between mb-4">
                       <div className="flex-1">
                         <div className="flex items-center gap-3 mb-3">
-                          <Badge style={{ 
+                          <Badge style={{
                             background: session.status === 'upcoming' ? '#E0F2FE' : '#F3F4F6',
                             color: session.status === 'upcoming' ? '#0284C7' : '#6B7280'
                           }}>
                             {session.status === 'upcoming' ? 'Upcoming' : 'Completed'}
+                          </Badge>
+                          <Badge style={{
+                            background: session.coverage === 'included' ? '#D1FAE5' : '#FEF3C7',
+                            color: session.coverage === 'included' ? '#065F46' : '#92400E'
+                          }}>
+                            {session.coverage === 'included' ? 'Included in Plan' : 'Add-on (+15% Discount)'}
                           </Badge>
                           <span className="text-[18px] font-bold" style={{ color: '#265073' }}>
                             {session.date}
@@ -530,6 +669,11 @@ export function LovedOneDetails({ seniorName, onBack, onNavigateToBooking, onNav
                               <strong>Location:</strong> {session.location}
                             </p>
                           </>
+                        )}
+                        {session.type && session.status === 'completed' && (
+                          <p className="text-[16px]" style={{ color: '#6B7280' }}>
+                            <strong>Type:</strong> {session.type}
+                          </p>
                         )}
                         <p className="text-[16px]" style={{ color: '#6B7280' }}>
                           <strong>Topics:</strong> {session.topics}
@@ -549,22 +693,30 @@ export function LovedOneDetails({ seniorName, onBack, onNavigateToBooking, onNav
                     <div className="flex gap-3">
                       {session.status === 'upcoming' ? (
                         <>
-                          <Button 
-                            variant="outline" 
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={handleEditSession}
+                          >
+                            <Edit className="w-4 h-4 mr-1" />
+                            Edit
+                          </Button>
+                          <Button
+                            variant="outline"
                             size="sm"
                             onClick={onNavigateToReschedule}
                           >
                             Reschedule
                           </Button>
-                          <Button 
-                            variant="outline" 
+                          <Button
+                            variant="outline"
                             size="sm"
                             onClick={() => setShowCancelModal(true)}
                           >
                             Cancel
                           </Button>
-                          <Button 
-                            variant="outline" 
+                          <Button
+                            variant="outline"
                             size="sm"
                             onClick={onNavigateToSessionDetails || (() => toast.info('Session details page coming soon!'))}
                           >
@@ -573,22 +725,22 @@ export function LovedOneDetails({ seniorName, onBack, onNavigateToBooking, onNav
                         </>
                       ) : (
                         <>
-                          <Button 
-                            variant="outline" 
+                          <Button
+                            variant="outline"
                             size="sm"
                             onClick={onNavigateToSessionSummary || (() => toast.info('Session summary page coming soon!'))}
                           >
                             View Summary
                           </Button>
-                          <Button 
-                            variant="outline" 
+                          <Button
+                            variant="outline"
                             size="sm"
                             onClick={() => toast.info('Video player coming soon!')}
                           >
                             Watch Recording
                           </Button>
-                          <Button 
-                            variant="outline" 
+                          <Button
+                            variant="outline"
                             size="sm"
                             onClick={() => {
                               toast.success('✓ Downloading guide...');
@@ -675,29 +827,29 @@ export function LovedOneDetails({ seniorName, onBack, onNavigateToBooking, onNav
                 <CardTitle className="text-[24px]">Account Management</CardTitle>
               </CardHeader>
               <CardContent className="space-y-3">
-                <Button 
-                  variant="outline" 
+                <Button
+                  variant="outline"
                   className="w-full justify-start"
                   onClick={onNavigateToUpdatePayment || (() => toast.info('Payment method page coming soon!'))}
                 >
                   Update Payment Method
                 </Button>
-                <Button 
-                  variant="outline" 
+                <Button
+                  variant="outline"
                   className="w-full justify-start"
                   onClick={onNavigateToManagePlan}
                 >
                   Change Plan
                 </Button>
-                <Button 
-                  variant="outline" 
+                <Button
+                  variant="outline"
                   className="w-full justify-start"
                   onClick={() => setShowPauseModal(true)}
                 >
                   Pause Services
                 </Button>
-                <Button 
-                  variant="destructive" 
+                <Button
+                  variant="destructive"
                   className="w-full justify-start"
                   onClick={() => setShowRemoveModal(true)}
                 >
@@ -707,6 +859,71 @@ export function LovedOneDetails({ seniorName, onBack, onNavigateToBooking, onNav
             </Card>
           </TabsContent>
         </Tabs>
+
+        {/* Edit Session Dialog */}
+        <Dialog open={showEditSessionModal} onOpenChange={setShowEditSessionModal}>
+          <DialogContent className="max-w-2xl">
+            <DialogHeader>
+              <DialogTitle className="text-[24px]" style={{ color: '#265073' }}>
+                Edit Session Details
+              </DialogTitle>
+              <DialogDescription className="text-[16px]">
+                Update the details for {seniorData.name}&apos;s upcoming session
+              </DialogDescription>
+            </DialogHeader>
+            <div className="space-y-4 py-4">
+              <div>
+                <Label className="text-[16px]">Date</Label>
+                <Input
+                  type="date"
+                  defaultValue={new Date(Date.now() + 5 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]}
+                  className="mt-2"
+                />
+              </div>
+              <div>
+                <Label className="text-[16px]">Time</Label>
+                <select className="w-full h-12 px-4 rounded-lg border-2 mt-2" style={{ borderColor: '#E5E7EB' }}>
+                  <option>9:00 AM</option>
+                  <option>10:00 AM</option>
+                  <option>11:00 AM</option>
+                  <option>12:00 PM</option>
+                  <option>1:00 PM</option>
+                  <option selected>2:00 PM</option>
+                  <option>3:00 PM</option>
+                  <option>4:00 PM</option>
+                </select>
+              </div>
+              <div>
+                <Label className="text-[16px]">Topics to Cover</Label>
+                <Textarea
+                  defaultValue="Two-Factor Authentication, Calendar App"
+                  className="mt-2 min-h-[80px]"
+                />
+              </div>
+              <div>
+                <Label className="text-[16px]">Additional Notes for Instructor (Optional)</Label>
+                <Textarea
+                  placeholder="Any special requests or focus areas..."
+                  className="mt-2 min-h-[60px]"
+                />
+              </div>
+            </div>
+            <DialogFooter>
+              <Button
+                variant="outline"
+                onClick={() => setShowEditSessionModal(false)}
+              >
+                Cancel
+              </Button>
+              <Button
+                onClick={handleSaveSessionEdit}
+                style={{ background: '#2D9596', color: '#FFFFFF' }}
+              >
+                Save Changes
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
 
         {/* Cancel Session Modal */}
         <AlertDialog open={showCancelModal} onOpenChange={setShowCancelModal}>
@@ -719,7 +936,7 @@ export function LovedOneDetails({ seniorName, onBack, onNavigateToBooking, onNav
                 <div className="space-y-4 mt-4">
                   <div className="p-4 rounded-lg" style={{ background: '#FEF3C7', borderLeft: '4px solid #F59E0B' }}>
                     <p className="font-semibold" style={{ color: '#92400E' }}>Session Details:</p>
-                    <p style={{ color: '#92400E' }}>December 1, 2025 at 2:00 PM</p>
+                    <p style={{ color: '#92400E' }}>{upcomingSessionDate} at 2:00 PM</p>
                     <p style={{ color: '#92400E' }}>Two-Factor Authentication, Calendar App</p>
                     <p style={{ color: '#92400E' }}>In-home visit with Tea Araki</p>
                   </div>
@@ -728,7 +945,7 @@ export function LovedOneDetails({ seniorName, onBack, onNavigateToBooking, onNav
                     <p className="font-semibold" style={{ color: '#265073' }}>Important Information:</p>
                     <ul className="space-y-1 text-[16px]" style={{ color: '#6B7280' }}>
                       <li>• Canceling less than 24 hours before = $20 late cancellation fee</li>
-                      <li>• This session: 48 hours away (no fee)</li>
+                      <li>• This session: 5 days away (no fee)</li>
                       <li>• {seniorData.name} will be notified immediately</li>
                     </ul>
                   </div>
@@ -738,7 +955,9 @@ export function LovedOneDetails({ seniorName, onBack, onNavigateToBooking, onNav
                       Message to {seniorData.name} (optional):
                     </label>
                     <Textarea
-                      defaultValue={`Hi Mom, I need to cancel your December 1 session. Let's reschedule soon!`}
+                      value={cancelMessage}
+                      onChange={(e) => setCancelMessage(e.target.value)}
+                      defaultValue={`Hi Mom, I need to cancel your ${upcomingSessionDate} session. Let's reschedule soon!`}
                       className="min-h-[100px]"
                     />
                   </div>
@@ -747,11 +966,8 @@ export function LovedOneDetails({ seniorName, onBack, onNavigateToBooking, onNav
             </AlertDialogHeader>
             <AlertDialogFooter>
               <AlertDialogCancel className="text-[16px]">Never Mind</AlertDialogCancel>
-              <AlertDialogAction 
-                onClick={() => {
-                  setShowCancelModal(false);
-                  toast.success(`✓ Session canceled. ${seniorData.name} and Tea have been notified.`);
-                }}
+              <AlertDialogAction
+                onClick={handleCancelSession}
                 className="text-[16px]"
                 style={{ background: '#DC2626', color: '#FFFFFF' }}
               >
@@ -760,6 +976,54 @@ export function LovedOneDetails({ seniorName, onBack, onNavigateToBooking, onNav
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>
+
+        {/* Cancel Confirmation Dialog with Print */}
+        <Dialog open={showCancelConfirmation} onOpenChange={setShowCancelConfirmation}>
+          <DialogContent className="max-w-2xl">
+            <DialogHeader>
+              <DialogTitle className="text-[28px] text-center" style={{ color: '#16A34A' }}>
+                ✓ Session Canceled
+              </DialogTitle>
+            </DialogHeader>
+            <div className="space-y-6 py-6">
+              <div className="text-center">
+                <p className="text-[18px] mb-4" style={{ color: '#265073' }}>
+                  The session has been successfully canceled.
+                </p>
+              </div>
+
+              <div className="p-6 rounded-lg border-2" style={{ borderColor: '#E5E7EB', background: '#F9FAFB' }}>
+                <h3 className="text-[20px] font-bold mb-4" style={{ color: '#265073' }}>Cancellation Summary</h3>
+                <div className="space-y-2 text-[16px]">
+                  <p><strong>Senior:</strong> {seniorData.name}</p>
+                  <p><strong>Canceled Session:</strong> {upcomingSessionDate} at 2:00 PM</p>
+                  <p><strong>Topics:</strong> Two-Factor Authentication, Calendar App</p>
+                  <p><strong>Instructor Notified:</strong> Tea Araki</p>
+                  <p><strong>Cancellation Fee:</strong> $0 (more than 24 hours notice)</p>
+                  <p><strong>Confirmation #:</strong> CANC-{Math.random().toString(36).substring(2, 10).toUpperCase()}</p>
+                </div>
+              </div>
+
+              <div className="flex gap-3">
+                <Button
+                  onClick={printConfirmation}
+                  variant="outline"
+                  className="flex-1"
+                >
+                  <Printer className="w-4 h-4 mr-2" />
+                  Print Confirmation
+                </Button>
+                <Button
+                  onClick={() => setShowCancelConfirmation(false)}
+                  style={{ background: '#2D9596', color: '#FFFFFF' }}
+                  className="flex-1"
+                >
+                  Done
+                </Button>
+              </div>
+            </div>
+          </DialogContent>
+        </Dialog>
 
         {/* Pause Services Modal */}
         <AlertDialog open={showPauseModal} onOpenChange={setShowPauseModal}>
@@ -802,7 +1066,9 @@ export function LovedOneDetails({ seniorName, onBack, onNavigateToBooking, onNav
 
                   <div>
                     <Label className="mb-2 block">Message to {seniorData.name} (Optional):</Label>
-                    <Textarea 
+                    <Textarea
+                      value={pauseMessage}
+                      onChange={(e) => setPauseMessage(e.target.value)}
                       placeholder={`Let ${seniorData.name} know why you're pausing her services...`}
                       className="min-h-[80px]"
                     />
@@ -812,11 +1078,8 @@ export function LovedOneDetails({ seniorName, onBack, onNavigateToBooking, onNav
             </AlertDialogHeader>
             <AlertDialogFooter>
               <AlertDialogCancel className="text-[16px]">Never Mind</AlertDialogCancel>
-              <AlertDialogAction 
-                onClick={() => {
-                  setShowPauseModal(false);
-                  toast.success(`✓ Services paused for ${seniorData.name}. Resume anytime from Settings.`);
-                }}
+              <AlertDialogAction
+                onClick={handlePauseServices}
                 className="text-[16px]"
                 style={{ background: '#F59E0B', color: '#FFFFFF' }}
               >
@@ -825,6 +1088,54 @@ export function LovedOneDetails({ seniorName, onBack, onNavigateToBooking, onNav
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>
+
+        {/* Pause Confirmation Dialog with Print */}
+        <Dialog open={showPauseConfirmation} onOpenChange={setShowPauseConfirmation}>
+          <DialogContent className="max-w-2xl">
+            <DialogHeader>
+              <DialogTitle className="text-[28px] text-center" style={{ color: '#F59E0B' }}>
+                ⏸️ Services Paused
+              </DialogTitle>
+            </DialogHeader>
+            <div className="space-y-6 py-6">
+              <div className="text-center">
+                <p className="text-[18px] mb-4" style={{ color: '#265073' }}>
+                  Services for {seniorData.name} have been paused. You can resume anytime.
+                </p>
+              </div>
+
+              <div className="p-6 rounded-lg border-2" style={{ borderColor: '#E5E7EB', background: '#F9FAFB' }}>
+                <h3 className="text-[20px] font-bold mb-4" style={{ color: '#265073' }}>Pause Summary</h3>
+                <div className="space-y-2 text-[16px]">
+                  <p><strong>Senior:</strong> {seniorData.name}</p>
+                  <p><strong>Status:</strong> Services Paused</p>
+                  <p><strong>Effective Date:</strong> {getDynamicDate(0)}</p>
+                  <p><strong>Next Charge:</strong> None while paused</p>
+                  <p><strong>Resume:</strong> Available anytime from Settings</p>
+                  <p><strong>Confirmation #:</strong> PAUSE-{Math.random().toString(36).substring(2, 10).toUpperCase()}</p>
+                </div>
+              </div>
+
+              <div className="flex gap-3">
+                <Button
+                  onClick={printConfirmation}
+                  variant="outline"
+                  className="flex-1"
+                >
+                  <Printer className="w-4 h-4 mr-2" />
+                  Print Confirmation
+                </Button>
+                <Button
+                  onClick={() => setShowPauseConfirmation(false)}
+                  style={{ background: '#2D9596', color: '#FFFFFF' }}
+                  className="flex-1"
+                >
+                  Done
+                </Button>
+              </div>
+            </div>
+          </DialogContent>
+        </Dialog>
 
         {/* Remove from Care Modal */}
         <AlertDialog open={showRemoveModal} onOpenChange={setShowRemoveModal}>
@@ -859,7 +1170,7 @@ export function LovedOneDetails({ seniorName, onBack, onNavigateToBooking, onNav
 
                   <div className="space-y-2">
                     <Label>Type "{seniorData.name}" to confirm:</Label>
-                    <Input 
+                    <Input
                       value={removeConfirmName}
                       onChange={(e) => setRemoveConfirmName(e.target.value)}
                       placeholder={seniorData.name}
@@ -869,13 +1180,13 @@ export function LovedOneDetails({ seniorName, onBack, onNavigateToBooking, onNav
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
-              <AlertDialogCancel 
+              <AlertDialogCancel
                 className="text-[16px]"
                 onClick={() => setRemoveConfirmName('')}
               >
                 Cancel
               </AlertDialogCancel>
-              <AlertDialogAction 
+              <AlertDialogAction
                 onClick={() => {
                   if (removeConfirmName === seniorData.name) {
                     setShowRemoveModal(false);
@@ -941,7 +1252,7 @@ export function LovedOneDetails({ seniorName, onBack, onNavigateToBooking, onNav
 
                   <div>
                     <Label className="mb-2 block">Why do you need this access?</Label>
-                    <Textarea 
+                    <Textarea
                       placeholder={`Tell ${seniorData.name} why you'd like additional permissions. This helps her feel comfortable approving your request.`}
                       className="min-h-[100px]"
                     />
@@ -951,7 +1262,7 @@ export function LovedOneDetails({ seniorName, onBack, onNavigateToBooking, onNav
             </AlertDialogHeader>
             <AlertDialogFooter>
               <AlertDialogCancel className="text-[16px]">Cancel</AlertDialogCancel>
-              <AlertDialogAction 
+              <AlertDialogAction
                 onClick={() => {
                   setShowAccessModal(false);
                   toast.success(`✓ Request sent to ${seniorData.name}. She'll review it and respond shortly.`);
