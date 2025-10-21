@@ -27,9 +27,8 @@ export function HomePage({ onNavigate }: HomePageProps) {
 
             {/* Headline */}
             <h1
-              className="mb-8"
+              className="mb-8 text-[40px] md:text-[48px]"
               style={{
-                fontSize: "40px",
                 fontWeight: 700,
                 lineHeight: 1.2,
                 color: "#265073",
@@ -119,7 +118,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
             <div className="max-w-[768px]">
               <div className="flex flex-col gap-6">
                 <h2
-                  className="text-[32px] md:text-[48px]"
+                  className="text-[32px] md:text-[40px]"
                   style={{
                     fontWeight: 700,
                     lineHeight: 1.2,
@@ -264,7 +263,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
             <div className="max-w-[768px]">
               <div className="flex flex-col gap-6">
                 <h2
-                  className="text-[32px] md:text-[48px]"
+                  className="text-[32px] md:text-[40px]"
                   style={{
                     fontWeight: 700,
                     lineHeight: 1.2,
@@ -499,7 +498,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
             {/* Section Title */}
             <div className="max-w-[768px] mx-auto text-center">
               <h2
-                className="text-[32px] md:text-[48px] mb-4"
+                className="text-[32px] md:text-[40px] mb-4"
                 style={{
                   fontWeight: 700,
                   lineHeight: 1.2,
@@ -724,7 +723,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
             {/* Section Title */}
             <div className="text-center">
               <h2
-                className="text-[32px] md:text-[48px] mb-4"
+                className="text-[32px] md:text-[40px] mb-4"
                 style={{
                   fontWeight: 700,
                   lineHeight: 1.2,

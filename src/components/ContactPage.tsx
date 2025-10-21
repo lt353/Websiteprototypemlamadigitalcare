@@ -76,7 +76,7 @@ export function ContactPage({ onNavigate }: ContactPageProps) {
         }}>
         <div className="max-w-[1280px] mx-auto px-6 md:px-16 text-center">
           <h1
-            className="text-[#2D3748] mb-6 text-[40px] md:text-[56px]"
+            className="text-[#2D3748] mb-6 text-[40px] md:text-[48px]"
             style={{ fontWeight: 700, lineHeight: 1.2 }}
           >
             Let's Start a Conversation
@@ -780,7 +780,7 @@ export function ContactPage({ onNavigate }: ContactPageProps) {
         <div className="max-w-[1280px] mx-auto px-6 md:px-16">
           <div className="text-center mb-16">
             <h2
-              className="text-[#2D3748] text-[32px] md:text-[48px]"
+              className="text-[#2D3748] text-[32px] md:text-[40px]"
               style={{ fontWeight: 700, lineHeight: 1.2 }}
             >
               FAQs

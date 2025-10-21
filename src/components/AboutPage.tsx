@@ -57,7 +57,7 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
 
             {/* Main Heading */}
             <h1
-              className="mb-6 text-[48px] md:text-[64px] lg:text-[72px]"
+              className="mb-6 text-[40px] md:text-[48px]"
               style={{
                 fontWeight: 700,
                 lineHeight: 1.1,
@@ -94,7 +94,7 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
   <div className="max-w-[1280px] mx-auto px-6 md:px-16">
     {/* Centered Title */}
     <div className="text-center mb-12">
-      <h2 className="text-[32px] md:text-[48px]" style={{ fontWeight: 700, lineHeight: 1.2, color: '#265073' }}>
+      <h2 className="text-[32px] md:text-[40px]" style={{ fontWeight: 700, lineHeight: 1.2, color: '#265073' }}>
         How The Journey Started
       </h2>
     </div>
@@ -148,7 +148,7 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
           {/* Section Title */}
           <div className="text-center mb-16">
             <h2
-              className="text-[#2D3748] mb-6 text-[32px] md:text-[48px]"
+              className="text-[#2D3748] mb-6 text-[32px] md:text-[40px]"
               style={{ fontWeight: 700, lineHeight: 1.2 }}
             >
               Our Mission & Values
@@ -252,7 +252,7 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
           {/* Section Title */}
           <div className="text-center mb-16">
             <h2
-              className="text-[32px] md:text-[48px]"
+              className="text-[32px] md:text-[40px]"
               style={{
                 fontWeight: 700,
                 lineHeight: 1.2,
