@@ -3,6 +3,18 @@ import { Button } from '../../ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '../../ui/card';
 import { Badge } from '../../ui/badge';
 
+// Session pricing constants (15% member discount applied)
+const SESSION_PRICES = {
+  IN_HOME: {
+    regular: 85,
+    discounted: 72.25,
+  },
+  VIRTUAL: {
+    regular: 35,
+    discounted: 29.75,
+  },
+} as const;
+
 interface SessionDetailsProps {
   seniorName: string;
   onBack: () => void;
@@ -85,7 +97,7 @@ export function SessionDetails({ seniorName, onBack, onReschedule, onCancel }: S
               </Badge>
             ) : (
               <Badge style={{ background: '#FEF3C7', color: '#92400E' }}>
-                ADD-ON {sessionData.type === 'In-Home Visit' ? '$72.25' : '$29.75'}
+                ADD-ON ${sessionData.type === 'In-Home Visit' ? SESSION_PRICES.IN_HOME.discounted : SESSION_PRICES.VIRTUAL.discounted}
               </Badge>
             )}
             <h1 className="text-[36px] font-bold" style={{ color: '#265073' }}>

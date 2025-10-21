@@ -9,6 +9,9 @@ import { RadioGroup, RadioGroupItem } from '../../ui/radio-group';
 import { toast } from 'sonner';
 import { CaregiverBottomNav } from './CaregiverBottomNav';
 
+// Plan pricing
+const STANDARD_PLAN_PRICE = 79;
+
 interface CaregiverSettingsProps {
   onBack: () => void;
   onNavigate?: (view: string) => void;
@@ -16,6 +19,9 @@ interface CaregiverSettingsProps {
 
 export function CaregiverSettings({ onBack, onNavigate }: CaregiverSettingsProps) {
   const [paymentResponsibility, setPaymentResponsibility] = useState<'senior' | 'caregiver' | 'split'>('senior');
+
+  // Calculate split payment amount
+  const splitAmount = (STANDARD_PLAN_PRICE / 2).toFixed(2);
   return (
     <div className="min-h-screen pb-24 md:pb-8" style={{ background: '#F9FAFB' }}>
       <div className="max-w-4xl mx-auto p-4 sm:p-6 md:p-8">
@@ -168,11 +174,11 @@ export function CaregiverSettings({ onBack, onNavigate }: CaregiverSettingsProps
                   <div className="flex items-start gap-3 p-3 md:p-4 rounded-lg" style={{ background: '#E0F2FE' }}>
                     <p className="text-[14px] md:text-[16px] break-words" style={{ color: '#075985' }}>
                       <strong>Current setup:</strong> {
-                        paymentResponsibility === 'senior' 
-                          ? 'Mary pays $79/month' 
+                        paymentResponsibility === 'senior'
+                          ? `Mary pays $${STANDARD_PLAN_PRICE}/month`
                           : paymentResponsibility === 'caregiver'
-                          ? 'You pay $79/month'
-                          : 'You and Mary each pay $39.50/month'
+                          ? `You pay $${STANDARD_PLAN_PRICE}/month`
+                          : `You and Mary each pay $${splitAmount}/month`
                       }
                     </p>
                   </div>

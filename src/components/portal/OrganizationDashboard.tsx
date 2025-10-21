@@ -21,7 +21,7 @@ import { Button } from '../ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
 import { Badge } from '../ui/badge';
 import { Progress } from '../ui/progress';
-import { toast } from 'sonner@2.0.3';
+import { toast } from 'sonner';
 import logoNoTagline from 'figma:asset/b3896b1c25bf716df167396f2f85a96f4bc48a2a.png';
 
 type OrganizationView = 'dashboard' | 'workshops' | 'residents' | 'reports' | 'settings';
@@ -360,10 +360,10 @@ export function OrganizationDashboard({ currentView, onNavigate, onLogout }: Org
                         >
                           View Details
                         </Button>
-                        <Button 
-                          variant="outline" 
+                        <Button
+                          variant="outline"
                           size="sm"
-                          onClick={() => toast.info('Manage Attendees page coming soon!')}
+                          onClick={() => onNavigate('manage-attendees')}
                           className="flex-1 sm:flex-none text-[13px] md:text-[14px]"
                         >
                           Manage Attendees
@@ -443,11 +443,13 @@ export function OrganizationDashboard({ currentView, onNavigate, onLogout }: Org
             <CardContent>
               <div className="space-y-3 md:space-y-4">
                 {recentActivity.map((activity, index) => (
-                  <div 
+                  <div
                     key={index}
                     className="flex items-start gap-3 md:gap-4 p-3 md:p-4 rounded-lg cursor-pointer hover:bg-white transition-colors"
                     style={{ background: '#F9FAFB' }}
-                    onClick={() => toast.info('Activity details coming soon!')}
+                    onClick={() => toast.info(activity.activity, {
+                      description: `Activity on ${activity.date}`
+                    })}
                   >
                     <div 
                       className="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0"

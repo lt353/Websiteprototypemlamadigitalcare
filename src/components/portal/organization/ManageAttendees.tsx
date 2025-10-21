@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '../../ui/card';
 import { Input } from '../../ui/input';
 import { Checkbox } from '../../ui/checkbox';
 import { Badge } from '../../ui/badge';
-import { toast } from 'sonner@2.0.3';
+import { toast } from 'sonner';
 
 interface ManageAttendeesProps {
   workshopTitle?: string;
@@ -139,7 +139,13 @@ export function ManageAttendees({ workshopTitle = 'Scam Prevention Workshop', on
               </Button>
               <Button
                 variant="outline"
-                onClick={() => toast.info('Attendance tracking page coming soon!')}
+                onClick={() => {
+                  const enrolledResidents = allResidents.filter(r => selectedResidents.includes(r.id));
+                  const attendedCount = enrolledResidents.filter(r => r.attended).length;
+                  toast.success(`Attendance: ${attendedCount}/${enrolledResidents.length} attended`, {
+                    description: 'Navigate to Workshop Details to view full attendance records'
+                  });
+                }}
               >
                 <CheckCircle2 className="w-5 h-5 mr-2" />
                 Mark Attendance

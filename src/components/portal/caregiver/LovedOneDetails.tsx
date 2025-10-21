@@ -119,7 +119,7 @@ export function LovedOneDetails({ seniorName, onBack, onNavigateToBooking, onNav
       instructor: 'Tea Araki',
       topics: 'Two-Factor Authentication, Calendar App',
       location: '123 Main St, Kailua',
-      coverage: 'addon' // add-on (already used Oct in-home on Oct 13)
+      coverage: 'addon' // Add-on: Current month's in-home session already used
     },
     {
       id: 2,
@@ -132,7 +132,7 @@ export function LovedOneDetails({ seniorName, onBack, onNavigateToBooking, onNav
       instructor: 'Tea Araki',
       duration: '90 minutes',
       rating: 5,
-      coverage: 'included' // included (1 of 1 Oct in-home)
+      coverage: 'included' // Included: Current month's in-home session (track selected)
     },
     {
       id: 3,
@@ -145,7 +145,7 @@ export function LovedOneDetails({ seniorName, onBack, onNavigateToBooking, onNav
       instructor: 'Lindsay Trenton',
       duration: '60 minutes',
       rating: 5,
-      coverage: 'addon' // add-on (not the chosen track for Oct)
+      coverage: 'addon' // Add-on: Virtual not selected for current month's track
     },
     {
       id: 4,
@@ -158,7 +158,7 @@ export function LovedOneDetails({ seniorName, onBack, onNavigateToBooking, onNav
       instructor: 'DJ Sable',
       duration: '60 minutes',
       rating: 5,
-      coverage: 'included' // included (2 of 3 Sept virtual)
+      coverage: 'included' // Included: Previous month's virtual session (track selected)
     },
     {
       id: 5,
@@ -171,7 +171,7 @@ export function LovedOneDetails({ seniorName, onBack, onNavigateToBooking, onNav
       instructor: 'Tea Araki',
       duration: '90 minutes',
       rating: 5,
-      coverage: 'addon' // add-on (not the chosen track for Sept)
+      coverage: 'addon' // Add-on: In-home not selected for previous month's track
     },
     {
       id: 6,
@@ -184,7 +184,7 @@ export function LovedOneDetails({ seniorName, onBack, onNavigateToBooking, onNav
       instructor: 'Lindsay Trenton',
       duration: '60 minutes',
       rating: 4,
-      coverage: 'included' // included (1 of 3 Sept virtual)
+      coverage: 'included' // Included: Previous month's virtual session (track selected)
     }
   ];
 
