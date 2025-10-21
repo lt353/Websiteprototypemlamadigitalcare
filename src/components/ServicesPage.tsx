@@ -707,39 +707,39 @@ export function ServicesPage({ onNavigate }: ServicesPageProps) {
           <h2 className="text-white mb-8" style={{ fontSize: 'clamp(32px, 5vw, 42px)', fontWeight: 700, lineHeight: 1.3 }}>
             Ready to Feel Confident with Technology?
           </h2>
-          
+
           <div className="flex flex-col sm:flex-row gap-6 justify-center mb-6">
             <button
               onClick={() => onNavigate('contact')}
               onMouseEnter={(e) => {
-                e.currentTarget.style.background = '#9AD0C2';
-                e.currentTarget.style.color = '#265073';
-                e.currentTarget.style.boxShadow = '0 8px 20px rgba(154, 208, 194, 0.7)';
+                e.currentTarget.style.background = '#257D7E';
+                e.currentTarget.style.color = '#FFFFFF';
+                e.currentTarget.style.boxShadow = '0 8px 20px rgba(45, 149, 150, 0.4)';
+                e.currentTarget.style.transform = 'translateY(-2px)';
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.background = '#FFFFFF';
-                e.currentTarget.style.color = '#2D9596';
+                e.currentTarget.style.background = '#2D9596';
+                e.currentTarget.style.color = '#FFFFFF';
                 e.currentTarget.style.boxShadow = 'none';
+                e.currentTarget.style.transform = 'translateY(0)';
               }}
-              className="min-h-[64px] px-12 transition-all rounded-md inline-flex items-center justify-center"
-              style={{ fontSize: '20px', fontWeight: 700, background: '#FFFFFF', color: '#2D9596', border: 'none', cursor: 'pointer' }}
+              className="min-h-[64px] px-12 transition-all rounded-md inline-flex items-center justify-center active:scale-95"
+              style={{ fontSize: '20px', fontWeight: 700, background: '#2D9596', color: '#FFFFFF', border: 'none', cursor: 'pointer' }}
             >
               Get Started
             </button>
             <button
               onClick={() => onNavigate('contact')}
               onMouseEnter={(e) => {
-                e.currentTarget.style.background = '#265073';
-                e.currentTarget.style.color = '#FFFFFF';
-                e.currentTarget.style.boxShadow = '0 8px 20px rgba(38, 80, 115, 0.7)';
+                e.currentTarget.style.background = '#F0FDFA';
+                e.currentTarget.style.transform = 'translateY(-2px)';
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.background = '#FFFFFF';
-                e.currentTarget.style.color = '#2D9596';
-                e.currentTarget.style.boxShadow = 'none';
+                e.currentTarget.style.transform = 'translateY(0)';
               }}
-              className="min-h-[64px] px-12 transition-all rounded-md inline-flex items-center justify-center gap-2"
-              style={{ fontSize: '20px', fontWeight: 700, background: '#FFFFFF', color: '#2D9596', border: 'none', cursor: 'pointer' }}
+              className="min-h-[64px] px-12 transition-all rounded-md inline-flex items-center justify-center gap-2 active:scale-95 border-2"
+              style={{ fontSize: '20px', fontWeight: 700, background: '#FFFFFF', color: '#2D9596', borderColor: '#2D9596', cursor: 'pointer' }}
             >
               <Phone className="w-6 h-6" />
               Call Us: (808) 555-1234

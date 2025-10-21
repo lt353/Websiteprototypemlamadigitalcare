@@ -448,16 +448,16 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
             <button
               onClick={() => onNavigate("careers")}
               onMouseEnter={(e) => {
-                e.currentTarget.style.background = '#1F6B6C';
-                e.currentTarget.style.boxShadow = '0 8px 20px rgba(45, 149, 150, 0.7), 0 4px 8px rgba(45, 149, 150, 0.4)';
-                e.currentTarget.style.filter = 'brightness(1.15)';
+                e.currentTarget.style.background = '#257D7E';
+                e.currentTarget.style.boxShadow = '0 8px 20px rgba(45, 149, 150, 0.4)';
+                e.currentTarget.style.transform = 'translateY(-2px)';
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.background = '#2D9596';
                 e.currentTarget.style.boxShadow = 'none';
-                e.currentTarget.style.filter = 'brightness(1)';
+                e.currentTarget.style.transform = 'translateY(0)';
               }}
-              className="text-white transition-all"
+              className="text-white transition-all active:scale-95"
               style={{
                 fontSize: "18px",
                 padding: "14px 32px",

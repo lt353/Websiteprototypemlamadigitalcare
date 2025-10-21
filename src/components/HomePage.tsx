@@ -44,16 +44,16 @@ export function HomePage({ onNavigate }: HomePageProps) {
               <button
                 onClick={() => onNavigate("register")}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.background = '#1F6B6C';
-                  e.currentTarget.style.boxShadow = '0 8px 20px rgba(45, 149, 150, 0.7), 0 4px 8px rgba(45, 149, 150, 0.4)';
-                  e.currentTarget.style.filter = 'brightness(1.15)';
+                  e.currentTarget.style.background = '#257D7E';
+                  e.currentTarget.style.boxShadow = '0 8px 20px rgba(45, 149, 150, 0.4)';
+                  e.currentTarget.style.transform = 'translateY(-2px)';
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.style.background = '#2D9596';
                   e.currentTarget.style.boxShadow = 'none';
-                  e.currentTarget.style.filter = 'brightness(1)';
+                  e.currentTarget.style.transform = 'translateY(0)';
                 }}
-                className="text-white transition-all flex-shrink-0 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-offset-2"
+                className="text-white transition-all flex-shrink-0 active:scale-95 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-offset-2"
                 style={{
                   fontSize: "18px",
                   fontWeight: 600,
@@ -70,6 +70,14 @@ export function HomePage({ onNavigate }: HomePageProps) {
               </button>
               <button
                 onClick={() => onNavigate("contact")}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = '#F0FDFA';
+                  e.currentTarget.style.transform = 'translateY(-2px)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = '#FFFFFF';
+                  e.currentTarget.style.transform = 'translateY(0)';
+                }}
                 className="border-2 transition-all flex-shrink-0 active:scale-95 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-offset-2"
                 style={{
                   fontSize: "18px",
@@ -85,8 +93,6 @@ export function HomePage({ onNavigate }: HomePageProps) {
                   background: "#FFFFFF",
                   outlineColor: "#265073",
                 }}
-                onMouseEnter={(e) => e.currentTarget.style.background = "#E0F2F1"}
-                onMouseLeave={(e) => e.currentTarget.style.background = "#FFFFFF"}
               >
                 Free Consultation
               </button>
@@ -871,16 +877,16 @@ export function HomePage({ onNavigate }: HomePageProps) {
               <button
                 onClick={() => onNavigate("services")}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.background = '#1F6B6C';
-                  e.currentTarget.style.boxShadow = '0 8px 20px rgba(45, 149, 150, 0.7), 0 4px 8px rgba(45, 149, 150, 0.4)';
-                  e.currentTarget.style.filter = 'brightness(1.15)';
+                  e.currentTarget.style.background = '#257D7E';
+                  e.currentTarget.style.boxShadow = '0 8px 20px rgba(45, 149, 150, 0.4)';
+                  e.currentTarget.style.transform = 'translateY(-2px)';
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.style.background = '#2D9596';
                   e.currentTarget.style.boxShadow = 'none';
-                  e.currentTarget.style.filter = 'brightness(1)';
+                  e.currentTarget.style.transform = 'translateY(0)';
                 }}
-                className="text-white transition-all"
+                className="text-white transition-all active:scale-95"
                 style={{
                   fontSize: "18px",
                   padding: "14px 32px",
@@ -894,6 +900,14 @@ export function HomePage({ onNavigate }: HomePageProps) {
               </button>
               <button
                 onClick={() => onNavigate("contact")}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = '#F0FDFA';
+                  e.currentTarget.style.transform = 'translateY(-2px)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = '#FFFFFF';
+                  e.currentTarget.style.transform = 'translateY(0)';
+                }}
                 className="border-2 transition-all flex items-center gap-2 active:scale-95"
                 style={{
                   fontSize: "18px",
@@ -905,8 +919,6 @@ export function HomePage({ onNavigate }: HomePageProps) {
                   borderRadius: "8px",
                   background: "#FFFFFF",
                 }}
-                onMouseEnter={(e) => e.currentTarget.style.background = "#E0F2F1"}
-                onMouseLeave={(e) => e.currentTarget.style.background = "#FFFFFF"}
               >
                 Contact us <ArrowRight className="w-4 h-4" />
               </button>
