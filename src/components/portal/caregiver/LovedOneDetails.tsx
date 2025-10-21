@@ -119,7 +119,7 @@ export function LovedOneDetails({ seniorName, onBack, onNavigateToBooking, onNav
       instructor: 'Tea Araki',
       topics: 'Two-Factor Authentication, Calendar App',
       location: '123 Main St, Kailua',
-      coverage: 'included' // included in plan
+      coverage: 'addon' // add-on (already used Oct in-home on Oct 13)
     },
     {
       id: 2,
@@ -132,7 +132,7 @@ export function LovedOneDetails({ seniorName, onBack, onNavigateToBooking, onNav
       instructor: 'Tea Araki',
       duration: '90 minutes',
       rating: 5,
-      coverage: 'included'
+      coverage: 'included' // included (1 of 1 Oct in-home)
     },
     {
       id: 3,
@@ -145,7 +145,7 @@ export function LovedOneDetails({ seniorName, onBack, onNavigateToBooking, onNav
       instructor: 'Lindsay Trenton',
       duration: '60 minutes',
       rating: 5,
-      coverage: 'included'
+      coverage: 'addon' // add-on (not the chosen track for Oct)
     },
     {
       id: 4,
@@ -158,7 +158,7 @@ export function LovedOneDetails({ seniorName, onBack, onNavigateToBooking, onNav
       instructor: 'DJ Sable',
       duration: '60 minutes',
       rating: 5,
-      coverage: 'included'
+      coverage: 'included' // included (2 of 3 Sept virtual)
     },
     {
       id: 5,
@@ -171,7 +171,7 @@ export function LovedOneDetails({ seniorName, onBack, onNavigateToBooking, onNav
       instructor: 'Tea Araki',
       duration: '90 minutes',
       rating: 5,
-      coverage: 'addon' // this was an add-on session
+      coverage: 'addon' // add-on (not the chosen track for Sept)
     },
     {
       id: 6,
@@ -184,7 +184,7 @@ export function LovedOneDetails({ seniorName, onBack, onNavigateToBooking, onNav
       instructor: 'Lindsay Trenton',
       duration: '60 minutes',
       rating: 4,
-      coverage: 'included'
+      coverage: 'included' // included (1 of 3 Sept virtual)
     }
   ];
 
