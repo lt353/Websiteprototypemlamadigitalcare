@@ -17,8 +17,10 @@ export function SessionSummary({ seniorName, onBack, onWatchRecording, onDownloa
     date: 'November 15, 2025',
     time: '2:00 PM - 3:30 PM',
     duration: '90 minutes',
+    type: 'In-Home Visit',
     instructor: 'Tea Araki',
     rating: 5,
+    coverage: 'included', // This was part of the plan
     topics: [
       {
         title: 'Password Management',
@@ -102,8 +104,17 @@ export function SessionSummary({ seniorName, onBack, onWatchRecording, onDownloa
 
         {/* Header */}
         <div className="mb-8">
-          <div className="flex items-center gap-3 mb-3">
+          <div className="flex items-center gap-3 mb-3 flex-wrap">
             <Badge style={{ background: '#D1FAE5', color: '#065F46' }}>Completed</Badge>
+            {sessionData.coverage === 'included' ? (
+              <Badge style={{ background: '#DBEAFE', color: '#1E40AF' }}>
+                PLAN SESSION
+              </Badge>
+            ) : (
+              <Badge style={{ background: '#FEF3C7', color: '#92400E' }}>
+                ADD-ON {sessionData.type === 'In-Home Visit' ? '$72.25' : '$29.75'}
+              </Badge>
+            )}
             <h1 className="text-[36px] font-bold" style={{ color: '#265073' }}>
               Session Summary
             </h1>

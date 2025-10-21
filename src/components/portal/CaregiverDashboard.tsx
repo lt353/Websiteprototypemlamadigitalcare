@@ -56,24 +56,14 @@ export function CaregiverDashboard({ currentView, onNavigate, onLogout }: Caregi
       status: 'active',
       progress: 'Making great progress with email',
       upcomingTopics: 'Two-Factor Authentication, Calendar App'
-    },
-    {
-      id: 2,
-      name: 'Robert Johnson',
-      relationship: 'Father',
-      nextSession: getDynamicDateTime(9, '10:00 AM'),
-      lastSession: getDynamicDate(-1),
-      status: 'active',
-      progress: 'Comfortable with video calls now',
-      upcomingTopics: 'Online Banking Security'
     }
   ];
 
   const recentActivity = [
-    { date: getDynamicDate(-1), senior: 'Robert Johnson', activity: 'Completed virtual session on video calling', type: 'success' },
     { date: getDynamicDate(-7), senior: 'Mary Johnson', activity: 'Completed in-home session on email management', type: 'success' },
     { date: getDynamicDate(-11), senior: 'Mary Johnson', activity: 'Passed scam awareness quiz with 100%', type: 'success' },
-    { date: getDynamicDate(-16), senior: 'Robert Johnson', activity: `Session rescheduled to ${getDynamicDate(9)}`, type: 'info' }
+    { date: getDynamicDate(-14), senior: 'Mary Johnson', activity: 'Completed virtual session (add-on)', type: 'success' },
+    { date: getDynamicDate(-21), senior: 'Mary Johnson', activity: 'Completed virtual session on video calling', type: 'success' }
   ];
 
   const navigationItems = [
