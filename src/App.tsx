@@ -73,6 +73,13 @@ export default function App() {
     return () => window.removeEventListener('hashchange', handleHashChange);
   }, []);
 
+  // Scroll to top when portal view changes (for pages not wrapped in KupunaPortalLayout)
+  useEffect(() => {
+    if (isLoggedIn && currentPage === 'portal') {
+      window.scrollTo(0, 0);
+    }
+  }, [portalView]);
+
   const handleNavigate = (page: Page) => {
     setCurrentPage(page);
     window.location.hash = page;
