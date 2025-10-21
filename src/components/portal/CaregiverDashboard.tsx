@@ -119,13 +119,13 @@ export function CaregiverDashboard({ currentView, onNavigate, onLogout }: Caregi
               
               <button
                 onClick={onLogout}
-                className="flex-1 flex items-center justify-center gap-1 lg:gap-2 px-2 lg:px-3 py-2 rounded-lg transition-all text-[12px] lg:text-[14px]"
-                style={{ 
+                className="flex-1 flex items-center justify-center gap-2 md:gap-3 px-3 md:px-4 py-2.5 md:py-3 rounded-lg transition-all text-[14px] md:text-[15px] font-medium"
+                style={{
                   background: 'rgba(255,255,255,0.1)',
                   color: 'rgba(255,255,255,0.9)'
                 }}
               >
-                <LogOut className="w-4 h-4 flex-shrink-0" />
+                <LogOut className="w-5 h-5 flex-shrink-0" />
                 <span className="hidden sm:inline">Logout</span>
               </button>
             </div>
