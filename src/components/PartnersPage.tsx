@@ -19,7 +19,7 @@ export function PartnersPage({ onNavigate }: PartnersPageProps) {
       {/* Hero Section */}
       <section className="py-20 px-6" style={{
           background:
-            "linear-gradient(135deg, #F1FADA 0%, #FFFFFF 100%)",
+            "linear-gradient(135deg, #B8E6E3 0%, #FFFFFF 100%)",
         }}>
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="text-[48px] font-bold mb-6" style={{ color: '#265073' }}>
@@ -413,7 +413,7 @@ export function PartnersPage({ onNavigate }: PartnersPageProps) {
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 px-6" style={{ background: '#F1FADA' }}>
+      <section className="py-16 px-6" style={{ background: '#B8E6E3' }}>
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-[36px] font-bold mb-6" style={{ color: '#265073' }}>
             Interested in Partnering?

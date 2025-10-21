@@ -70,9 +70,9 @@ export function ContactPage({ onNavigate }: ContactPageProps) {
   return (
     <div className="bg-white">
       {/* Hero Section */}
-      <section className="bg-white py-20 md:py-24"style={{
+      <section className="bg-white py-12 md:py-16"style={{
           background:
-            "linear-gradient(135deg, #F1FADA 0%, #FFFFFF 100%)",
+            "linear-gradient(135deg, #B8E6E3 0%, #FFFFFF 100%)",
         }}>
         <div className="max-w-[1280px] mx-auto px-6 md:px-16 text-center">
           <h1

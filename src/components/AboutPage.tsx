@@ -21,10 +21,10 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
     <div className="bg-white">
       {/* Hero Section */}
       <section
-        className="relative overflow-hidden py-20 md:py-32"
+        className="relative overflow-hidden py-16 md:py-20"
         style={{
           background:
-            "linear-gradient(135deg, #F1FADA 0%, #FFFFFF 100%)",
+            "linear-gradient(135deg, #B8E6E3 0%, #FFFFFF 100%)",
         }}
       >
         {/* Decorative Elements */}
@@ -269,7 +269,7 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
             <div className="flex flex-col items-center text-center">
               <div
                 className="w-40 h-40 rounded-full mb-6 overflow-hidden flex-shrink-0"
-                style={{ background: "#F1FADA" }}
+                style={{ background: "#B8E6E3" }}
               >
                 <img
                   src={teaPhoto}
@@ -316,7 +316,7 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
             <div className="flex flex-col items-center text-center">
               <div
                 className="w-40 h-40 rounded-full mb-6 overflow-hidden flex-shrink-0"
-                style={{ background: "#F1FADA" }}
+                style={{ background: "#B8E6E3" }}
               >
                 <img
                   src={lindsayPhoto}
@@ -363,7 +363,7 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
             <div className="flex flex-col items-center text-center">
               <div
                 className="w-40 h-40 rounded-full mb-6 overflow-hidden flex-shrink-0"
-                style={{ background: "#F1FADA" }}
+                style={{ background: "#B8E6E3" }}
               >
                 <img
                   src={djPhoto}

@@ -23,7 +23,7 @@ export function CareersPage({ onNavigate }: CareersPageProps) {
         className="py-20 px-6"
         style={{
           background:
-            "linear-gradient(135deg, #F1FADA 0%, #FFFFFF 100%)",
+            "linear-gradient(135deg, #B8E6E3 0%, #FFFFFF 100%)",
         }}
       >
         <div className="max-w-4xl mx-auto text-center">
@@ -177,7 +177,7 @@ export function CareersPage({ onNavigate }: CareersPageProps) {
       {/* Open Position */}
       <section
         className="py-16 px-6"
-        style={{ background: "#F1FADA" }}
+        style={{ background: "#B8E6E3" }}
       >
         <div className="max-w-5xl mx-auto">
           <h2
@@ -404,7 +404,7 @@ export function CareersPage({ onNavigate }: CareersPageProps) {
               <div
                 key={idx}
                 className="rounded-xl p-6 flex flex-col"
-                style={{ background: "#F1FADA" }}
+                style={{ background: "#B8E6E3" }}
               >
                 <p
                   className="text-[18px] mb-4 italic flex-grow"
@@ -534,14 +534,14 @@ export function CareersPage({ onNavigate }: CareersPageProps) {
           </h2>
           <p
             className="text-[20px] mb-4"
-            style={{ color: "#F1FADA" }}
+            style={{ color: "#B8E6E3" }}
           >
             Send us your resume and a brief note (or video!)
             telling us:
           </p>
           <ul
             className="text-[18px] mb-8 text-left max-w-2xl mx-auto space-y-2"
-            style={{ color: "#F1FADA" }}
+            style={{ color: "#B8E6E3" }}
           >
             <li>
               • Why you want to help kūpuna with technology
@@ -582,7 +582,7 @@ export function CareersPage({ onNavigate }: CareersPageProps) {
                 (window.location.href = "tel:8085551234")
               }
               onMouseEnter={(e) => {
-                e.currentTarget.style.background = '#F1FADA';
+                e.currentTarget.style.background = '#B8E6E3';
                 e.currentTarget.style.color = '#265073';
                 e.currentTarget.style.boxShadow = '0 8px 20px rgba(241, 250, 218, 0.8)';
               }}
@@ -605,7 +605,7 @@ export function CareersPage({ onNavigate }: CareersPageProps) {
           </div>
           <p
             className="text-[16px] mt-6"
-            style={{ color: "#F1FADA" }}
+            style={{ color: "#B8E6E3" }}
           >
             We review applications on a rolling basis and
             respond to everyone who applies (usually within 3-5

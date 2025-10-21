@@ -22,10 +22,10 @@ export function ServicesPage({ onNavigate }: ServicesPageProps) {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative overflow-hidden py-20 md:py-32"
+      <section className="relative overflow-hidden py-16 md:py-20"
         style={{
           background:
-            "linear-gradient(135deg, #F1FADA 0%, #FFFFFF 100%)",
+            "linear-gradient(135deg, #B8E6E3 0%, #FFFFFF 100%)",
         }}>
         <div className="max-w-[1280px] mx-auto px-6 md:px-16">
           <div className="max-w-4xl mx-auto text-center">
@@ -732,7 +732,7 @@ export function ServicesPage({ onNavigate }: ServicesPageProps) {
               onClick={() => onNavigate('contact')}
               onMouseEnter={(e) => {
                 e.currentTarget.style.background = '#265073';
-                e.currentTarget.style.color = '#F1FADA';
+                e.currentTarget.style.color = '#FFFFFF';
                 e.currentTarget.style.boxShadow = '0 8px 20px rgba(38, 80, 115, 0.7)';
               }}
               onMouseLeave={(e) => {

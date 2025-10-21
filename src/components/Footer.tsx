@@ -35,7 +35,7 @@ export function Footer({ onNavigate }: FooterProps) {
 
           {/* Quick Links */}
           <div>
-            <h3 className="mb-6" style={{ fontSize: '18px', fontWeight: 700, color: '#F1FADA' }}>
+            <h3 className="mb-6" style={{ fontSize: '18px', fontWeight: 700, color: '#B8E6E3' }}>
               Quick Links
             </h3>
             <ul className="space-y-3">
@@ -107,7 +107,7 @@ export function Footer({ onNavigate }: FooterProps) {
 
           {/* Contact Info */}
           <div>
-            <h3 className="mb-6" style={{ fontSize: '18px', fontWeight: 700, color: '#F1FADA' }}>
+            <h3 className="mb-6" style={{ fontSize: '18px', fontWeight: 700, color: '#B8E6E3' }}>
               Get In Touch
             </h3>
             <ul className="space-y-4">

@@ -106,7 +106,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
       </section>
 
       {/* Stats Section - "The Digital Divide in Hawaii" */}
-      <section className="bg-white py-20 md:py-24">
+      <section className="bg-white py-12 md:py-16">
         <div className="max-w-[1280px] mx-auto px-6 md:px-16">
           <div className="flex flex-col gap-16">
             {/* Section Title */}
@@ -251,7 +251,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
       </section>
 
       {/* Pain Points Section - "You're Not Alone" */}
-      <section className="bg-white py-20 md:py-24">
+      <section className="bg-white py-12 md:py-16">
         <div className="max-w-[1280px] mx-auto px-6 md:px-16">
           <div className="flex flex-col gap-16">
             {/* Section Title */}
@@ -405,7 +405,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
       </section>
 
       {/* Testimonial Section */}
-      <section className="bg-[#F1FADA] py-20 md:py-24">
+      <section className="bg-[#B8E6E3] py-12 md:py-16">
         <div className="max-w-[1280px] mx-auto px-6 md:px-16">
           <div className="flex flex-col gap-12">
             <div className="flex flex-col items-center gap-10">
@@ -432,7 +432,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
                 <div className="rounded-full overflow-hidden bg-gray-200 w-20 h-20 shadow-lg">
                   <ImageWithFallback
                     src="https://images.unsplash.com/photo-1660794124904-c85540c9be87?w=200"
-                    alt="Michele Blair"
+                    alt="Michelle Blair"
                     className="w-full h-full object-cover"
                   />
                 </div>
@@ -445,7 +445,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
                       color: "#265073",
                     }}
                   >
-                    Michele Blair, 78
+                    Michelle Blair, 78
                   </p>
                   <p
                     className="text-[16px]"
@@ -487,7 +487,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
       </section>
 
       {/* What Makes Us Different Section */}
-      <section className="bg-white py-20 md:py-24">
+      <section className="bg-white py-12 md:py-16">
         <div className="max-w-[1280px] mx-auto px-6 md:px-16">
           <div className="flex flex-col gap-16">
             {/* Section Title */}
@@ -712,7 +712,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
       </section>
 
       {/* Getting Started is Easy Section */}
-      <section className="bg-[#F1FADA] py-20 md:py-24">
+      <section className="bg-[#B8E6E3] py-12 md:py-16">
         <div className="max-w-[1280px] mx-auto px-6 md:px-16">
           <div className="flex flex-col gap-16">
             {/* Section Title */}

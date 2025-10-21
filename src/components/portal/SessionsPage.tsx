@@ -88,7 +88,7 @@ export function SessionsPage({ onBack, onNavigateToBooking, onRescheduleSuccess,
   const upcomingLongDate = formatLongDate(upcomingDate);
 
   // Realistic 2-month timeline for Standard plan (1 in-person OR 3 virtual per month)
-  // Michele has been adding extra sessions, showing value and justifying Premium consideration
+  // Michelle has been adding extra sessions, showing value and justifying Premium consideration
   const completedSessions = [
     {
       id: 1,
@@ -100,7 +100,7 @@ export function SessionsPage({ onBack, onNavigateToBooking, onRescheduleSuccess,
       topics: 'Email Organization, Spam Filters',
       rating: 5,
       isPlanSession: true, // Part of plan (October virtual track - 1 of 3)
-      notes: 'Helped Michele set up email folders and filters to better manage her inbox. Reviewed her spam folder settings and practiced identifying suspicious emails. She\'s much more organized now!'
+      notes: 'Helped Michelle set up email folders and filters to better manage her inbox. Reviewed her spam folder settings and practiced identifying suspicious emails. She\'s much more organized now!'
     },
     {
       id: 2,
@@ -114,7 +114,7 @@ export function SessionsPage({ onBack, onNavigateToBooking, onRescheduleSuccess,
       isPlanSession: false, // Add-on (already used Sept in-home on Sept 8)
       price: 72.25, // 15% discount applied ($85 → $72.25)
       originalPrice: 85,
-      notes: 'Helped Michele organize her photo library into albums by family members and events. Set up iCloud Photo sharing with her daughter in California so they can easily share family photos back and forth.'
+      notes: 'Helped Michelle organize her photo library into albums by family members and events. Set up iCloud Photo sharing with her daughter in California so they can easily share family photos back and forth.'
     },
     {
       id: 3,
@@ -128,7 +128,7 @@ export function SessionsPage({ onBack, onNavigateToBooking, onRescheduleSuccess,
       isPlanSession: false, // Add-on
       price: 29.75, // 15% discount applied ($35 → $29.75)
       originalPrice: 35,
-      notes: 'Walked through joining Zoom meetings, using mute/unmute, turning camera on/off, and screen sharing basics. Michele can now confidently join her book club\'s virtual meetings each week.'
+      notes: 'Walked through joining Zoom meetings, using mute/unmute, turning camera on/off, and screen sharing basics. Michelle can now confidently join her book club\'s virtual meetings each week.'
     },
     {
       id: 4,
@@ -140,7 +140,7 @@ export function SessionsPage({ onBack, onNavigateToBooking, onRescheduleSuccess,
       topics: 'iPhone Basics, Essential Apps',
       rating: 5,
       isPlanSession: true, // Part of plan (Month 1)
-      notes: 'First regular session after Michele signed up! Covered iPhone navigation, Siri basics, adjusting settings for comfortable text size. Went through her most-used apps and organized her home screen logically.'
+      notes: 'First regular session after Michelle signed up! Covered iPhone navigation, Siri basics, adjusting settings for comfortable text size. Went through her most-used apps and organized her home screen logically.'
     },
     {
       id: 5,
@@ -156,7 +156,7 @@ export function SessionsPage({ onBack, onNavigateToBooking, onRescheduleSuccess,
       originalPrice: 85,
       discountedPrice: 68,
       discountPercent: 20,
-      notes: 'First meeting with Michele! Got to know her tech goals and concerns. Assessed her comfort level with iPhone and computer. Created a personalized learning plan focusing on: staying safe from scams, communicating with family, and organizing photos. Michele signed up for our Standard plan after this session!'
+      notes: 'First meeting with Michelle! Got to know her tech goals and concerns. Assessed her comfort level with iPhone and computer. Created a personalized learning plan focusing on: staying safe from scams, communicating with family, and organizing photos. Michelle signed up for our Standard plan after this session!'
     }
   ];
 

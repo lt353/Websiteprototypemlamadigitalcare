@@ -36,9 +36,9 @@ export function Header({ currentPage, onNavigate }: HeaderProps) {
           <button
             onClick={() => handleNavigate('home')}
             className={`transition-colors ${
-              currentPage === 'home' 
-                ? 'text-[#4DB8A8] border-b-[3px] border-[#4DB8A8]' 
-                : 'text-[#2D3748] hover:text-[#4DB8A8]'
+              currentPage === 'home'
+                ? 'text-[#2D9596] border-b-[3px] border-[#2D9596]'
+                : 'text-[#2D3748] hover:text-[#2D9596]'
             }`}
             style={{ fontSize: '17px', fontWeight: 600, paddingBottom: '4px' }}
           >
@@ -47,9 +47,9 @@ export function Header({ currentPage, onNavigate }: HeaderProps) {
           <button
             onClick={() => handleNavigate('services')}
             className={`transition-colors ${
-              currentPage === 'services' 
-                ? 'text-[#4DB8A8] border-b-[3px] border-[#4DB8A8]' 
-                : 'text-[#2D3748] hover:text-[#4DB8A8]'
+              currentPage === 'services'
+                ? 'text-[#2D9596] border-b-[3px] border-[#2D9596]'
+                : 'text-[#2D3748] hover:text-[#2D9596]'
             }`}
             style={{ fontSize: '17px', fontWeight: 600, paddingBottom: '4px' }}
           >
@@ -58,9 +58,9 @@ export function Header({ currentPage, onNavigate }: HeaderProps) {
           <button
             onClick={() => handleNavigate('about')}
             className={`transition-colors ${
-              currentPage === 'about' 
-                ? 'text-[#4DB8A8] border-b-[3px] border-[#4DB8A8]' 
-                : 'text-[#2D3748] hover:text-[#4DB8A8]'
+              currentPage === 'about'
+                ? 'text-[#2D9596] border-b-[3px] border-[#2D9596]'
+                : 'text-[#2D3748] hover:text-[#2D9596]'
             }`}
             style={{ fontSize: '17px', fontWeight: 600, paddingBottom: '4px' }}
           >
@@ -69,9 +69,9 @@ export function Header({ currentPage, onNavigate }: HeaderProps) {
           <button
             onClick={() => handleNavigate('contact')}
             className={`transition-colors ${
-              currentPage === 'contact' 
-                ? 'text-[#4DB8A8] border-b-[3px] border-[#4DB8A8]' 
-                : 'text-[#2D3748] hover:text-[#4DB8A8]'
+              currentPage === 'contact'
+                ? 'text-[#2D9596] border-b-[3px] border-[#2D9596]'
+                : 'text-[#2D3748] hover:text-[#2D9596]'
             }`}
             style={{ fontSize: '17px', fontWeight: 600, paddingBottom: '4px' }}
           >
@@ -82,7 +82,7 @@ export function Header({ currentPage, onNavigate }: HeaderProps) {
           <div className="relative">
             <button
               onClick={() => setIsMoreDropdownOpen(!isMoreDropdownOpen)}
-              className="flex items-center gap-1 text-[#2D3748] hover:text-[#4DB8A8] transition-colors"
+              className="flex items-center gap-1 text-[#2D3748] hover:text-[#2D9596] transition-colors"
               style={{ fontSize: '17px', fontWeight: 600 }}
             >
               More
@@ -101,21 +101,21 @@ export function Header({ currentPage, onNavigate }: HeaderProps) {
                 >
                   <button
                     onClick={() => handleNavigate('workshops')}
-                    className="w-full text-left px-6 py-4 text-[#2D3748] hover:bg-[#4DB8A8]/10 transition-colors rounded-t-lg"
+                    className="w-full text-left px-6 py-4 text-[#2D3748] hover:bg-[#2D9596]/10 transition-colors rounded-t-lg"
                     style={{ fontSize: '16px' }}
                   >
                     Workshops & Classes
                   </button>
                   <button
                     onClick={() => handleNavigate('partners')}
-                    className="w-full text-left px-6 py-4 text-[#2D3748] hover:bg-[#4DB8A8]/10 transition-colors"
+                    className="w-full text-left px-6 py-4 text-[#2D3748] hover:bg-[#2D9596]/10 transition-colors"
                     style={{ fontSize: '16px' }}
                   >
                     Partners
                   </button>
                   <button
                     onClick={() => handleNavigate('careers')}
-                    className="w-full text-left px-6 py-4 text-[#2D3748] hover:bg-[#4DB8A8]/10 transition-colors rounded-b-lg"
+                    className="w-full text-left px-6 py-4 text-[#2D3748] hover:bg-[#2D9596]/10 transition-colors rounded-b-lg"
                     style={{ fontSize: '16px' }}
                   >
                     Careers
