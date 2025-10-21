@@ -33,6 +33,7 @@ interface OrganizationRouterProps {
 export function OrganizationRouter({ onLogout }: OrganizationRouterProps) {
   const [currentView, setCurrentView] = useState<OrgView>('dashboard');
   const [workshopData, setWorkshopData] = useState<any>(null);
+  const [selectedResidentName, setSelectedResidentName] = useState<string>('Mary Johnson');
 
   const handleNavigate = (view: string) => {
     setCurrentView(view as OrgView);
@@ -84,7 +85,10 @@ export function OrganizationRouter({ onLogout }: OrganizationRouterProps) {
       return (
         <ResidentProgress
           onBack={handleBackToDashboard}
-          onNavigateToResident={() => setCurrentView('resident-profile')}
+          onNavigateToResident={(name) => {
+            setSelectedResidentName(name);
+            setCurrentView('resident-profile');
+          }}
         />
       );
 
@@ -106,6 +110,7 @@ export function OrganizationRouter({ onLogout }: OrganizationRouterProps) {
     case 'resident-profile':
       return (
         <ResidentProfile
+          residentName={selectedResidentName}
           onBack={() => setCurrentView('residents')}
         />
       );
