@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import { Shield, MessageCircle, Calendar, BookOpen, Phone, CheckCircle, ChevronRight, Video, Edit3, AlertCircle } from 'lucide-react';
+import { Shield, MessageCircle, Calendar, BookOpen, Phone, CheckCircle, ChevronRight, Video, Edit3 } from 'lucide-react';
 import { KupunaPortalLayout } from './KupunaPortalLayout';
 import { ReadAloudButton } from './ReadAloudButton';
 
@@ -34,10 +33,8 @@ const getDaysUntilText = (daysFromNow: number) => {
 };
 
 export function CustomerDashboard({ currentView, onNavigate, onLogout }: CustomerDashboardProps) {
-  const [showCancelDialog, setShowCancelDialog] = useState(false);
-
   const user = {
-    name: 'Michelle'
+    name: 'Michele'
   };
 
   // Dynamic upcoming session - 2 days from today
@@ -179,9 +176,14 @@ export function CustomerDashboard({ currentView, onNavigate, onLogout }: Custome
               Reschedule
             </button>
             <button
-              onClick={() => setShowCancelDialog(true)}
+              onClick={() => {
+                // Handle cancel action
+                if (confirm('Are you sure you want to cancel this session?')) {
+                  onNavigate('sessions');
+                }
+              }}
               className="flex-1 px-6 py-3 rounded-lg transition-all border-2 flex items-center justify-center gap-2"
-              style={{
+              style={{ 
                 background: '#FFFFFF',
                 color: '#DC2626',
                 borderColor: '#DC2626',
@@ -400,7 +402,7 @@ export function CustomerDashboard({ currentView, onNavigate, onLogout }: Custome
           </div>
         </div>
 
-        {/* ACHIEVEMENTS SECTION - Updated for Michelle's 2-month journey */}
+        {/* ACHIEVEMENTS SECTION - Updated for Michele's 2-month journey */}
         <div 
           className="rounded-2xl p-6 md:p-8 border-2"
           style={{ 
@@ -473,87 +475,6 @@ export function CustomerDashboard({ currentView, onNavigate, onLogout }: Custome
           </p>
         </div>
       </div>
-
-      {/* CANCEL SESSION CONFIRMATION DIALOG */}
-      {showCancelDialog && (
-        <>
-          <div
-            className="fixed inset-0 z-50"
-            style={{ background: 'rgba(0,0,0,0.5)' }}
-            onClick={() => setShowCancelDialog(false)}
-          />
-          <div
-            className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 rounded-2xl border-4 shadow-2xl w-full max-w-md mx-4"
-            style={{ background: '#FFFFFF', borderColor: '#F59E0B' }}
-          >
-            <div className="p-8">
-              <div className="flex items-center gap-4 mb-6">
-                <div
-                  className="w-16 h-16 rounded-xl flex items-center justify-center"
-                  style={{ background: '#FEF3C7' }}
-                >
-                  <AlertCircle className="w-8 h-8" style={{ color: '#F59E0B' }} />
-                </div>
-                <div>
-                  <h3 style={{ color: '#265073', fontSize: '28px', lineHeight: '1.2' }}>
-                    Cancel Session?
-                  </h3>
-                  <p style={{ fontSize: '18px', color: '#6B7280', marginTop: '4px' }}>
-                    Are you sure you want to cancel?
-                  </p>
-                </div>
-              </div>
-
-              <div className="mb-6 p-4 rounded-lg" style={{ background: '#FEF3C7' }}>
-                <p style={{ fontSize: '16px', color: '#92400E', lineHeight: '1.5' }}>
-                  This will cancel your upcoming session on <strong>{getDaysUntilText(2)} at {upcomingSessionTime}</strong> with Tea Araki.
-                </p>
-              </div>
-
-              <div className="flex gap-4">
-                <button
-                  onClick={() => setShowCancelDialog(false)}
-                  className="flex-1 px-6 py-4 rounded-xl transition-all border-3"
-                  style={{
-                    background: '#FFFFFF',
-                    color: '#2D9596',
-                    border: '3px solid #2D9596',
-                    fontSize: '20px',
-                    minHeight: '64px'
-                  }}
-                  onMouseEnter={(e) => e.currentTarget.style.background = '#E5F5F5'}
-                  onMouseLeave={(e) => e.currentTarget.style.background = '#FFFFFF'}
-                >
-                  Keep Session
-                </button>
-                <button
-                  onClick={() => {
-                    setShowCancelDialog(false);
-                    onNavigate('sessions');
-                  }}
-                  className="flex-1 px-6 py-4 rounded-xl transition-all"
-                  style={{
-                    background: '#DC2626',
-                    color: '#FFFFFF',
-                    fontSize: '20px',
-                    minHeight: '64px'
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.background = '#B91C1C';
-                    e.currentTarget.style.transform = 'translateY(-2px)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.background = '#DC2626';
-                    e.currentTarget.style.transform = 'translateY(0)';
-                  }}
-                >
-                  Yes, Cancel Session
-                </button>
-              </div>
-            </div>
-          </div>
-        </>
-      )}
     </KupunaPortalLayout>
   );
 }

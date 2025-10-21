@@ -1699,10 +1699,6 @@
     border-color: #2d9596;
   }
 
-  .border-\[\#4DB8A8\] {
-    border-color: #4db8a8;
-  }
-
   .border-\[\#265073\] {
     border-color: #265073;
   }
@@ -1771,16 +1767,16 @@
     background-color: #2d3748;
   }
 
-  .bg-\[\#4DB8A8\] {
-    background-color: #4db8a8;
+  .bg-\[\#2D9596\] {
+    background-color: #2d9596;
+  }
+
+  .bg-\[\#B8E6E3\] {
+    background-color: #b8e6e3;
   }
 
   .bg-\[\#E6F7F4\] {
     background-color: #e6f7f4;
-  }
-
-  .bg-\[\#F1FADA\] {
-    background-color: #f1fada;
   }
 
   .bg-\[\#F5F1E8\] {
@@ -2339,10 +2335,6 @@
     color: #2d9596;
   }
 
-  .text-\[\#4DB8A8\] {
-    color: #4db8a8;
-  }
-
   .text-\[\#16A34A\] {
     color: #16a34a;
   }
@@ -2776,14 +2768,14 @@
   }
 
   @media (hover: hover) {
-    .hover\:bg-\[\#3DA089\]:hover {
-      background-color: #3da089;
+    .hover\:bg-\[\#2D9596\]\/10:hover {
+      background-color: oklab(61.3003% -.0882875 -.0252618 / .1);
     }
   }
 
   @media (hover: hover) {
-    .hover\:bg-\[\#4DB8A8\]\/10:hover {
-      background-color: oklab(71.5993% -.101044 -.0034821 / .1);
+    .hover\:bg-\[\#3DA089\]:hover {
+      background-color: #3da089;
     }
   }
 
@@ -2878,8 +2870,8 @@
   }
 
   @media (hover: hover) {
-    .hover\:text-\[\#4DB8A8\]:hover {
-      color: #4db8a8;
+    .hover\:text-\[\#2D9596\]:hover {
+      color: #2d9596;
     }
   }
 
@@ -2950,10 +2942,6 @@
     border-color: #2d9596;
   }
 
-  .focus\:border-\[\#4DB8A8\]:focus {
-    border-color: #4db8a8;
-  }
-
   .focus\:bg-accent:focus {
     background-color: var(--accent);
   }
@@ -2971,8 +2959,8 @@
     --tw-ring-color: #2d9596;
   }
 
-  .focus\:ring-\[\#4DB8A8\]\/20:focus {
-    --tw-ring-color: oklab(71.5993% -.101044 -.0034821 / .2);
+  .focus\:ring-\[\#2D9596\]\/20:focus {
+    --tw-ring-color: oklab(61.3003% -.0882875 -.0252618 / .2);
   }
 
   .focus\:ring-ring:focus {
@@ -3995,26 +3983,20 @@
   }
 
   @media (width >= 48rem) {
+    .md\:py-16 {
+      padding-block: calc(var(--spacing) * 16);
+    }
+  }
+
+  @media (width >= 48rem) {
     .md\:py-20 {
       padding-block: calc(var(--spacing) * 20);
     }
   }
 
   @media (width >= 48rem) {
-    .md\:py-24 {
-      padding-block: calc(var(--spacing) * 24);
-    }
-  }
-
-  @media (width >= 48rem) {
     .md\:py-28 {
       padding-block: calc(var(--spacing) * 28);
-    }
-  }
-
-  @media (width >= 48rem) {
-    .md\:py-32 {
-      padding-block: calc(var(--spacing) * 32);
     }
   }
 
@@ -4133,18 +4115,6 @@
   @media (width >= 48rem) {
     .md\:text-\[48px\] {
       font-size: 48px;
-    }
-  }
-
-  @media (width >= 48rem) {
-    .md\:text-\[56px\] {
-      font-size: 56px;
-    }
-  }
-
-  @media (width >= 48rem) {
-    .md\:text-\[64px\] {
-      font-size: 64px;
     }
   }
 
@@ -4307,12 +4277,6 @@
   @media (width >= 64rem) {
     .lg\:text-\[24px\] {
       font-size: 24px;
-    }
-  }
-
-  @media (width >= 64rem) {
-    .lg\:text-\[72px\] {
-      font-size: 72px;
     }
   }
 

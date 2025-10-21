@@ -724,7 +724,7 @@ export function ServicesPage({ onNavigate }: ServicesPageProps) {
                 e.currentTarget.style.transform = 'translateY(0)';
               }}
               className="min-h-[64px] px-12 transition-all rounded-md inline-flex items-center justify-center active:scale-95"
-              style={{ fontSize: '20px', fontWeight: 700, background: '#2D9596', color: '#FFFFFF', border: 'none', cursor: 'pointer' }}
+              style={{ fontSize: '20px', fontWeight: 700, background: '#066255', color: '#FFFFFF', border: 'none', cursor: 'pointer' }}
             >
               Get Started
             </button>

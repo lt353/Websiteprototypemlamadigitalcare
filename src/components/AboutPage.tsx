@@ -411,7 +411,7 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
           <div className="max-w-[966px] mx-auto text-center">
             <h2
               className="text-[#2D3748] mb-6 text-[32px] md:text-[40px]"
-              style={{ fontWeight: 700, lineHeight: 1.2 }}
+              style={{ fontWeight: 700, lineHeight: 1.2,  }}
             >
               Growing our 'Ohana
             </h2>
