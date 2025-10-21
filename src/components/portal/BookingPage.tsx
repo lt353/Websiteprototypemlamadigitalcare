@@ -250,7 +250,7 @@ export function BookingPage({ onBack, onBookingSuccess }: BookingPageProps) {
                 <Button
                   onClick={() => setShowTrackChangeDialog(true)}
                   variant="outline"
-                  className="w-full md:w-auto h-12 md:h-10 px-6 md:px-4 text-[16px] md:text-[14px] border-2 active:scale-95 transition-transform"
+                  className="w-full md:w-auto h-12 px-6 text-[16px] border-2 active:scale-95 transition-transform"
                   style={{ borderColor: '#2D9596', color: '#2D9596' }}
                 >
                   Change Format

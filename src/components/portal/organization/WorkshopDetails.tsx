@@ -251,7 +251,7 @@ export function WorkshopDetails({ onBack, onNavigateToManageAttendees, onNavigat
                         window.open('about:blank', '_blank');
                       }}
                       variant="outline"
-                      size="sm"
+                      className="h-10 px-4 text-[14px]"
                     >
                       <Download className="w-4 h-4 mr-2" />
                       Download
@@ -379,8 +379,8 @@ export function WorkshopDetails({ onBack, onNavigateToManageAttendees, onNavigat
                   <Label className="text-[16px]">Instructor Availability:</Label>
                   {!availabilityChecked ? (
                     <Button
-                      size="sm"
                       variant="outline"
+                      className="h-10 px-4 text-[14px]"
                       onClick={() => {
                         setAvailabilityChecked(true);
                         toast.success('✓ Tea Araki is available');
