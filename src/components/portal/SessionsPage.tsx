@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Calendar, MapPin, Video, User, X, Check, Plus, Edit3, Trash2 } from 'lucide-react';
 import { Button } from '../ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '../ui/dialog';
-import { toast } from 'sonner@2.0.3';
+import { toast } from 'sonner';
 
 interface SessionsPageProps {
   onBack: () => void;
@@ -194,8 +194,10 @@ export function SessionsPage({ onBack, onNavigateToBooking, onRescheduleSuccess,
             </div>
             <button
               onClick={() => {
-                // In real implementation, navigate to plan upgrade page
-                alert('In the live version, this would show plan comparison and upgrade options.');
+                toast.info('View Premium Plan features', {
+                  description: 'Navigate to Settings to upgrade your plan and see detailed comparison.'
+                });
+                onNavigateToBooking?.();
               }}
               className="px-4 py-2 rounded-lg font-bold text-[14px] transition-all active:scale-95"
               style={{
@@ -502,7 +504,10 @@ export function SessionsPage({ onBack, onNavigateToBooking, onRescheduleSuccess,
                 </p>
                 <button
                   onClick={() => {
-                    alert('In the live version, this would show detailed plan comparison and upgrade options.');
+                    toast.info('Upgrade to Premium Care', {
+                      description: 'Navigate to Settings to view plan comparison and upgrade options.'
+                    });
+                    onNavigateToBooking?.();
                   }}
                   className="w-full h-12 rounded-lg font-bold text-[16px] transition-all active:scale-95"
                   style={{

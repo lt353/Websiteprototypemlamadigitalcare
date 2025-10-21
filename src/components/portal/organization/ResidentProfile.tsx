@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '../..
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../../ui/tabs';
 import { Badge } from '../../ui/badge';
 import { Progress } from '../../ui/progress';
-import { toast } from 'sonner@2.0.3';
+import { toast } from 'sonner';
 
 interface ResidentProfileProps {
   residentName?: string;
@@ -153,7 +153,10 @@ export function ResidentProfile({ residentName = 'Mary Johnson', onBack }: Resid
             <Button
               variant="outline"
               className="w-full sm:w-auto h-12 text-[16px]"
-              onClick={() => toast.info('Email compose window opening...')}
+              onClick={() => {
+                const subject = encodeURIComponent(`Message to ${residentData.name}`);
+                window.location.href = `mailto:${residentData.email}?subject=${subject}`;
+              }}
             >
               <Mail className="w-5 h-5 mr-2" />
               Email Resident
@@ -317,7 +320,12 @@ export function ResidentProfile({ residentName = 'Mary Johnson', onBack }: Resid
               </h2>
               <Button
                 variant="outline"
-                onClick={() => toast.success('✓ Session history exported to PDF')}
+                onClick={() => {
+                  toast.success('Exporting session history to PDF...', {
+                    description: 'PDF will open in a new window'
+                  });
+                  window.open('about:blank', '_blank');
+                }}
               >
                 Export Report
               </Button>

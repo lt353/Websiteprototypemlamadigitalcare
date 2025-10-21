@@ -11,7 +11,7 @@ import { Label } from '../../ui/label';
 import { Textarea } from '../../ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../../ui/select';
 import { Checkbox } from '../../ui/checkbox';
-import { toast } from 'sonner@2.0.3';
+import { toast } from 'sonner';
 
 interface WorkshopDetailsProps {
   onBack: () => void;
@@ -39,18 +39,7 @@ export function WorkshopDetails({ onBack, onNavigateToManageAttendees, onNavigat
     message: `Dear Residents,\n\nWe're sorry to inform you that the Scam Prevention Workshop scheduled for November 30 at 2:00 PM has been canceled.\n\n[Reason will be inserted if provided]\n\nWe will schedule a similar workshop soon and notify you of the new date. Thank you for your understanding.\n\nIf you have questions, please contact our activities team.\n\nMahalo,\nSunset Senior Living`
   });
   const [availabilityChecked, setAvailabilityChecked] = useState(false);
-  const workshop = {
-    title: 'Scam Prevention Workshop',
-    date: 'November 30, 2025',
-    time: '2:00 PM - 3:30 PM',
-    status: 'confirmed',
-    instructor: 'Tea Araki',
-    location: 'Sunset Senior Living - Community Room',
-    attendees: 24,
-    capacity: 30
-  };
-
-  const attendees = [
+  const [attendees, setAttendees] = useState([
     { name: 'Margaret Liu', unit: 'Room 204', status: 'Confirmed' },
     { name: 'Robert Kim', unit: 'Room 312', status: 'Confirmed' },
     { name: 'Helen Martinez', unit: 'Room 108', status: 'Confirmed' },
@@ -75,11 +64,27 @@ export function WorkshopDetails({ onBack, onNavigateToManageAttendees, onNavigat
     { name: 'Ruth Nakamura', unit: 'Room 134', status: 'Confirmed' },
     { name: 'James Watanabe', unit: 'Room 278', status: 'Confirmed' },
     { name: 'Barbara Yamamoto', unit: 'Room 156', status: 'Confirmed' },
-  ];
+  ]);
+
+  const workshop = {
+    title: 'Scam Prevention Workshop',
+    date: 'November 30, 2025',
+    time: '2:00 PM - 3:30 PM',
+    status: 'confirmed',
+    instructor: 'Tea Araki',
+    location: 'Sunset Senior Living - Community Room',
+    attendees: attendees.length,
+    capacity: 30
+  };
+
+  const handleRemoveAttendee = (attendeeName: string) => {
+    setAttendees(attendees.filter(a => a.name !== attendeeName));
+    toast.success(`${attendeeName} removed from workshop`);
+  };
 
   return (
     <div className="min-h-screen" style={{ background: '#F9FAFB' }}>
-      <div className="max-w-6xl mx-auto p-8">
+      <div className="max-w-6xl mx-auto p-4 md:p-8">
         <button
           onClick={onBack}
           className="flex items-center gap-2 mb-6 hover:underline"
@@ -161,7 +166,13 @@ export function WorkshopDetails({ onBack, onNavigateToManageAttendees, onNavigat
               >
                 Reschedule
               </Button>
-              <Button 
+              <Button
+                onClick={() => {
+                  toast.success('Downloading workshop flyer...', {
+                    description: 'PDF will open in a new window'
+                  });
+                  window.open('about:blank', '_blank');
+                }}
                 variant="outline"
                 className="text-[16px] h-12 flex-1 min-w-[160px]"
               >
@@ -203,7 +214,13 @@ export function WorkshopDetails({ onBack, onNavigateToManageAttendees, onNavigat
                       </div>
                       <div className="flex gap-3 w-full sm:w-auto">
                         <Badge className="text-[14px]" style={{ background: '#D1FAE5', color: '#065F46' }}>{attendee.status}</Badge>
-                        <Button variant="ghost" className="text-[14px]">Remove</Button>
+                        <Button
+                          onClick={() => handleRemoveAttendee(attendee.name)}
+                          variant="ghost"
+                          className="text-[14px]"
+                        >
+                          Remove
+                        </Button>
                       </div>
                     </div>
                   ))}
@@ -226,7 +243,16 @@ export function WorkshopDetails({ onBack, onNavigateToManageAttendees, onNavigat
                 ].map((material, i) => (
                   <div key={i} className="flex items-center justify-between p-4 rounded-lg" style={{ background: '#F9FAFB' }}>
                     <span className="text-[16px]">{material}</span>
-                    <Button variant="outline" size="sm">
+                    <Button
+                      onClick={() => {
+                        toast.success(`Downloading ${material}...`, {
+                          description: 'File will open in a new window'
+                        });
+                        window.open('about:blank', '_blank');
+                      }}
+                      variant="outline"
+                      size="sm"
+                    >
                       <Download className="w-4 h-4 mr-2" />
                       Download
                     </Button>
@@ -321,7 +347,7 @@ export function WorkshopDetails({ onBack, onNavigateToManageAttendees, onNavigat
                     <div className="flex-1 space-y-2">
                       <Label htmlFor="time-custom" className="text-[16px] cursor-pointer">Custom time:</Label>
                       {rescheduleData.customTime && (
-                        <div className="grid grid-cols-2 gap-3">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                           <Input
                             type="time"
                             value={rescheduleData.customStartTime}

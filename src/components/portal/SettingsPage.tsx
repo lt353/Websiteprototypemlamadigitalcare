@@ -6,7 +6,7 @@ import { Label } from '../ui/label';
 import { Switch } from '../ui/switch';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '../ui/dialog';
 import { Badge } from '../ui/badge';
-import { toast } from 'sonner@2.0.3';
+import { toast } from 'sonner';
 
 interface SettingsPageProps {
   onBack: () => void;
@@ -439,7 +439,7 @@ export function SettingsPage({ onBack }: SettingsPageProps) {
                   </li>
                   <li className="flex items-start gap-2 text-[16px]" style={{ color: '#4B5563' }}>
                     <Check className="w-5 h-5 flex-shrink-0 mt-0.5" style={{ color: '#10B981' }} />
-                    <span>20% off add-on sessions (vs. 15%)</span>
+                    <span>15% off add-on sessions</span>
                   </li>
                 </ul>
               </div>
@@ -462,7 +462,7 @@ export function SettingsPage({ onBack }: SettingsPageProps) {
                           $149
                         </span>
                         <span className="text-[24px] font-bold" style={{ color: '#10B981' }}>
-                          $104
+                          $119
                         </span>
                       </div>
                     </div>
@@ -575,7 +575,9 @@ export function SettingsPage({ onBack }: SettingsPageProps) {
               <Button
                 onClick={() => {
                   setShowDowngradeDialog(false);
-                  alert('Plan downgrade scheduled for December 1, 2025.');
+                  toast.success('✓ Plan downgrade scheduled', {
+                    description: 'Your plan will change to Basic Care on December 1, 2025'
+                  });
                 }}
                 className="h-12 px-6 text-[16px] font-bold active:scale-95 transition-transform"
                 style={{ background: '#F59E0B', color: '#FFFFFF' }}

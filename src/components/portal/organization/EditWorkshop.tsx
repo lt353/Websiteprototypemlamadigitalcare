@@ -69,7 +69,7 @@ export function EditWorkshop({ onBack, onSave }: EditWorkshopProps) {
 
   return (
     <div className="min-h-screen" style={{ background: '#F9FAFB' }}>
-      <div className="max-w-4xl mx-auto p-8">
+      <div className="max-w-4xl mx-auto p-4 md:p-8">
         {/* Back Button */}
         <button
           onClick={onBack}
@@ -119,7 +119,7 @@ export function EditWorkshop({ onBack, onSave }: EditWorkshopProps) {
               </div>
               <div className="space-y-2">
                 <Label className="text-[18px]">Time</Label>
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
                     <Label htmlFor="startTime" className="text-[14px] mb-1 block">Start</Label>
                     <Input

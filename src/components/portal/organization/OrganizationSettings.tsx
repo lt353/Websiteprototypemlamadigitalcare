@@ -3,6 +3,7 @@ import { Button } from '../../ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '../../ui/card';
 import { Input } from '../../ui/input';
 import { Label } from '../../ui/label';
+import { toast } from 'sonner';
 
 interface OrganizationSettingsProps {
   onBack: () => void;
@@ -12,7 +13,7 @@ interface OrganizationSettingsProps {
 export function OrganizationSettings({ onBack, onNavigateToUpdatePayment }: OrganizationSettingsProps) {
   return (
     <div className="min-h-screen" style={{ background: '#F9FAFB' }}>
-      <div className="max-w-4xl mx-auto p-8">
+      <div className="max-w-4xl mx-auto p-4 md:p-8">
         <button onClick={onBack} className="flex items-center gap-2 mb-6 hover:underline" style={{ color: '#2D9596' }}>
           <ArrowLeft className="w-5 h-5" />
           Back to Dashboard
@@ -37,7 +38,12 @@ export function OrganizationSettings({ onBack, onNavigateToUpdatePayment }: Orga
                 <Label>Phone</Label>
                 <Input defaultValue="(808) 555-1234" className="h-12" />
               </div>
-              <Button style={{ background: '#2D9596', color: '#FFFFFF' }}>Update Information</Button>
+              <Button
+                onClick={() => toast.success('✓ Facility information updated successfully')}
+                style={{ background: '#2D9596', color: '#FFFFFF' }}
+              >
+                Update Information
+              </Button>
             </CardContent>
           </Card>
 
