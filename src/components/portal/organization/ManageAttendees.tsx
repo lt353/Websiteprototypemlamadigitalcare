@@ -108,7 +108,7 @@ export function ManageAttendees({ workshopTitle = 'Scam Prevention Workshop', on
         {/* Back Button */}
         <button
           onClick={onBack}
-          className="flex items-center gap-2 mb-6 hover:underline"
+          className="flex items-center gap-2 mb-6 hover:underline active:scale-95 transition-transform"
           style={{ color: '#2D9596', fontSize: '16px' }}
         >
           <ArrowLeft className="w-5 h-5" />
@@ -168,6 +168,7 @@ export function ManageAttendees({ workshopTitle = 'Scam Prevention Workshop', on
               <Button
                 onClick={handleSendReminders}
                 style={{ background: '#2D9596', color: '#FFFFFF' }}
+                className="active:scale-95 transition-transform"
               >
                 <Mail className="w-5 h-5 mr-2" />
                 Send Reminder to All ({enrolledCount})
@@ -175,6 +176,7 @@ export function ManageAttendees({ workshopTitle = 'Scam Prevention Workshop', on
               <Button
                 variant="outline"
                 onClick={handleExportList}
+                className="active:scale-95 transition-transform"
               >
                 <UserPlus className="w-5 h-5 mr-2" />
                 Export Attendee List
@@ -188,6 +190,7 @@ export function ManageAttendees({ workshopTitle = 'Scam Prevention Workshop', on
                     description: 'Navigate to Workshop Details to view full attendance records'
                   });
                 }}
+                className="active:scale-95 transition-transform"
               >
                 <CheckCircle2 className="w-5 h-5 mr-2" />
                 Mark Attendance
@@ -212,6 +215,7 @@ export function ManageAttendees({ workshopTitle = 'Scam Prevention Workshop', on
               <Button
                 variant="outline"
                 onClick={() => setSearchQuery('')}
+                className="active:scale-95 transition-transform"
               >
                 Clear
               </Button>
@@ -227,14 +231,14 @@ export function ManageAttendees({ workshopTitle = 'Scam Prevention Workshop', on
               <div className="flex items-center gap-2 w-full sm:w-auto">
                 <Button
                   variant="outline"
-                  className="flex-1 sm:flex-none text-[16px] h-12"
+                  className="flex-1 sm:flex-none text-[16px] h-12 active:scale-95 transition-transform"
                   onClick={() => setSelectedResidents(allResidents.map(r => r.id))}
                 >
                   Select All
                 </Button>
                 <Button
                   variant="outline"
-                  className="flex-1 sm:flex-none text-[16px] h-12"
+                  className="flex-1 sm:flex-none text-[16px] h-12 active:scale-95 transition-transform"
                   onClick={() => setSelectedResidents([])}
                 >
                   Clear All
@@ -293,7 +297,7 @@ export function ManageAttendees({ workshopTitle = 'Scam Prevention Workshop', on
                   {selectedResidents.includes(resident.id) ? (
                     <Button
                       variant="ghost"
-                      className="w-full sm:w-auto h-12 text-[16px]"
+                      className="w-full sm:w-auto h-12 text-[16px] active:scale-95 transition-transform"
                       onClick={() => handleToggleResident(resident.id)}
                       style={{ color: '#DC2626' }}
                     >
@@ -303,7 +307,7 @@ export function ManageAttendees({ workshopTitle = 'Scam Prevention Workshop', on
                   ) : (
                     <Button
                       variant="outline"
-                      className="w-full sm:w-auto h-12 text-[16px]"
+                      className="w-full sm:w-auto h-12 text-[16px] active:scale-95 transition-transform"
                       onClick={() => handleToggleResident(resident.id)}
                       disabled={enrolledCount >= maxCapacity}
                     >
@@ -330,13 +334,13 @@ export function ManageAttendees({ workshopTitle = 'Scam Prevention Workshop', on
           <Button
             variant="outline"
             onClick={onBack}
-            className="w-full sm:flex-1 h-16 text-[18px] font-bold"
+            className="w-full sm:flex-1 h-16 text-[18px] font-bold active:scale-95 transition-transform"
           >
             Cancel
           </Button>
           <Button
             onClick={handleSaveChanges}
-            className="w-full sm:flex-1 h-16 text-[16px] sm:text-[18px] font-bold"
+            className="w-full sm:flex-1 h-16 text-[16px] sm:text-[18px] font-bold active:scale-95 transition-transform"
             style={{ background: '#2D9596', color: '#FFFFFF' }}
           >
             <CheckCircle2 className="w-5 h-5 mr-2 flex-shrink-0" />

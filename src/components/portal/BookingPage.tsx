@@ -173,7 +173,7 @@ export function BookingPage({ onBack, onBookingSuccess }: BookingPageProps) {
       <div className="max-w-5xl mx-auto">
         <button
           onClick={onBack}
-          className="mb-6 text-[22px] font-medium hover:underline"
+          className="mb-6 text-[22px] font-medium hover:underline active:scale-95 transition-transform"
           style={{ color: '#2D9596' }}
         >
           ← Back to Dashboard
@@ -1212,7 +1212,7 @@ export function BookingPage({ onBack, onBookingSuccess }: BookingPageProps) {
                 <Button
                   onClick={printConfirmation}
                   variant="outline"
-                  className="flex-1"
+                  className="flex-1 active:scale-95 transition-transform"
                 >
                   <Printer className="w-4 h-4 mr-2" />
                   Print Confirmation
@@ -1223,7 +1223,7 @@ export function BookingPage({ onBack, onBookingSuccess }: BookingPageProps) {
                     onBack();
                   }}
                   style={{ background: '#2D9596', color: '#FFFFFF' }}
-                  className="flex-1"
+                  className="flex-1 active:scale-95 transition-transform"
                 >
                   Done
                 </Button>

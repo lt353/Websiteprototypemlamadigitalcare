@@ -128,7 +128,7 @@ export function OrganizationDashboard({ currentView, onNavigate, onLogout }: Org
              
               <button
                 onClick={onLogout}
-                className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg transition-all text-[14px]"
+                className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg transition-all text-[14px] active:scale-95 transition-transform"
                 style={{
                   background: 'rgba(255,255,255,0.1)',
                   color: 'rgba(255,255,255,0.9)'
@@ -149,7 +149,7 @@ export function OrganizationDashboard({ currentView, onNavigate, onLogout }: Org
                 <button
                   key={item.id}
                   onClick={() => onNavigate(item.id)}
-                  className="w-full flex items-center gap-3 px-4 py-3 mb-2 rounded-lg transition-all"
+                  className="w-full flex items-center gap-3 px-4 py-3 mb-2 rounded-lg transition-all active:scale-95 transition-transform"
                   style={{
                     background: isActive ? '#2D9596' : 'transparent',
                     color: '#FFFFFF'
@@ -166,7 +166,7 @@ export function OrganizationDashboard({ currentView, onNavigate, onLogout }: Org
           <div className="p-4 border-t" style={{ borderColor: 'rgba(255,255,255,0.1)' }}>
             <button
               onClick={onLogout}
-              className="w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all hover:bg-red-600"
+              className="w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all hover:bg-red-600 active:scale-95 transition-transform"
               style={{
                 background: '#DC2626',
                 color: '#FFFFFF'
@@ -197,8 +197,8 @@ export function OrganizationDashboard({ currentView, onNavigate, onLogout }: Org
             </div>
             <button
               onClick={onLogout}
-              className="flex items-center gap-2 px-4 py-2.5 rounded-lg transition-all"
-              style={{ 
+              className="flex items-center gap-2 px-4 py-2.5 rounded-lg transition-all active:scale-95 transition-transform"
+              style={{
                 background: '#DC2626',
                 color: '#FFFFFF'
               }}
@@ -267,16 +267,11 @@ export function OrganizationDashboard({ currentView, onNavigate, onLogout }: Org
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-4">
+              <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 <div className="p-4 rounded-lg" style={{ background: '#F0FDFA', border: '2px solid #2D9596' }}>
                   <p className="text-[14px] mb-1" style={{ color: '#6B7280' }}>Total Mālama Plans</p>
-                  <p className="text-[28px] font-bold" style={{ color: '#2D9596' }}>34</p>
-                  <p className="text-[13px]" style={{ color: '#6B7280' }}>81% of residents</p>
-                </div>
-                <div className="p-4 rounded-lg" style={{ background: '#F9FAFB' }}>
-                  <p className="text-[14px] mb-1" style={{ color: '#6B7280' }}>Facility Plans</p>
-                  <p className="text-[24px] font-bold" style={{ color: '#265073' }}>12</p>
-                  <p className="text-[13px]" style={{ color: '#6B7280' }}>Bulk subscription</p>
+                  <p className="text-[28px] font-bold" style={{ color: '#2D9596' }}>24</p>
+                  <p className="text-[13px]" style={{ color: '#6B7280' }}>57% of residents</p>
                 </div>
                 <div className="p-4 rounded-lg" style={{ background: '#FEF3C7' }}>
                   <p className="text-[14px] mb-1" style={{ color: '#6B7280' }}>Premium</p>
@@ -290,13 +285,13 @@ export function OrganizationDashboard({ currentView, onNavigate, onLogout }: Org
                 </div>
                 <div className="p-4 rounded-lg" style={{ background: '#F3F4F6' }}>
                   <p className="text-[14px] mb-1" style={{ color: '#6B7280' }}>Basic</p>
-                  <p className="text-[24px] font-bold" style={{ color: '#4B5563' }}>3</p>
+                  <p className="text-[24px] font-bold" style={{ color: '#4B5563' }}>5</p>
                   <p className="text-[13px]" style={{ color: '#6B7280' }}>$39/month</p>
                 </div>
               </div>
               <div className="mt-4 p-3 rounded-lg" style={{ background: '#FEE2E2' }}>
                 <p className="text-[14px]" style={{ color: '#6B7280' }}>
-                  <strong style={{ color: '#DC2626' }}>8 residents</strong> attending workshops only (no Mālama subscription)
+                  <strong style={{ color: '#DC2626' }}>18 residents</strong> attending workshops only (no Mālama subscription)
                 </p>
               </div>
             </CardContent>
@@ -314,10 +309,10 @@ export function OrganizationDashboard({ currentView, onNavigate, onLogout }: Org
                     Scheduled classes and events for your community
                   </CardDescription>
                 </div>
-                <Button 
+                <Button
                   onClick={() => onNavigate('schedule')}
                   style={{ background: '#2D9596', color: '#FFFFFF' }}
-                  className="w-full sm:w-auto text-[15px] md:text-[16px]"
+                  className="w-full sm:w-auto text-[15px] md:text-[16px] active:scale-95 transition-transform"
                 >
                   Schedule New Workshop
                 </Button>
@@ -401,14 +396,14 @@ export function OrganizationDashboard({ currentView, onNavigate, onLogout }: Org
                         <Button
                           variant="outline"
                           onClick={() => onNavigate('workshop-details')}
-                          className="flex-1 sm:flex-none h-10 px-4 text-[14px]"
+                          className="flex-1 sm:flex-none h-10 px-4 text-[14px] active:scale-95 transition-transform"
                         >
                           View Details
                         </Button>
                         <Button
                           variant="outline"
                           onClick={() => onNavigate('manage-attendees')}
-                          className="flex-1 sm:flex-none h-10 px-4 text-[14px]"
+                          className="flex-1 sm:flex-none h-10 px-4 text-[14px] active:scale-95 transition-transform"
                         >
                           Manage Attendees
                         </Button>
@@ -537,21 +532,21 @@ export function OrganizationDashboard({ currentView, onNavigate, onLogout }: Org
                     Need to customize your program or have questions about billing? Our partnership team is here to help.
                   </p>
                   <div className="flex flex-col sm:flex-row gap-3 md:gap-4">
-                    <Button 
+                    <Button
                       style={{ background: '#2D9596', color: '#FFFFFF' }}
                       onClick={() => window.location.href = 'tel:+18085558324'}
-                      className="w-full sm:w-auto text-[14px] md:text-[16px]"
+                      className="w-full sm:w-auto text-[14px] md:text-[16px] active:scale-95 transition-transform"
                     >
                       <Phone className="w-4 h-4 mr-2 flex-shrink-0" />
                       Call Partnership Team
                     </Button>
-                    <Button 
-                      variant="outline" 
+                    <Button
+                      variant="outline"
                       style={{ borderColor: '#2D9596', color: '#2D9596' }}
                       onClick={() => {
                         window.location.href = 'mailto:support@malamadigital.com?subject=Support Request - Organization&body=Hi Mālama Digital Care Team,%0D%0A%0D%0AOrganization: Sunset Senior Living%0D%0A%0D%0APlease describe your question or issue:%0D%0A';
                       }}
-                      className="w-full sm:w-auto text-[14px] md:text-[16px]"
+                      className="w-full sm:w-auto text-[14px] md:text-[16px] active:scale-95 transition-transform"
                     >
                       <Mail className="w-4 h-4 mr-2 flex-shrink-0" />
                       Email Support
@@ -583,7 +578,7 @@ export function OrganizationDashboard({ currentView, onNavigate, onLogout }: Org
                 <button
                   key={item.id}
                   onClick={() => onNavigate(item.id)}
-                  className="flex flex-col items-center gap-2 p-3 rounded-xl transition-all"
+                  className="flex flex-col items-center gap-2 p-3 rounded-xl transition-all active:scale-95 transition-transform"
                   style={{
                     background: isActive ? '#E6F7F4' : 'transparent',
                     color: isActive ? '#2D9596' : '#6B7280'

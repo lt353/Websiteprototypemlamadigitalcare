@@ -18,7 +18,7 @@ function getResidentData(name: string) {
     'Margaret Liu': {
       room: '204', joinedDate: 'June 2025', email: 'margaret.liu@email.com', phone: '(808) 555-0201',
       emergencyContact: 'David Liu (Son)', emergencyPhone: '(808) 555-0202',
-      plan: 'Facility Subscription', sessionsCompleted: 6, skillsMastered: 12, currentStreak: 3,
+      plan: 'Basic ($39/mo)', sessionsCompleted: 6, skillsMastered: 12, currentStreak: 3,
       lastSession: 'Nov 20', skills: [
         { skill: 'Email Basics', progress: 100, status: 'completed' },
         { skill: 'Scam Prevention', progress: 100, status: 'completed' },
@@ -50,7 +50,7 @@ function getResidentData(name: string) {
     'Helen Martinez': {
       room: '108', joinedDate: 'July 2025', email: 'helen.martinez@email.com', phone: '(808) 555-0108',
       emergencyContact: 'Carlos Martinez (Son)', emergencyPhone: '(808) 555-0109',
-      plan: 'Facility Subscription', sessionsCompleted: 5, skillsMastered: 9, currentStreak: 2,
+      plan: 'Workshop Only', sessionsCompleted: 5, skillsMastered: 9, currentStreak: 2,
       lastSession: 'Nov 20', skills: [
         { skill: 'Video Calling', progress: 100, status: 'completed' },
         { skill: 'Scam Prevention', progress: 100, status: 'completed' },
@@ -92,7 +92,7 @@ function getResidentData(name: string) {
     'Mary Johnson': {
       room: '401', joinedDate: 'August 2025', email: 'mary.johnson@email.com', phone: '(808) 555-0123',
       emergencyContact: 'Sarah Miller (Daughter)', emergencyPhone: '(808) 555-9876',
-      plan: 'Facility Subscription', sessionsCompleted: 10, skillsMastered: 18, currentStreak: 4,
+      plan: 'Basic ($39/mo)', sessionsCompleted: 10, skillsMastered: 18, currentStreak: 4,
       lastSession: 'Nov 20', skills: [
         { skill: 'Email Basics', progress: 100, status: 'completed' },
         { skill: 'Video Calling', progress: 100, status: 'completed' },
@@ -111,7 +111,7 @@ function getResidentData(name: string) {
     'George Nakamura': {
       room: '325', joinedDate: 'August 2025', email: 'george.nakamura@email.com', phone: '(808) 555-0325',
       emergencyContact: 'Ken Nakamura (Son)', emergencyPhone: '(808) 555-0326',
-      plan: 'Facility Subscription', sessionsCompleted: 4, skillsMastered: 8, currentStreak: 2,
+      plan: 'Workshop Only', sessionsCompleted: 4, skillsMastered: 8, currentStreak: 2,
       lastSession: 'Nov 20', skills: [
         { skill: 'Scam Prevention', progress: 100, status: 'completed' },
         { skill: 'Email Basics', progress: 70, status: 'in-progress' },
@@ -132,7 +132,7 @@ function getResidentData(name: string) {
     'Thomas Park': {
       room: '418', joinedDate: 'July 2025', email: 'thomas.park@email.com', phone: '(808) 555-0418',
       emergencyContact: 'Susan Park (Daughter)', emergencyPhone: '(808) 555-0419',
-      plan: 'Facility Subscription', sessionsCompleted: 5, skillsMastered: 10, currentStreak: 3,
+      plan: 'Workshop Only', sessionsCompleted: 5, skillsMastered: 10, currentStreak: 3,
       lastSession: 'Nov 20', skills: [
         { skill: 'Scam Prevention', progress: 100, status: 'completed' },
         { skill: 'Email Basics', progress: 100, status: 'completed' },
@@ -196,7 +196,7 @@ function getResidentData(name: string) {
     'Susan Lee': {
       room: '289', joinedDate: 'July 2025', email: 'susan.lee@email.com', phone: '(808) 555-0289',
       emergencyContact: 'Peter Lee (Son)', emergencyPhone: '(808) 555-0290',
-      plan: 'Facility Subscription', sessionsCompleted: 5, skillsMastered: 9, currentStreak: 2,
+      plan: 'Workshop Only', sessionsCompleted: 5, skillsMastered: 9, currentStreak: 2,
       lastSession: 'Nov 20', skills: [
         { skill: 'Scam Prevention', progress: 100, status: 'completed' },
         { skill: 'Email Basics', progress: 100, status: 'completed' },
@@ -226,7 +226,7 @@ function getResidentData(name: string) {
     'Steven Park': {
       room: '367', joinedDate: 'August 2025', email: 'steven.park@email.com', phone: '(808) 555-0367',
       emergencyContact: 'Michelle Park (Daughter)', emergencyPhone: '(808) 555-0368',
-      plan: 'Facility Subscription', sessionsCompleted: 4, skillsMastered: 7, currentStreak: 2,
+      plan: 'Workshop Only', sessionsCompleted: 4, skillsMastered: 7, currentStreak: 2,
       lastSession: 'Nov 20', skills: [
         { skill: 'Scam Prevention', progress: 100, status: 'completed' },
         { skill: 'Email Basics', progress: 65, status: 'in-progress' },
@@ -259,7 +259,7 @@ function getResidentData(name: string) {
     'Ruth Nakamura': {
       room: '134', joinedDate: 'July 2025', email: 'ruth.nakamura@email.com', phone: '(808) 555-0134',
       emergencyContact: 'Brian Nakamura (Son)', emergencyPhone: '(808) 555-0135',
-      plan: 'Facility Subscription', sessionsCompleted: 5, skillsMastered: 10, currentStreak: 3,
+      plan: 'Workshop Only', sessionsCompleted: 5, skillsMastered: 10, currentStreak: 3,
       lastSession: 'Nov 20', skills: [
         { skill: 'Email Basics', progress: 100, status: 'completed' },
         { skill: 'Scam Prevention', progress: 100, status: 'completed' },
@@ -288,6 +288,24 @@ function getResidentData(name: string) {
         { skill: 'Video Calling', progress: 50, status: 'in-progress' }
       ]
     },
+    'David Rodriguez': { plan: 'Workshop Only' },
+    'Jennifer Tanaka': { plan: 'Standard ($79/mo)' },
+    'Michael Santos': { plan: 'Workshop Only' },
+    'Elizabeth Kim': { plan: 'Premium ($149/mo)' },
+    'Joseph Lee': { plan: 'Workshop Only' },
+    'Sarah Wong': { plan: 'Standard ($79/mo)' },
+    'Christopher Chen': { plan: 'Workshop Only' },
+    'Karen Nakamura': { plan: 'Basic ($39/mo)' },
+    'Matthew Park': { plan: 'Workshop Only' },
+    'Jessica Martinez': { plan: 'Premium ($149/mo)' },
+    'Andrew Liu': { plan: 'Workshop Only' },
+    'Michelle Fujimoto': { plan: 'Standard ($79/mo)' },
+    'Daniel Brown': { plan: 'Workshop Only' },
+    'Lisa Yamamoto': { plan: 'Standard ($79/mo)' },
+    'Kevin Silva': { plan: 'Premium ($149/mo)' },
+    'Amanda Kato': { plan: 'Workshop Only' },
+    'Ryan Watanabe': { plan: 'Basic ($39/mo)' },
+    'Emily Rodriguez': { plan: 'Standard ($79/mo)' },
   };
 
   // Default data for residents not in detailed list
@@ -296,7 +314,7 @@ function getResidentData(name: string) {
     email: name.toLowerCase().replace(/ /g, '.') + '@email.com',
     phone: '(808) 555-0100',
     emergencyContact: 'Family Member', emergencyPhone: '(808) 555-0101',
-    plan: 'Facility Subscription', sessionsCompleted: 5, skillsMastered: 10, currentStreak: 2,
+    plan: 'Workshop Only', sessionsCompleted: 5, skillsMastered: 10, currentStreak: 2,
     lastSession: 'Nov 18', skills: [
       { skill: 'Email Basics', progress: 100, status: 'completed' },
       { skill: 'Video Calling', progress: 75, status: 'in-progress' },
@@ -308,7 +326,7 @@ function getResidentData(name: string) {
     ]
   };
 
-  return residentProfiles[name] || defaultData;
+  return { ...defaultData, ...residentProfiles[name] };
 }
 
 export function ResidentProfile({ residentName = 'Mary Johnson', onBack }: ResidentProfileProps) {
@@ -350,7 +368,7 @@ export function ResidentProfile({ residentName = 'Mary Johnson', onBack }: Resid
         {/* Back Button */}
         <button
           onClick={onBack}
-          className="flex items-center gap-2 mb-6 hover:underline"
+          className="flex items-center gap-2 mb-6 hover:underline active:scale-95 transition-transform"
           style={{ color: '#2D9596', fontSize: '16px' }}
         >
           <ArrowLeft className="w-5 h-5" />
@@ -388,7 +406,7 @@ export function ResidentProfile({ residentName = 'Mary Johnson', onBack }: Resid
           <div className="flex flex-col sm:flex-row gap-3">
             <Button
               variant="outline"
-              className="w-full sm:w-auto h-12 text-[16px]"
+              className="w-full sm:w-auto h-12 text-[16px] active:scale-95 transition-transform"
               onClick={() => {
                 const subject = encodeURIComponent(`Message to ${residentData.name}`);
                 window.location.href = `mailto:${residentData.email}?subject=${subject}`;
@@ -398,7 +416,7 @@ export function ResidentProfile({ residentName = 'Mary Johnson', onBack }: Resid
               Email Resident
             </Button>
             <Button
-              className="w-full sm:w-auto h-12 text-[16px]"
+              className="w-full sm:w-auto h-12 text-[16px] active:scale-95 transition-transform"
               onClick={() => window.location.href = `tel:${residentData.phone}`}
               style={{ background: '#2D9596', color: '#FFFFFF' }}
             >
@@ -562,6 +580,7 @@ export function ResidentProfile({ residentName = 'Mary Johnson', onBack }: Resid
                   });
                   window.open('about:blank', '_blank');
                 }}
+                className="active:scale-95 transition-transform"
               >
                 Export Report
               </Button>

@@ -31,7 +31,7 @@ export function CaregiverBottomNav({ currentView, onNavigate }: CaregiverBottomN
             <button
               key={item.id}
               onClick={() => onNavigate(item.id)}
-              className="flex flex-col items-center justify-center py-3 px-3 rounded-lg transition-all"
+              className="flex flex-col items-center justify-center py-3 px-3 rounded-lg transition-all active:scale-95 transition-transform"
               style={{
                 background: isActive ? '#E6F7F4' : 'transparent',
                 color: isActive ? '#2D9596' : '#6B7280',

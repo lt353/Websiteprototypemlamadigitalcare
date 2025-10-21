@@ -119,7 +119,7 @@ export function CaregiverDashboard({ currentView, onNavigate, onLogout }: Caregi
               
               <button
                 onClick={onLogout}
-                className="flex-1 flex items-center justify-center gap-2 md:gap-3 px-4 md:px-5 py-2.5 md:py-3 rounded-lg transition-all text-[14px] md:text-[15px] font-medium"
+                className="flex-1 flex items-center justify-center gap-2 md:gap-3 px-4 md:px-5 py-2.5 md:py-3 rounded-lg transition-all text-[14px] md:text-[15px] font-medium active:scale-95 transition-transform"
                 style={{
                   background: 'rgba(255,255,255,0.1)',
                   color: 'rgba(255,255,255,0.9)'
@@ -140,7 +140,7 @@ export function CaregiverDashboard({ currentView, onNavigate, onLogout }: Caregi
                 <button
                   key={item.id}
                   onClick={() => onNavigate(item.id)}
-                  className="w-full flex items-center gap-3 px-4 lg:px-5 py-3 mb-2 rounded-lg transition-all"
+                  className="w-full flex items-center gap-3 px-4 lg:px-5 py-3 mb-2 rounded-lg transition-all active:scale-95 transition-transform"
                   style={{
                     background: isActive ? '#2D9596' : 'transparent',
                     color: '#FFFFFF'
@@ -157,7 +157,7 @@ export function CaregiverDashboard({ currentView, onNavigate, onLogout }: Caregi
           <div className="p-3 lg:p-4 border-t" style={{ borderColor: 'rgba(255,255,255,0.1)' }}>
             <button
               onClick={onLogout}
-              className="w-full flex items-center gap-3 px-4 lg:px-5 py-3 rounded-lg transition-all hover:bg-red-600"
+              className="w-full flex items-center gap-3 px-4 lg:px-5 py-3 rounded-lg transition-all hover:bg-red-600 active:scale-95 transition-transform"
               style={{
                 background: '#DC2626',
                 color: '#FFFFFF'
@@ -188,8 +188,8 @@ export function CaregiverDashboard({ currentView, onNavigate, onLogout }: Caregi
             </div>
             <button
               onClick={onLogout}
-              className="flex items-center gap-2 px-4 py-2.5 rounded-lg transition-all"
-              style={{ 
+              className="flex items-center gap-2 px-4 py-2.5 rounded-lg transition-all active:scale-95 transition-transform"
+              style={{
                 background: '#DC2626',
                 color: '#FFFFFF'
               }}
@@ -280,17 +280,17 @@ export function CaregiverDashboard({ currentView, onNavigate, onLogout }: Caregi
 
                   {/* Action Buttons */}
                   <div className="flex flex-col sm:flex-row gap-3 pt-2 mt-auto">
-                    <Button 
+                    <Button
                       onClick={() => onNavigate('loved-one-details', { seniorName: senior.name })}
-                      className="flex-1 text-[15px] md:text-[16px] whitespace-nowrap"
+                      className="flex-1 text-[15px] md:text-[16px] whitespace-nowrap active:scale-95 transition-transform"
                       style={{ background: '#2D9596', color: '#FFFFFF' }}
                     >
                       View Details
                     </Button>
-                    <Button 
+                    <Button
                       onClick={() => onNavigate('book-session')}
                       variant="outline"
-                      className="flex-1 text-[15px] md:text-[16px] whitespace-nowrap"
+                      className="flex-1 text-[15px] md:text-[16px] whitespace-nowrap active:scale-95 transition-transform"
                       style={{ borderColor: '#2D9596', color: '#2D9596' }}
                     >
                       Book Session
@@ -418,7 +418,7 @@ export function CaregiverDashboard({ currentView, onNavigate, onLogout }: Caregi
                   <div className="flex flex-col sm:flex-row gap-3">
                     <Button
                       onClick={() => window.open('tel:+18085555432', '_self')}
-                      className="text-[14px] md:text-[16px] whitespace-nowrap w-full sm:w-auto justify-center"
+                      className="text-[14px] md:text-[16px] whitespace-nowrap w-full sm:w-auto justify-center active:scale-95 transition-transform"
                       style={{ background: '#2D9596', color: '#FFFFFF' }}
                     >
                       <Phone className="w-4 h-4 mr-2 flex-shrink-0" />
@@ -427,7 +427,7 @@ export function CaregiverDashboard({ currentView, onNavigate, onLogout }: Caregi
                     <Button
                       onClick={() => window.open('mailto:support@malamadigitalcare.com?subject=Support%20Request', '_self')}
                       variant="outline"
-                      className="text-[14px] md:text-[16px] whitespace-nowrap w-full sm:w-auto justify-center"
+                      className="text-[14px] md:text-[16px] whitespace-nowrap w-full sm:w-auto justify-center active:scale-95 transition-transform"
                       style={{ borderColor: '#2D9596', color: '#2D9596' }}
                     >
                       <Mail className="w-4 h-4 mr-2 flex-shrink-0" />
@@ -460,7 +460,7 @@ export function CaregiverDashboard({ currentView, onNavigate, onLogout }: Caregi
                 <button
                   key={item.id}
                   onClick={() => onNavigate(item.id)}
-                  className="flex flex-col items-center gap-1 p-3 rounded-xl transition-all"
+                  className="flex flex-col items-center gap-1 p-3 rounded-xl transition-all active:scale-95 transition-transform"
                   style={{
                     background: isActive ? '#E6F7F4' : 'transparent',
                     color: isActive ? '#2D9596' : '#6B7280'
