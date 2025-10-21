@@ -57,7 +57,7 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
 
             {/* Main Heading */}
             <h1
-              className="mb-6 text-[48px] md:text-[64px] lg:text-[72px]"
+              className="mb-6 text-[40px] md:text-[48px]"
               style={{
                 fontWeight: 700,
                 lineHeight: 1.1,
@@ -94,7 +94,7 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
   <div className="max-w-[1280px] mx-auto px-6 md:px-16">
     {/* Centered Title */}
     <div className="text-center mb-12">
-      <h2 className="text-[32px] md:text-[48px]" style={{ fontWeight: 700, lineHeight: 1.2, color: '#265073' }}>
+      <h2 className="text-[32px] md:text-[40px]" style={{ fontWeight: 700, lineHeight: 1.2, color: '#265073' }}>
         How The Journey Started
       </h2>
     </div>
@@ -148,7 +148,7 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
           {/* Section Title */}
           <div className="text-center mb-16">
             <h2
-              className="text-[#2D3748] mb-6 text-[32px] md:text-[48px]"
+              className="text-[#2D3748] mb-6 text-[32px] md:text-[40px]"
               style={{ fontWeight: 700, lineHeight: 1.2 }}
             >
               Our Mission & Values
@@ -252,7 +252,7 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
           {/* Section Title */}
           <div className="text-center mb-16">
             <h2
-              className="text-[32px] md:text-[48px]"
+              className="text-[32px] md:text-[40px]"
               style={{
                 fontWeight: 700,
                 lineHeight: 1.2,
@@ -306,7 +306,7 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
               </div>
               <a
                 href="#"
-                className="text-[#2D3748] hover:text-[#4DB8A8] transition-colors mt-auto"
+                className="text-[#2D3748] hover:text-[#2D9596] transition-colors mt-auto"
               >
                 <Linkedin className="w-6 h-6" strokeWidth={2} />
               </a>
@@ -353,7 +353,7 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
               </div>
               <a
                 href="#"
-                className="text-[#2D3748] hover:text-[#4DB8A8] transition-colors mt-auto"
+                className="text-[#2D3748] hover:text-[#2D9596] transition-colors mt-auto"
               >
                 <Linkedin className="w-6 h-6" strokeWidth={2} />
               </a>
@@ -400,7 +400,7 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
               </div>
               <a
                 href="#"
-                className="text-[#2D3748] hover:text-[#4DB8A8] transition-colors mt-auto"
+                className="text-[#2D3748] hover:text-[#2D9596] transition-colors mt-auto"
               >
                 <Linkedin className="w-6 h-6" strokeWidth={2} />
               </a>
@@ -448,16 +448,16 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
             <button
               onClick={() => onNavigate("careers")}
               onMouseEnter={(e) => {
-                e.currentTarget.style.background = '#1F6B6C';
-                e.currentTarget.style.boxShadow = '0 8px 20px rgba(45, 149, 150, 0.7), 0 4px 8px rgba(45, 149, 150, 0.4)';
-                e.currentTarget.style.filter = 'brightness(1.15)';
+                e.currentTarget.style.background = '#257D7E';
+                e.currentTarget.style.boxShadow = '0 8px 20px rgba(45, 149, 150, 0.4)';
+                e.currentTarget.style.transform = 'translateY(-2px)';
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.background = '#2D9596';
                 e.currentTarget.style.boxShadow = 'none';
-                e.currentTarget.style.filter = 'brightness(1)';
+                e.currentTarget.style.transform = 'translateY(0)';
               }}
-              className="text-white transition-all"
+              className="text-white transition-all active:scale-95"
               style={{
                 fontSize: "18px",
                 padding: "14px 32px",

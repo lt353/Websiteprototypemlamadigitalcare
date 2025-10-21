@@ -76,7 +76,7 @@ export function ContactPage({ onNavigate }: ContactPageProps) {
         }}>
         <div className="max-w-[1280px] mx-auto px-6 md:px-16 text-center">
           <h1
-            className="text-[#2D3748] mb-6 text-[40px] md:text-[56px]"
+            className="text-[#2D3748] mb-6 text-[40px] md:text-[48px]"
             style={{ fontWeight: 700, lineHeight: 1.2 }}
           >
             Let's Start a Conversation
@@ -136,7 +136,7 @@ export function ContactPage({ onNavigate }: ContactPageProps) {
                     </p>
                     <a
                       href="tel:+18085551234"
-                      className="text-[#2D3748] hover:text-[#4DB8A8] transition-colors"
+                      className="text-[#2D3748] hover:text-[#2D9596] transition-colors"
                       style={{
                         fontSize: "16px",
                         lineHeight: 1.5,
@@ -165,7 +165,7 @@ export function ContactPage({ onNavigate }: ContactPageProps) {
                     </p>
                     <a
                       href="mailto:hello@digitalkupuna.com"
-                      className="text-[#2D3748] hover:text-[#4DB8A8] transition-colors"
+                      className="text-[#2D3748] hover:text-[#2D9596] transition-colors"
                       style={{
                         fontSize: "16px",
                         lineHeight: 1.5,
@@ -352,7 +352,7 @@ export function ContactPage({ onNavigate }: ContactPageProps) {
                         firstName: e.target.value,
                       })
                     }
-                    className="w-full border-2 border-[#E2E8F0] rounded-lg bg-white text-[#2D3748] focus:border-[#4DB8A8] focus:outline-none focus:ring-2 focus:ring-[#4DB8A8]/20 transition-colors"
+                    className="w-full border-2 border-[#E2E8F0] rounded-lg bg-white text-[#2D3748] focus:border-[#2D9596] focus:outline-none focus:ring-2 focus:ring-[#2D9596]/20 transition-colors"
                     style={{
                       padding: "14px 16px",
                       fontSize: "16px",
@@ -385,7 +385,7 @@ export function ContactPage({ onNavigate }: ContactPageProps) {
                         lastName: e.target.value,
                       })
                     }
-                    className="w-full border-2 border-[#E2E8F0] rounded-lg bg-white text-[#2D3748] focus:border-[#4DB8A8] focus:outline-none focus:ring-2 focus:ring-[#4DB8A8]/20 transition-colors"
+                    className="w-full border-2 border-[#E2E8F0] rounded-lg bg-white text-[#2D3748] focus:border-[#2D9596] focus:outline-none focus:ring-2 focus:ring-[#2D9596]/20 transition-colors"
                     style={{
                       padding: "14px 16px",
                       fontSize: "16px",
@@ -418,7 +418,7 @@ export function ContactPage({ onNavigate }: ContactPageProps) {
                         email: e.target.value,
                       })
                     }
-                    className="w-full border-2 border-[#E2E8F0] rounded-lg bg-white text-[#2D3748] focus:border-[#4DB8A8] focus:outline-none focus:ring-2 focus:ring-[#4DB8A8]/20 transition-colors"
+                    className="w-full border-2 border-[#E2E8F0] rounded-lg bg-white text-[#2D3748] focus:border-[#2D9596] focus:outline-none focus:ring-2 focus:ring-[#2D9596]/20 transition-colors"
                     style={{
                       padding: "14px 16px",
                       fontSize: "16px",
@@ -451,7 +451,7 @@ export function ContactPage({ onNavigate }: ContactPageProps) {
                         phone: e.target.value,
                       })
                     }
-                    className="w-full border-2 border-[#E2E8F0] rounded-lg bg-white text-[#2D3748] focus:border-[#4DB8A8] focus:outline-none focus:ring-2 focus:ring-[#4DB8A8]/20 transition-colors"
+                    className="w-full border-2 border-[#E2E8F0] rounded-lg bg-white text-[#2D3748] focus:border-[#2D9596] focus:outline-none focus:ring-2 focus:ring-[#2D9596]/20 transition-colors"
                     style={{
                       padding: "14px 16px",
                       fontSize: "16px",
@@ -549,7 +549,7 @@ export function ContactPage({ onNavigate }: ContactPageProps) {
                         island: e.target.value,
                       })
                     }
-                    className="w-full border-2 border-[#E2E8F0] rounded-lg bg-white text-[#2D3748] focus:border-[#4DB8A8] focus:outline-none focus:ring-2 focus:ring-[#4DB8A8]/20 transition-colors"
+                    className="w-full border-2 border-[#E2E8F0] rounded-lg bg-white text-[#2D3748] focus:border-[#2D9596] focus:outline-none focus:ring-2 focus:ring-[#2D9596]/20 transition-colors"
                     style={{
                       padding: "14px 16px",
                       fontSize: "16px",
@@ -654,7 +654,7 @@ export function ContactPage({ onNavigate }: ContactPageProps) {
                         hearAbout: e.target.value,
                       })
                     }
-                    className="w-full border-2 border-[#E2E8F0] rounded-lg bg-white text-[#2D3748] focus:border-[#4DB8A8] focus:outline-none focus:ring-2 focus:ring-[#4DB8A8]/20 transition-colors"
+                    className="w-full border-2 border-[#E2E8F0] rounded-lg bg-white text-[#2D3748] focus:border-[#2D9596] focus:outline-none focus:ring-2 focus:ring-[#2D9596]/20 transition-colors"
                     style={{
                       padding: "14px 16px",
                       fontSize: "16px",
@@ -701,7 +701,7 @@ export function ContactPage({ onNavigate }: ContactPageProps) {
                       })
                     }
                     rows={5}
-                    className="w-full border-2 border-[#E2E8F0] rounded-lg bg-white text-[#2D3748] focus:border-[#4DB8A8] focus:outline-none focus:ring-2 focus:ring-[#4DB8A8]/20 transition-colors resize-none"
+                    className="w-full border-2 border-[#E2E8F0] rounded-lg bg-white text-[#2D3748] focus:border-[#2D9596] focus:outline-none focus:ring-2 focus:ring-[#2D9596]/20 transition-colors resize-none"
                     style={{
                       padding: "14px 16px",
                       fontSize: "16px",
@@ -736,7 +736,7 @@ export function ContactPage({ onNavigate }: ContactPageProps) {
                 </div>
                 {/* Privacy Notice */}
                 <div className="flex items-start gap-3 bg-[#F5F1E8] p-4 rounded-lg">
-                  <Shield className="w-5 h-5 text-[#4DB8A8] flex-shrink-0 mt-0.5" />
+                  <Shield className="w-5 h-5 text-[#2D9596] flex-shrink-0 mt-0.5" />
                   <p
                     className="text-[#2D3748]"
                     style={{
@@ -751,7 +751,7 @@ export function ContactPage({ onNavigate }: ContactPageProps) {
                 {/* Submit Button */}
                 <button
                   type="submit"
-                  className="w-full bg-[#4DB8A8] text-white hover:bg-[#3DA089] transition-colors rounded-lg"
+                  className="w-full bg-[#2D9596] text-white hover:bg-[#3DA089] transition-colors rounded-lg"
                   style={{
                     padding: "16px 24px",
                     fontSize: "18px",
@@ -780,7 +780,7 @@ export function ContactPage({ onNavigate }: ContactPageProps) {
         <div className="max-w-[1280px] mx-auto px-6 md:px-16">
           <div className="text-center mb-16">
             <h2
-              className="text-[#2D3748] text-[32px] md:text-[48px]"
+              className="text-[#2D3748] text-[32px] md:text-[40px]"
               style={{ fontWeight: 700, lineHeight: 1.2 }}
             >
               FAQs

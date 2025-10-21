@@ -557,20 +557,18 @@ export function CareersPage({ onNavigate }: CareersPageProps) {
                   "mailto:careers@malamadigitalcare.com?subject=Digital Literacy Instructor Application")
               }
               onMouseEnter={(e) => {
-                e.currentTarget.style.background = '#9AD0C2';
-                e.currentTarget.style.color = '#FFFFFF';
-                e.currentTarget.style.boxShadow = '0 8px 20px rgba(154, 208, 194, 0.6)';
+                e.currentTarget.style.background = '#F0FDFA';
+                e.currentTarget.style.transform = 'translateY(-2px)';
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.background = '#FFFFFF';
-                e.currentTarget.style.color = '#2D9596';
-                e.currentTarget.style.boxShadow = 'none';
+                e.currentTarget.style.transform = 'translateY(0)';
               }}
-              className="h-14 px-8 text-[18px] transition-all inline-flex items-center justify-center gap-2 rounded-md font-medium"
+              className="h-14 px-8 text-[18px] transition-all inline-flex items-center justify-center gap-2 rounded-md font-medium border-2 active:scale-95"
               style={{
                 background: "#FFFFFF",
                 color: "#2D9596",
-                border: "none",
+                borderColor: "#2D9596",
                 cursor: "pointer",
               }}
             >
@@ -582,16 +580,16 @@ export function CareersPage({ onNavigate }: CareersPageProps) {
                 (window.location.href = "tel:8085551234")
               }
               onMouseEnter={(e) => {
-                e.currentTarget.style.background = '#B8E6E3';
-                e.currentTarget.style.color = '#265073';
-                e.currentTarget.style.boxShadow = '0 8px 20px rgba(241, 250, 218, 0.8)';
+                e.currentTarget.style.background = '#1E4A5F';
+                e.currentTarget.style.boxShadow = '0 8px 20px rgba(38, 80, 115, 0.4)';
+                e.currentTarget.style.transform = 'translateY(-2px)';
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.background = '#265073';
-                e.currentTarget.style.color = '#FFFFFF';
                 e.currentTarget.style.boxShadow = 'none';
+                e.currentTarget.style.transform = 'translateY(0)';
               }}
-              className="h-14 px-8 text-[18px] transition-all inline-flex items-center justify-center gap-2 rounded-md font-medium"
+              className="h-14 px-8 text-[18px] transition-all inline-flex items-center justify-center gap-2 rounded-md font-medium active:scale-95"
               style={{
                 background: "#265073",
                 color: "#FFFFFF",
