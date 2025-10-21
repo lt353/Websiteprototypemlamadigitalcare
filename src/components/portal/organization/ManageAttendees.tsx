@@ -14,18 +14,60 @@ interface ManageAttendeesProps {
 
 export function ManageAttendees({ workshopTitle = 'Scam Prevention Workshop', onBack }: ManageAttendeesProps) {
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedResidents, setSelectedResidents] = useState<string[]>(['1', '3', '5']);
 
+  // All 42 residents at Sunset Senior Living
   const allResidents = [
-    { id: '1', name: 'Mary Johnson', room: '204', email: 'mary.j@email.com', phone: '(808) 555-0123', enrolled: true, attended: true },
-    { id: '2', name: 'Robert Chen', room: '312', email: 'robert.c@email.com', phone: '(808) 555-0124', enrolled: false, attended: false },
-    { id: '3', name: 'Patricia Williams', room: '108', email: 'patricia.w@email.com', phone: '(808) 555-0125', enrolled: true, attended: true },
-    { id: '4', name: 'James Martinez', room: '215', email: 'james.m@email.com', phone: '(808) 555-0126', enrolled: false, attended: false },
-    { id: '5', name: 'Linda Davis', room: '403', email: 'linda.d@email.com', phone: '(808) 555-0127', enrolled: true, attended: false },
-    { id: '6', name: 'Michael Brown', room: '301', email: 'michael.b@email.com', phone: '(808) 555-0128', enrolled: false, attended: false },
-    { id: '7', name: 'Barbara Garcia', room: '209', email: 'barbara.g@email.com', phone: '(808) 555-0129', enrolled: false, attended: false },
-    { id: '8', name: 'William Rodriguez', room: '156', email: 'william.r@email.com', phone: '(808) 555-0130', enrolled: false, attended: false },
+    // Workshop attendees (24 enrolled)
+    { id: '1', name: 'Margaret Liu', room: 'Room 204', email: 'margaret.liu@email.com', phone: '(808) 555-0201', enrolled: true, attended: true },
+    { id: '2', name: 'Robert Kim', room: 'Room 312', email: 'robert.kim@email.com', phone: '(808) 555-0301', enrolled: true, attended: true },
+    { id: '3', name: 'Helen Martinez', room: 'Room 108', email: 'helen.martinez@email.com', phone: '(808) 555-0108', enrolled: true, attended: true },
+    { id: '4', name: 'Dorothy Santos', room: 'Room 215', email: 'dorothy.santos@email.com', phone: '(808) 555-0215', enrolled: true, attended: false },
+    { id: '5', name: 'Frank Wong', room: 'Room 401', email: 'frank.wong@email.com', phone: '(808) 555-0401', enrolled: true, attended: true },
+    { id: '6', name: 'Alice Chen', room: 'Room 118', email: 'alice.chen@email.com', phone: '(808) 555-0118', enrolled: true, attended: true },
+    { id: '7', name: 'George Nakamura', room: 'Room 325', email: 'george.nakamura@email.com', phone: '(808) 555-0325', enrolled: true, attended: true },
+    { id: '8', name: 'Betty Yamamoto', room: 'Room 209', email: 'betty.yamamoto@email.com', phone: '(808) 555-0209', enrolled: true, attended: true },
+    { id: '9', name: 'Thomas Park', room: 'Room 418', email: 'thomas.park@email.com', phone: '(808) 555-0418', enrolled: true, attended: true },
+    { id: '10', name: 'Patricia Lee', room: 'Room 209', email: 'patricia.lee@email.com', phone: '(808) 555-0299', enrolled: true, attended: true },
+    { id: '11', name: 'William Chen', room: 'Room 305', email: 'william.chen@email.com', phone: '(808) 555-0305', enrolled: true, attended: true },
+    { id: '12', name: 'Mary Johnson', room: 'Room 401', email: 'mary.johnson@email.com', phone: '(808) 555-0123', enrolled: true, attended: true },
+    { id: '13', name: 'Richard Silva', room: 'Room 122', email: 'richard.silva@email.com', phone: '(808) 555-0122', enrolled: true, attended: true },
+    { id: '14', name: 'Linda Fujimoto', room: 'Room 233', email: 'linda.fujimoto@email.com', phone: '(808) 555-0233', enrolled: true, attended: true },
+    { id: '15', name: 'Charles Brown', room: 'Room 156', email: 'charles.brown@email.com', phone: '(808) 555-0156', enrolled: true, attended: true },
+    { id: '16', name: 'Susan Lee', room: 'Room 289', email: 'susan.lee@email.com', phone: '(808) 555-0289', enrolled: true, attended: true },
+    { id: '17', name: 'Daniel Kato', room: 'Room 331', email: 'daniel.kato@email.com', phone: '(808) 555-0331', enrolled: true, attended: false },
+    { id: '18', name: 'Nancy Wong', room: 'Room 412', email: 'nancy.wong@email.com', phone: '(808) 555-0412', enrolled: true, attended: true },
+    { id: '19', name: 'Steven Park', room: 'Room 367', email: 'steven.park@email.com', phone: '(808) 555-0367', enrolled: true, attended: true },
+    { id: '20', name: 'Carol Kim', room: 'Room 198', email: 'carol.kim@email.com', phone: '(808) 555-0198', enrolled: true, attended: true },
+    { id: '21', name: 'Mark Tanaka', room: 'Room 421', email: 'mark.tanaka@email.com', phone: '(808) 555-0421', enrolled: true, attended: true },
+    { id: '22', name: 'Ruth Nakamura', room: 'Room 134', email: 'ruth.nakamura@email.com', phone: '(808) 555-0134', enrolled: true, attended: true },
+    { id: '23', name: 'James Watanabe', room: 'Room 278', email: 'james.watanabe@email.com', phone: '(808) 555-0278', enrolled: true, attended: true },
+    { id: '24', name: 'Barbara Yamamoto', room: 'Room 156', email: 'barbara.yamamoto@email.com', phone: '(808) 555-0166', enrolled: true, attended: true },
+
+    // Additional residents (not enrolled - 18 residents)
+    { id: '25', name: 'David Rodriguez', room: 'Room 145', email: 'david.rodriguez@email.com', phone: '(808) 555-0145', enrolled: false, attended: false },
+    { id: '26', name: 'Jennifer Tanaka', room: 'Room 267', email: 'jennifer.tanaka@email.com', phone: '(808) 555-0267', enrolled: false, attended: false },
+    { id: '27', name: 'Michael Santos', room: 'Room 334', email: 'michael.santos@email.com', phone: '(808) 555-0334', enrolled: false, attended: false },
+    { id: '28', name: 'Elizabeth Kim', room: 'Room 189', email: 'elizabeth.kim@email.com', phone: '(808) 555-0189', enrolled: false, attended: false },
+    { id: '29', name: 'Joseph Lee', room: 'Room 423', email: 'joseph.lee@email.com', phone: '(808) 555-0423', enrolled: false, attended: false },
+    { id: '30', name: 'Sarah Wong', room: 'Room 256', email: 'sarah.wong@email.com', phone: '(808) 555-0256', enrolled: false, attended: false },
+    { id: '31', name: 'Christopher Chen', room: 'Room 378', email: 'christopher.chen@email.com', phone: '(808) 555-0378', enrolled: false, attended: false },
+    { id: '32', name: 'Karen Nakamura', room: 'Room 212', email: 'karen.nakamura@email.com', phone: '(808) 555-0212', enrolled: false, attended: false },
+    { id: '33', name: 'Matthew Park', room: 'Room 345', email: 'matthew.park@email.com', phone: '(808) 555-0345', enrolled: false, attended: false },
+    { id: '34', name: 'Jessica Martinez', room: 'Room 167', email: 'jessica.martinez@email.com', phone: '(808) 555-0167', enrolled: false, attended: false },
+    { id: '35', name: 'Andrew Liu', room: 'Room 289', email: 'andrew.liu@email.com', phone: '(808) 555-0289', enrolled: false, attended: false },
+    { id: '36', name: 'Michelle Fujimoto', room: 'Room 401', email: 'michelle.fujimoto@email.com', phone: '(808) 555-0401', enrolled: false, attended: false },
+    { id: '37', name: 'Daniel Brown', room: 'Room 223', email: 'daniel.brown@email.com', phone: '(808) 555-0223', enrolled: false, attended: false },
+    { id: '38', name: 'Lisa Yamamoto', room: 'Room 356', email: 'lisa.yamamoto@email.com', phone: '(808) 555-0356', enrolled: false, attended: false },
+    { id: '39', name: 'Kevin Silva', room: 'Room 178', email: 'kevin.silva@email.com', phone: '(808) 555-0178', enrolled: false, attended: false },
+    { id: '40', name: 'Amanda Kato', room: 'Room 412', email: 'amanda.kato@email.com', phone: '(808) 555-0412', enrolled: false, attended: false },
+    { id: '41', name: 'Ryan Watanabe', room: 'Room 234', email: 'ryan.watanabe@email.com', phone: '(808) 555-0234', enrolled: false, attended: false },
+    { id: '42', name: 'Emily Rodriguez', room: 'Room 389', email: 'emily.rodriguez@email.com', phone: '(808) 555-0389', enrolled: false, attended: false },
   ];
+
+  // Initialize with the 24 enrolled residents (IDs 1-24)
+  const [selectedResidents, setSelectedResidents] = useState<string[]>(
+    allResidents.filter(r => r.enrolled).map(r => r.id)
+  );
 
   const filteredResidents = allResidents.filter(resident =>
     resident.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -79,7 +121,7 @@ export function ManageAttendees({ workshopTitle = 'Scam Prevention Workshop', on
             Manage Attendees
           </h1>
           <p className="text-[18px]" style={{ color: '#6B7280' }}>
-            {workshopTitle} • December 5, 2025 at 2:00 PM
+            {workshopTitle} • November 30, 2025 at 2:00 PM
           </p>
         </div>
 

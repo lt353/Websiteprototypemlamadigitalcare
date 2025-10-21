@@ -12,26 +12,297 @@ interface ResidentProfileProps {
   onBack: () => void;
 }
 
+// Helper function to get resident data based on name
+function getResidentData(name: string) {
+  const residentProfiles: Record<string, any> = {
+    'Margaret Liu': {
+      room: '204', joinedDate: 'June 2025', email: 'margaret.liu@email.com', phone: '(808) 555-0201',
+      emergencyContact: 'David Liu (Son)', emergencyPhone: '(808) 555-0202',
+      plan: 'Facility Subscription', sessionsCompleted: 6, skillsMastered: 12, currentStreak: 3,
+      lastSession: 'Nov 20', skills: [
+        { skill: 'Email Basics', progress: 100, status: 'completed' },
+        { skill: 'Scam Prevention', progress: 100, status: 'completed' },
+        { skill: 'Video Calling', progress: 75, status: 'in-progress' },
+        { skill: 'Photo Management', progress: 50, status: 'in-progress' }
+      ]
+    },
+    'Robert Kim': {
+      room: '312', joinedDate: 'March 2025', email: 'robert.kim@email.com', phone: '(808) 555-0301',
+      emergencyContact: 'Jennifer Kim (Daughter)', emergencyPhone: '(808) 555-0302',
+      plan: 'Premium ($149/mo)', sessionsCompleted: 8, skillsMastered: 15, currentStreak: 5,
+      lastSession: 'Nov 20', skills: [
+        { skill: 'Email Basics', progress: 100, status: 'completed' },
+        { skill: 'Video Calling', progress: 100, status: 'completed' },
+        { skill: 'Scam Prevention', progress: 100, status: 'completed' },
+        { skill: 'Calendar Management', progress: 80, status: 'in-progress' }
+      ]
+    },
+    'Helen Martinez': {
+      room: '108', joinedDate: 'July 2025', email: 'helen.martinez@email.com', phone: '(808) 555-0108',
+      emergencyContact: 'Carlos Martinez (Son)', emergencyPhone: '(808) 555-0109',
+      plan: 'Facility Subscription', sessionsCompleted: 5, skillsMastered: 9, currentStreak: 2,
+      lastSession: 'Nov 20', skills: [
+        { skill: 'Video Calling', progress: 100, status: 'completed' },
+        { skill: 'Scam Prevention', progress: 100, status: 'completed' },
+        { skill: 'Email Basics', progress: 60, status: 'in-progress' }
+      ]
+    },
+    'Dorothy Santos': {
+      room: '215', joinedDate: 'October 2025', email: 'dorothy.santos@email.com', phone: '(808) 555-0215',
+      emergencyContact: 'Maria Santos (Daughter)', emergencyPhone: '(808) 555-0216',
+      plan: 'Workshop Only', sessionsCompleted: 3, skillsMastered: 6, currentStreak: 1,
+      lastSession: 'Nov 12', skills: [
+        { skill: 'Scam Prevention', progress: 100, status: 'completed' },
+        { skill: 'Email Basics', progress: 50, status: 'in-progress' }
+      ]
+    },
+    'Frank Wong': {
+      room: '401', joinedDate: 'May 2025', email: 'frank.wong@email.com', phone: '(808) 555-0401',
+      emergencyContact: 'Lisa Wong (Daughter)', emergencyPhone: '(808) 555-0403',
+      plan: 'Standard ($79/mo)', sessionsCompleted: 7, skillsMastered: 13, currentStreak: 4,
+      lastSession: 'Nov 20', skills: [
+        { skill: 'Email Basics', progress: 100, status: 'completed' },
+        { skill: 'Video Calling', progress: 100, status: 'completed' },
+        { skill: 'Scam Prevention', progress: 100, status: 'completed' },
+        { skill: 'Password Security', progress: 70, status: 'in-progress' }
+      ]
+    },
+    'Alice Chen': {
+      room: '118', joinedDate: 'February 2025', email: 'alice.chen@email.com', phone: '(808) 555-0118',
+      emergencyContact: 'Michael Chen (Son)', emergencyPhone: '(808) 555-0119',
+      plan: 'Premium ($149/mo)', sessionsCompleted: 9, skillsMastered: 16, currentStreak: 6,
+      lastSession: 'Nov 20', skills: [
+        { skill: 'Email Basics', progress: 100, status: 'completed' },
+        { skill: 'Video Calling', progress: 100, status: 'completed' },
+        { skill: 'Scam Prevention', progress: 100, status: 'completed' },
+        { skill: 'Calendar Management', progress: 100, status: 'completed' },
+        { skill: 'Social Media Safety', progress: 75, status: 'in-progress' }
+      ]
+    },
+    'Mary Johnson': {
+      room: '401', joinedDate: 'August 2025', email: 'mary.johnson@email.com', phone: '(808) 555-0123',
+      emergencyContact: 'Sarah Miller (Daughter)', emergencyPhone: '(808) 555-9876',
+      plan: 'Facility Subscription', sessionsCompleted: 10, skillsMastered: 18, currentStreak: 4,
+      lastSession: 'Nov 20', skills: [
+        { skill: 'Email Basics', progress: 100, status: 'completed' },
+        { skill: 'Video Calling', progress: 100, status: 'completed' },
+        { skill: 'Photo Management', progress: 100, status: 'completed' },
+        { skill: 'Password Security', progress: 100, status: 'completed' },
+        { skill: 'Scam Prevention', progress: 100, status: 'completed' },
+        { skill: 'Calendar Management', progress: 85, status: 'in-progress' }
+      ]
+    },
+    'George Nakamura': {
+      room: '325', joinedDate: 'August 2025', email: 'george.nakamura@email.com', phone: '(808) 555-0325',
+      emergencyContact: 'Ken Nakamura (Son)', emergencyPhone: '(808) 555-0326',
+      plan: 'Facility Subscription', sessionsCompleted: 4, skillsMastered: 8, currentStreak: 2,
+      lastSession: 'Nov 20', skills: [
+        { skill: 'Scam Prevention', progress: 100, status: 'completed' },
+        { skill: 'Email Basics', progress: 70, status: 'in-progress' },
+        { skill: 'Video Calling', progress: 40, status: 'in-progress' }
+      ]
+    },
+    'Betty Yamamoto': {
+      room: '209', joinedDate: 'June 2025', email: 'betty.yamamoto@email.com', phone: '(808) 555-0209',
+      emergencyContact: 'Tom Yamamoto (Son)', emergencyPhone: '(808) 555-0210',
+      plan: 'Standard ($79/mo)', sessionsCompleted: 6, skillsMastered: 11, currentStreak: 3,
+      lastSession: 'Nov 20', skills: [
+        { skill: 'Email Basics', progress: 100, status: 'completed' },
+        { skill: 'Scam Prevention', progress: 100, status: 'completed' },
+        { skill: 'Video Calling', progress: 80, status: 'in-progress' },
+        { skill: 'Calendar Management', progress: 50, status: 'in-progress' }
+      ]
+    },
+    'Thomas Park': {
+      room: '418', joinedDate: 'July 2025', email: 'thomas.park@email.com', phone: '(808) 555-0418',
+      emergencyContact: 'Susan Park (Daughter)', emergencyPhone: '(808) 555-0419',
+      plan: 'Facility Subscription', sessionsCompleted: 5, skillsMastered: 10, currentStreak: 3,
+      lastSession: 'Nov 20', skills: [
+        { skill: 'Scam Prevention', progress: 100, status: 'completed' },
+        { skill: 'Email Basics', progress: 100, status: 'completed' },
+        { skill: 'Video Calling', progress: 60, status: 'in-progress' }
+      ]
+    },
+    'Patricia Lee': {
+      room: '209', joinedDate: 'April 2025', email: 'patricia.lee@email.com', phone: '(808) 555-0299',
+      emergencyContact: 'James Lee (Son)', emergencyPhone: '(808) 555-0298',
+      plan: 'Premium ($149/mo)', sessionsCompleted: 8, skillsMastered: 14, currentStreak: 5,
+      lastSession: 'Nov 20', skills: [
+        { skill: 'Email Basics', progress: 100, status: 'completed' },
+        { skill: 'Video Calling', progress: 100, status: 'completed' },
+        { skill: 'Scam Prevention', progress: 100, status: 'completed' },
+        { skill: 'Photo Management', progress: 100, status: 'completed' },
+        { skill: 'Calendar Management', progress: 70, status: 'in-progress' }
+      ]
+    },
+    'William Chen': {
+      room: '305', joinedDate: 'May 2025', email: 'william.chen@email.com', phone: '(808) 555-0305',
+      emergencyContact: 'Amy Chen (Daughter)', emergencyPhone: '(808) 555-0306',
+      plan: 'Standard ($79/mo)', sessionsCompleted: 7, skillsMastered: 12, currentStreak: 4,
+      lastSession: 'Nov 20', skills: [
+        { skill: 'Email Basics', progress: 100, status: 'completed' },
+        { skill: 'Scam Prevention', progress: 100, status: 'completed' },
+        { skill: 'Video Calling', progress: 100, status: 'completed' },
+        { skill: 'Password Security', progress: 65, status: 'in-progress' }
+      ]
+    },
+    'Richard Silva': {
+      room: '122', joinedDate: 'October 2025', email: 'richard.silva@email.com', phone: '(808) 555-0122',
+      emergencyContact: 'Maria Silva (Daughter)', emergencyPhone: '(808) 555-0123',
+      plan: 'Workshop Only', sessionsCompleted: 3, skillsMastered: 5, currentStreak: 1,
+      lastSession: 'Nov 20', skills: [
+        { skill: 'Scam Prevention', progress: 100, status: 'completed' },
+        { skill: 'Email Basics', progress: 40, status: 'in-progress' }
+      ]
+    },
+    'Linda Fujimoto': {
+      room: '233', joinedDate: 'September 2025', email: 'linda.fujimoto@email.com', phone: '(808) 555-0233',
+      emergencyContact: 'John Fujimoto (Son)', emergencyPhone: '(808) 555-0234',
+      plan: 'Basic ($39/mo)', sessionsCompleted: 6, skillsMastered: 11, currentStreak: 3,
+      lastSession: 'Nov 20', skills: [
+        { skill: 'Email Basics', progress: 100, status: 'completed' },
+        { skill: 'Scam Prevention', progress: 100, status: 'completed' },
+        { skill: 'Video Calling', progress: 75, status: 'in-progress' }
+      ]
+    },
+    'Charles Brown': {
+      room: '156', joinedDate: 'January 2025', email: 'charles.brown@email.com', phone: '(808) 555-0156',
+      emergencyContact: 'Laura Brown (Daughter)', emergencyPhone: '(808) 555-0157',
+      plan: 'Premium ($149/mo)', sessionsCompleted: 9, skillsMastered: 16, currentStreak: 6,
+      lastSession: 'Nov 20', skills: [
+        { skill: 'Email Basics', progress: 100, status: 'completed' },
+        { skill: 'Video Calling', progress: 100, status: 'completed' },
+        { skill: 'Scam Prevention', progress: 100, status: 'completed' },
+        { skill: 'Calendar Management', progress: 100, status: 'completed' },
+        { skill: 'Photo Management', progress: 90, status: 'in-progress' }
+      ]
+    },
+    'Susan Lee': {
+      room: '289', joinedDate: 'July 2025', email: 'susan.lee@email.com', phone: '(808) 555-0289',
+      emergencyContact: 'Peter Lee (Son)', emergencyPhone: '(808) 555-0290',
+      plan: 'Facility Subscription', sessionsCompleted: 5, skillsMastered: 9, currentStreak: 2,
+      lastSession: 'Nov 20', skills: [
+        { skill: 'Scam Prevention', progress: 100, status: 'completed' },
+        { skill: 'Email Basics', progress: 100, status: 'completed' },
+        { skill: 'Video Calling', progress: 55, status: 'in-progress' }
+      ]
+    },
+    'Daniel Kato': {
+      room: '331', joinedDate: 'November 2025', email: 'daniel.kato@email.com', phone: '(808) 555-0331',
+      emergencyContact: 'Emily Kato (Daughter)', emergencyPhone: '(808) 555-0332',
+      plan: 'Workshop Only', sessionsCompleted: 2, skillsMastered: 4, currentStreak: 1,
+      lastSession: 'Nov 8', skills: [
+        { skill: 'Email Basics', progress: 60, status: 'in-progress' },
+        { skill: 'Scam Prevention', progress: 30, status: 'in-progress' }
+      ]
+    },
+    'Nancy Wong': {
+      room: '412', joinedDate: 'May 2025', email: 'nancy.wong@email.com', phone: '(808) 555-0412',
+      emergencyContact: 'Robert Wong (Son)', emergencyPhone: '(808) 555-0413',
+      plan: 'Standard ($79/mo)', sessionsCompleted: 7, skillsMastered: 13, currentStreak: 4,
+      lastSession: 'Nov 20', skills: [
+        { skill: 'Email Basics', progress: 100, status: 'completed' },
+        { skill: 'Video Calling', progress: 100, status: 'completed' },
+        { skill: 'Scam Prevention', progress: 100, status: 'completed' },
+        { skill: 'Calendar Management', progress: 70, status: 'in-progress' }
+      ]
+    },
+    'Steven Park': {
+      room: '367', joinedDate: 'August 2025', email: 'steven.park@email.com', phone: '(808) 555-0367',
+      emergencyContact: 'Michelle Park (Daughter)', emergencyPhone: '(808) 555-0368',
+      plan: 'Facility Subscription', sessionsCompleted: 4, skillsMastered: 7, currentStreak: 2,
+      lastSession: 'Nov 20', skills: [
+        { skill: 'Scam Prevention', progress: 100, status: 'completed' },
+        { skill: 'Email Basics', progress: 65, status: 'in-progress' },
+        { skill: 'Video Calling', progress: 45, status: 'in-progress' }
+      ]
+    },
+    'Carol Kim': {
+      room: '198', joinedDate: 'March 2025', email: 'carol.kim@email.com', phone: '(808) 555-0198',
+      emergencyContact: 'Daniel Kim (Son)', emergencyPhone: '(808) 555-0199',
+      plan: 'Premium ($149/mo)', sessionsCompleted: 8, skillsMastered: 15, currentStreak: 5,
+      lastSession: 'Nov 20', skills: [
+        { skill: 'Email Basics', progress: 100, status: 'completed' },
+        { skill: 'Video Calling', progress: 100, status: 'completed' },
+        { skill: 'Scam Prevention', progress: 100, status: 'completed' },
+        { skill: 'Photo Management', progress: 100, status: 'completed' },
+        { skill: 'Password Security', progress: 80, status: 'in-progress' }
+      ]
+    },
+    'Mark Tanaka': {
+      room: '421', joinedDate: 'June 2025', email: 'mark.tanaka@email.com', phone: '(808) 555-0421',
+      emergencyContact: 'Lisa Tanaka (Daughter)', emergencyPhone: '(808) 555-0422',
+      plan: 'Standard ($79/mo)', sessionsCompleted: 6, skillsMastered: 11, currentStreak: 3,
+      lastSession: 'Nov 20', skills: [
+        { skill: 'Email Basics', progress: 100, status: 'completed' },
+        { skill: 'Scam Prevention', progress: 100, status: 'completed' },
+        { skill: 'Video Calling', progress: 90, status: 'in-progress' },
+        { skill: 'Calendar Management', progress: 50, status: 'in-progress' }
+      ]
+    },
+    'Ruth Nakamura': {
+      room: '134', joinedDate: 'July 2025', email: 'ruth.nakamura@email.com', phone: '(808) 555-0134',
+      emergencyContact: 'Brian Nakamura (Son)', emergencyPhone: '(808) 555-0135',
+      plan: 'Facility Subscription', sessionsCompleted: 5, skillsMastered: 10, currentStreak: 3,
+      lastSession: 'Nov 20', skills: [
+        { skill: 'Email Basics', progress: 100, status: 'completed' },
+        { skill: 'Scam Prevention', progress: 100, status: 'completed' },
+        { skill: 'Video Calling', progress: 70, status: 'in-progress' }
+      ]
+    },
+    'James Watanabe': {
+      room: '278', joinedDate: 'April 2025', email: 'james.watanabe@email.com', phone: '(808) 555-0278',
+      emergencyContact: 'Karen Watanabe (Daughter)', emergencyPhone: '(808) 555-0279',
+      plan: 'Premium ($149/mo)', sessionsCompleted: 7, skillsMastered: 14, currentStreak: 4,
+      lastSession: 'Nov 20', skills: [
+        { skill: 'Email Basics', progress: 100, status: 'completed' },
+        { skill: 'Video Calling', progress: 100, status: 'completed' },
+        { skill: 'Scam Prevention', progress: 100, status: 'completed' },
+        { skill: 'Calendar Management', progress: 100, status: 'completed' },
+        { skill: 'Password Security', progress: 60, status: 'in-progress' }
+      ]
+    },
+    'Barbara Yamamoto': {
+      room: '156', joinedDate: 'October 2025', email: 'barbara.yamamoto@email.com', phone: '(808) 555-0166',
+      emergencyContact: 'Steven Yamamoto (Son)', emergencyPhone: '(808) 555-0167',
+      plan: 'Workshop Only', sessionsCompleted: 4, skillsMastered: 8, currentStreak: 2,
+      lastSession: 'Nov 20', skills: [
+        { skill: 'Scam Prevention', progress: 100, status: 'completed' },
+        { skill: 'Email Basics', progress: 70, status: 'in-progress' },
+        { skill: 'Video Calling', progress: 50, status: 'in-progress' }
+      ]
+    },
+  };
+
+  // Default data for residents not in detailed list
+  const defaultData = {
+    room: '100', joinedDate: 'September 2025',
+    email: name.toLowerCase().replace(/ /g, '.') + '@email.com',
+    phone: '(808) 555-0100',
+    emergencyContact: 'Family Member', emergencyPhone: '(808) 555-0101',
+    plan: 'Facility Subscription', sessionsCompleted: 5, skillsMastered: 10, currentStreak: 2,
+    lastSession: 'Nov 18', skills: [
+      { skill: 'Email Basics', progress: 100, status: 'completed' },
+      { skill: 'Video Calling', progress: 75, status: 'in-progress' },
+      { skill: 'Scam Prevention', progress: 50, status: 'in-progress' }
+    ]
+  };
+
+  return residentProfiles[name] || defaultData;
+}
+
 export function ResidentProfile({ residentName = 'Mary Johnson', onBack }: ResidentProfileProps) {
   const [activeTab, setActiveTab] = useState('overview');
 
+  const profileData = getResidentData(residentName);
+
   const residentData = {
     name: residentName,
-    room: '204',
-    joinedDate: 'August 2025',
-    email: 'mary.johnson@email.com',
-    phone: '(808) 555-0123',
-    emergencyContact: 'Sarah Miller (Daughter)',
-    emergencyPhone: '(808) 555-9876',
+    ...profileData,
     status: 'active',
-    plan: 'Included in facility subscription',
-    sessionsCompleted: 8,
-    skillsMastered: 15,
-    currentStreak: 4,
-    lastSession: 'November 20, 2025',
     nextSession: {
       date: 'December 5, 2025',
-      time: '2:00 PM',
+      time: '10:00 AM',
       topic: 'Email & Calendar Basics',
       type: 'Group Workshop'
     }
@@ -43,14 +314,7 @@ export function ResidentProfile({ residentName = 'Mary Johnson', onBack }: Resid
     { label: 'Current Streak', value: `${residentData.currentStreak} weeks`, icon: '🔥' }
   ];
 
-  const skillsProgress = [
-    { skill: 'Email Basics', progress: 100, status: 'completed' },
-    { skill: 'Video Calling', progress: 100, status: 'completed' },
-    { skill: 'Photo Management', progress: 100, status: 'completed' },
-    { skill: 'Password Security', progress: 75, status: 'in-progress' },
-    { skill: 'Calendar Management', progress: 50, status: 'in-progress' },
-    { skill: 'Social Media Safety', progress: 0, status: 'not-started' }
-  ];
+  const skillsProgress = profileData.skills;
 
   const sessionHistory = [
     {
