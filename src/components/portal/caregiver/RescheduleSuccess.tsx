@@ -24,7 +24,7 @@ export function RescheduleSuccess({
           <div className="inline-flex items-center justify-center w-20 h-20 rounded-full mb-6" style={{ background: '#D1FAE5' }}>
             <CheckCircle2 className="w-12 h-12" style={{ color: '#16A34A' }} />
           </div>
-          <h1 className="text-[36px] font-bold mb-4" style={{ color: '#265073' }}>
+          <h1 className="text-2xl md:text-[36px] font-bold mb-4" style={{ color: '#265073' }}>
             Session Rescheduled!
           </h1>
           <p className="text-[20px]" style={{ color: '#6B7280' }}>
@@ -37,7 +37,7 @@ export function RescheduleSuccess({
             <div className="text-center space-y-4">
               <div>
                 <p className="text-[16px]" style={{ color: '#6B7280' }}>New Date & Time</p>
-                <p className="text-[28px] font-bold" style={{ color: '#2D9596' }}>
+                <p className="text-xl md:text-[28px] font-bold" style={{ color: '#2D9596' }}>
                   {newDate} at {newTime}
                 </p>
               </div>

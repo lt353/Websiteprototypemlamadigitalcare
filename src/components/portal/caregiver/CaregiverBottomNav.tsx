@@ -22,7 +22,7 @@ export function CaregiverBottomNav({ currentView, onNavigate }: CaregiverBottomN
         boxShadow: '0 -4px 20px rgba(38, 80, 115, 0.15)'
       }}
     >
-      <div className="grid grid-cols-4 gap-1 p-2">
+      <div className="grid grid-cols-4 gap-2 p-3">
         {navItems.map((item) => {
           const Icon = item.icon;
           const isActive = currentView === item.id;
@@ -31,7 +31,7 @@ export function CaregiverBottomNav({ currentView, onNavigate }: CaregiverBottomN
             <button
               key={item.id}
               onClick={() => onNavigate(item.id)}
-              className="flex flex-col items-center justify-center py-3 px-2 rounded-lg transition-all"
+              className="flex flex-col items-center justify-center py-3 px-3 rounded-lg transition-all"
               style={{
                 background: isActive ? '#E6F7F4' : 'transparent',
                 color: isActive ? '#2D9596' : '#6B7280',
@@ -53,9 +53,9 @@ export function CaregiverBottomNav({ currentView, onNavigate }: CaregiverBottomN
                   strokeWidth: isActive ? 2.5 : 2 
                 }}
               />
-              <span 
-                style={{ 
-                  fontSize: '13px',
+              <span
+                style={{
+                  fontSize: '14px',
                   fontWeight: isActive ? '600' : '500',
                   textAlign: 'center',
                   lineHeight: '1.2'

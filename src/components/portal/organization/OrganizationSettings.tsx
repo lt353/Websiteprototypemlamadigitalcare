@@ -18,7 +18,7 @@ export function OrganizationSettings({ onBack, onNavigateToUpdatePayment }: Orga
           <ArrowLeft className="w-5 h-5" />
           Back to Dashboard
         </button>
-        <h1 className="text-[36px] font-bold mb-8" style={{ color: '#265073' }}>Settings</h1>
+        <h1 className="text-2xl md:text-[36px] font-bold mb-8" style={{ color: '#265073' }}>Settings</h1>
         
         <div className="space-y-6">
           <Card>

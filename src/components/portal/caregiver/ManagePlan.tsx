@@ -134,7 +134,7 @@ export function ManagePlan({ seniorName, onBack }: ManagePlanProps) {
         </button>
 
         <div className="mb-8">
-          <h1 className="text-[36px] font-bold mb-2" style={{ color: '#265073' }}>
+          <h1 className="text-2xl md:text-[36px] font-bold mb-2" style={{ color: '#265073' }}>
             Manage {seniorName}&apos;s Plan
           </h1>
         </div>
@@ -161,7 +161,7 @@ export function ManagePlan({ seniorName, onBack }: ManagePlanProps) {
           </CardContent>
         </Card>
 
-        <h2 className="text-[28px] font-bold mb-6" style={{ color: '#265073' }}>Available Plans</h2>
+        <h2 className="text-xl md:text-[28px] font-bold mb-6" style={{ color: '#265073' }}>Available Plans</h2>
 
         <div className="grid md:grid-cols-3 gap-6 mb-8">
           {plans.map((plan) => (
@@ -236,7 +236,7 @@ export function ManagePlan({ seniorName, onBack }: ManagePlanProps) {
         <Dialog open={showGiftDialog} onOpenChange={setShowGiftDialog}>
           <DialogContent className="max-w-2xl">
             <DialogHeader>
-              <DialogTitle className="text-[28px] flex items-center gap-3" style={{ color: '#265073' }}>
+              <DialogTitle className="text-xl md:text-[28px] flex items-center gap-3" style={{ color: '#265073' }}>
                 <Gift className="w-8 h-8" style={{ color: '#2D9596' }} />
                 Gift This Upgrade?
               </DialogTitle>
@@ -291,7 +291,7 @@ export function ManagePlan({ seniorName, onBack }: ManagePlanProps) {
         <Dialog open={showPaymentDialog} onOpenChange={setShowPaymentDialog}>
           <DialogContent className="max-w-2xl">
             <DialogHeader>
-              <DialogTitle className="text-[28px]" style={{ color: '#265073' }}>
+              <DialogTitle className="text-xl md:text-[28px]" style={{ color: '#265073' }}>
                 {isGiftUpgrade ? 'Complete Gift Upgrade Payment' : 'Confirm Upgrade Payment'}
               </DialogTitle>
               <DialogDescription className="text-[16px]">
@@ -393,7 +393,7 @@ export function ManagePlan({ seniorName, onBack }: ManagePlanProps) {
         <Dialog open={showUpgradeConfirmation} onOpenChange={setShowUpgradeConfirmation}>
           <DialogContent className="max-w-2xl">
             <DialogHeader>
-              <DialogTitle className="text-[28px] text-center flex items-center justify-center gap-3" style={{ color: '#16A34A' }}>
+              <DialogTitle className="text-xl md:text-[28px] text-center flex items-center justify-center gap-3" style={{ color: '#16A34A' }}>
                 {isGiftUpgrade && <Gift className="w-8 h-8" />}
                 ✓ Upgrade Complete!
               </DialogTitle>

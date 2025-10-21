@@ -96,7 +96,7 @@ export function WorkshopDetails({ onBack, onNavigateToManageAttendees, onNavigat
 
         <div className="flex items-start justify-between mb-8">
           <div>
-            <h1 className="text-[36px] font-bold mb-2" style={{ color: '#265073' }}>
+            <h1 className="text-2xl md:text-[36px] font-bold mb-2" style={{ color: '#265073' }}>
               {workshop.title}
             </h1>
             <p className="text-[18px]" style={{ color: '#6B7280' }}>
@@ -251,7 +251,7 @@ export function WorkshopDetails({ onBack, onNavigateToManageAttendees, onNavigat
                         window.open('about:blank', '_blank');
                       }}
                       variant="outline"
-                      size="sm"
+                      className="h-10 px-4 text-[14px]"
                     >
                       <Download className="w-4 h-4 mr-2" />
                       Download
@@ -267,7 +267,7 @@ export function WorkshopDetails({ onBack, onNavigateToManageAttendees, onNavigat
         <Dialog open={showRescheduleModal} onOpenChange={setShowRescheduleModal}>
           <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
             <DialogHeader>
-              <DialogTitle className="text-[28px]" style={{ color: '#265073' }}>
+              <DialogTitle className="text-xl md:text-[28px]" style={{ color: '#265073' }}>
                 Reschedule Workshop
               </DialogTitle>
               <DialogDescription className="text-[16px]">
@@ -379,8 +379,8 @@ export function WorkshopDetails({ onBack, onNavigateToManageAttendees, onNavigat
                   <Label className="text-[16px]">Instructor Availability:</Label>
                   {!availabilityChecked ? (
                     <Button
-                      size="sm"
                       variant="outline"
+                      className="h-10 px-4 text-[14px]"
                       onClick={() => {
                         setAvailabilityChecked(true);
                         toast.success('✓ Tea Araki is available');
@@ -478,7 +478,7 @@ export function WorkshopDetails({ onBack, onNavigateToManageAttendees, onNavigat
             <DialogHeader>
               <div className="flex items-center gap-3 mb-2">
                 <AlertTriangle className="w-8 h-8" style={{ color: '#DC2626' }} />
-                <DialogTitle className="text-[28px]" style={{ color: '#DC2626' }}>
+                <DialogTitle className="text-xl md:text-[28px]" style={{ color: '#DC2626' }}>
                   Cancel This Workshop?
                 </DialogTitle>
               </div>

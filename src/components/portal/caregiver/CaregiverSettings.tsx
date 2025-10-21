@@ -9,6 +9,9 @@ import { RadioGroup, RadioGroupItem } from '../../ui/radio-group';
 import { toast } from 'sonner';
 import { CaregiverBottomNav } from './CaregiverBottomNav';
 
+// Plan pricing
+const STANDARD_PLAN_PRICE = 79;
+
 interface CaregiverSettingsProps {
   onBack: () => void;
   onNavigate?: (view: string) => void;
@@ -16,6 +19,9 @@ interface CaregiverSettingsProps {
 
 export function CaregiverSettings({ onBack, onNavigate }: CaregiverSettingsProps) {
   const [paymentResponsibility, setPaymentResponsibility] = useState<'senior' | 'caregiver' | 'split'>('senior');
+
+  // Calculate split payment amount
+  const splitAmount = (STANDARD_PLAN_PRICE / 2).toFixed(2);
   return (
     <div className="min-h-screen pb-24 md:pb-8" style={{ background: '#F9FAFB' }}>
       <div className="max-w-4xl mx-auto p-4 sm:p-6 md:p-8">
@@ -39,10 +45,10 @@ export function CaregiverSettings({ onBack, onNavigate }: CaregiverSettingsProps
 
         <Tabs defaultValue="profile">
           <TabsList className="mb-6 md:mb-8 h-auto grid grid-cols-2 gap-2 p-2">
-            <TabsTrigger value="profile" className="text-[14px] md:text-[16px] px-3 md:px-4 py-2 md:py-3">My Profile</TabsTrigger>
-            <TabsTrigger value="notifications" className="text-[14px] md:text-[16px] px-3 md:px-4 py-2 md:py-3">Notifications</TabsTrigger>
-            <TabsTrigger value="billing" className="text-[14px] md:text-[16px] px-3 md:px-4 py-2 md:py-3">Billing & Payment</TabsTrigger>
-            <TabsTrigger value="security" className="text-[14px] md:text-[16px] px-3 md:px-4 py-2 md:py-3">Security</TabsTrigger>
+            <TabsTrigger value="profile" className="text-[14px] md:text-[16px] px-4 md:px-5 py-2.5 md:py-3.5">My Profile</TabsTrigger>
+            <TabsTrigger value="notifications" className="text-[14px] md:text-[16px] px-4 md:px-5 py-2.5 md:py-3.5">Notifications</TabsTrigger>
+            <TabsTrigger value="billing" className="text-[14px] md:text-[16px] px-4 md:px-5 py-2.5 md:py-3.5">Billing & Payment</TabsTrigger>
+            <TabsTrigger value="security" className="text-[14px] md:text-[16px] px-4 md:px-5 py-2.5 md:py-3.5">Security</TabsTrigger>
           </TabsList>
 
           <TabsContent value="profile">
@@ -168,11 +174,11 @@ export function CaregiverSettings({ onBack, onNavigate }: CaregiverSettingsProps
                   <div className="flex items-start gap-3 p-3 md:p-4 rounded-lg" style={{ background: '#E0F2FE' }}>
                     <p className="text-[14px] md:text-[16px] break-words" style={{ color: '#075985' }}>
                       <strong>Current setup:</strong> {
-                        paymentResponsibility === 'senior' 
-                          ? 'Mary pays $79/month' 
+                        paymentResponsibility === 'senior'
+                          ? `Mary pays $${STANDARD_PLAN_PRICE}/month`
                           : paymentResponsibility === 'caregiver'
-                          ? 'You pay $79/month'
-                          : 'You and Mary each pay $39.50/month'
+                          ? `You pay $${STANDARD_PLAN_PRICE}/month`
+                          : `You and Mary each pay $${splitAmount}/month`
                       }
                     </p>
                   </div>

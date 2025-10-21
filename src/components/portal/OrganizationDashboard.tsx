@@ -21,7 +21,7 @@ import { Button } from '../ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
 import { Badge } from '../ui/badge';
 import { Progress } from '../ui/progress';
-import { toast } from 'sonner@2.0.3';
+import { toast } from 'sonner';
 import logoNoTagline from 'figma:asset/b3896b1c25bf716df167396f2f85a96f4bc48a2a.png';
 
 type OrganizationView = 'dashboard' | 'workshops' | 'residents' | 'reports' | 'settings';
@@ -128,13 +128,13 @@ export function OrganizationDashboard({ currentView, onNavigate, onLogout }: Org
              
               <button
                 onClick={onLogout}
-                className="flex-1 flex items-center justify-center gap-2 px-3 py-2 rounded-lg transition-all text-[14px]"
-                style={{ 
+                className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg transition-all text-[14px]"
+                style={{
                   background: 'rgba(255,255,255,0.1)',
                   color: 'rgba(255,255,255,0.9)'
                 }}
               >
-                <LogOut className="w-4 h-4" />
+                <LogOut className="w-5 h-5" />
                 Logout
               </button>
             </div>
@@ -360,10 +360,10 @@ export function OrganizationDashboard({ currentView, onNavigate, onLogout }: Org
                         >
                           View Details
                         </Button>
-                        <Button 
-                          variant="outline" 
+                        <Button
+                          variant="outline"
                           size="sm"
-                          onClick={() => toast.info('Manage Attendees page coming soon!')}
+                          onClick={() => onNavigate('manage-attendees')}
                           className="flex-1 sm:flex-none text-[13px] md:text-[14px]"
                         >
                           Manage Attendees
@@ -443,11 +443,13 @@ export function OrganizationDashboard({ currentView, onNavigate, onLogout }: Org
             <CardContent>
               <div className="space-y-3 md:space-y-4">
                 {recentActivity.map((activity, index) => (
-                  <div 
+                  <div
                     key={index}
                     className="flex items-start gap-3 md:gap-4 p-3 md:p-4 rounded-lg cursor-pointer hover:bg-white transition-colors"
                     style={{ background: '#F9FAFB' }}
-                    onClick={() => toast.info('Activity details coming soon!')}
+                    onClick={() => toast.info(activity.activity, {
+                      description: `Activity on ${activity.date}`
+                    })}
                   >
                     <div 
                       className="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0"
@@ -537,7 +539,7 @@ export function OrganizationDashboard({ currentView, onNavigate, onLogout }: Org
                 <button
                   key={item.id}
                   onClick={() => onNavigate(item.id)}
-                  className="flex flex-col items-center gap-1 p-3 rounded-xl transition-all"
+                  className="flex flex-col items-center gap-2 p-3 rounded-xl transition-all"
                   style={{
                     background: isActive ? '#E6F7F4' : 'transparent',
                     color: isActive ? '#2D9596' : '#6B7280'

@@ -201,10 +201,10 @@ export function ResidentProfile({ residentName = 'Mary Johnson', onBack }: Resid
         {/* Tabs */}
         <Tabs value={activeTab} onValueChange={setActiveTab}>
           <TabsList className="mb-8 w-full flex-wrap h-auto gap-2">
-            <TabsTrigger value="overview" className="text-[14px] sm:text-[16px] px-4 sm:px-6 py-3 flex-1 min-w-[120px]">Overview</TabsTrigger>
-            <TabsTrigger value="sessions" className="text-[14px] sm:text-[16px] px-4 sm:px-6 py-3 flex-1 min-w-[140px]">Session History</TabsTrigger>
-            <TabsTrigger value="progress" className="text-[14px] sm:text-[16px] px-4 sm:px-6 py-3 flex-1 min-w-[140px]">Skills Progress</TabsTrigger>
-            <TabsTrigger value="contact" className="text-[14px] sm:text-[16px] px-4 sm:px-6 py-3 flex-1 min-w-[120px]">Contact Info</TabsTrigger>
+            <TabsTrigger value="overview" className="text-[15px] sm:text-[16px] px-4 sm:px-6 py-3 flex-1 min-w-[120px]">Overview</TabsTrigger>
+            <TabsTrigger value="sessions" className="text-[15px] sm:text-[16px] px-4 sm:px-6 py-3 flex-1 min-w-[140px]">Session History</TabsTrigger>
+            <TabsTrigger value="progress" className="text-[15px] sm:text-[16px] px-4 sm:px-6 py-3 flex-1 min-w-[140px]">Skills Progress</TabsTrigger>
+            <TabsTrigger value="contact" className="text-[15px] sm:text-[16px] px-4 sm:px-6 py-3 flex-1 min-w-[120px]">Contact Info</TabsTrigger>
           </TabsList>
 
           {/* OVERVIEW TAB */}

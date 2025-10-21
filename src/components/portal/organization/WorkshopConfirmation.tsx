@@ -84,7 +84,7 @@ Email: support@malamadigital.com
 
         {/* Workshop Details */}
         <div className="bg-white rounded-xl border-2 p-8 mb-6 print:border" style={{ borderColor: '#D1D5DB' }}>
-          <h2 className="text-[28px] font-bold mb-6" style={{ color: '#265073' }}>
+          <h2 className="text-xl md:text-[28px] font-bold mb-6" style={{ color: '#265073' }}>
             Workshop Details
           </h2>
           <div className="space-y-4">
@@ -113,7 +113,7 @@ Email: support@malamadigital.com
 
         {/* Registration Information */}
         <div className="bg-white rounded-xl border-2 p-8 mb-6 print:border" style={{ borderColor: '#D1D5DB' }}>
-          <h2 className="text-[28px] font-bold mb-6" style={{ color: '#265073' }}>
+          <h2 className="text-xl md:text-[28px] font-bold mb-6" style={{ color: '#265073' }}>
             Registration Information
           </h2>
           <div className="space-y-4">
@@ -150,7 +150,7 @@ Email: support@malamadigital.com
 
         {/* What Happens Next */}
         <div className="bg-white rounded-xl border-2 p-8 mb-6 print:border" style={{ borderColor: '#D1D5DB' }}>
-          <h2 className="text-[28px] font-bold mb-4" style={{ color: '#265073' }}>
+          <h2 className="text-xl md:text-[28px] font-bold mb-4" style={{ color: '#265073' }}>
             What Happens Next
           </h2>
           <div className="space-y-3">

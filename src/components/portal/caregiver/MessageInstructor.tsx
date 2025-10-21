@@ -75,7 +75,7 @@ export function MessageInstructor({ seniorName, instructorName = 'Tea Araki', on
 
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-[36px] font-bold mb-2" style={{ color: '#265073' }}>
+          <h1 className="text-2xl md:text-[36px] font-bold mb-2" style={{ color: '#265073' }}>
             Message {instructorName}
           </h1>
           <p className="text-[18px]" style={{ color: '#6B7280' }}>

@@ -474,7 +474,7 @@ export function LearningLibraryPage({ onBack }: LearningLibraryPageProps) {
                   </Badge>
                 )}
               </div>
-              <DialogTitle className="text-[28px]" style={{ color: '#265073' }}>
+              <DialogTitle className="text-xl md:text-[28px]" style={{ color: '#265073' }}>
                 {selectedResource?.title}
               </DialogTitle>
               <DialogDescription className="text-[16px]" style={{ color: '#4B5563' }}>
