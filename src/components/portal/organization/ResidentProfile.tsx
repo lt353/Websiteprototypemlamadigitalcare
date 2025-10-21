@@ -24,6 +24,11 @@ function getResidentData(name: string) {
         { skill: 'Scam Prevention', progress: 100, status: 'completed' },
         { skill: 'Video Calling', progress: 75, status: 'in-progress' },
         { skill: 'Photo Management', progress: 50, status: 'in-progress' }
+      ],
+      sessionHistory: [
+        { id: 1, date: 'November 20, 2025', topic: 'Scam Prevention Workshop', type: 'Group Workshop', duration: '90 minutes', instructor: 'Tea Araki', status: 'completed', attendance: 'present', rating: 5, notes: 'Excellent participant! Shared personal experience with phone scam attempt and helped others identify warning signs.' },
+        { id: 2, date: 'November 6, 2025', topic: 'Email Safety', type: 'One-on-One', duration: '45 minutes', instructor: 'Lindsay Trenton', status: 'completed', attendance: 'present', rating: 5, notes: 'Quick learner. Now confidently identifies spam emails and knows how to report them.' },
+        { id: 3, date: 'December 5, 2025', topic: 'Email & Calendar Basics', type: 'Group Workshop', duration: '90 minutes', instructor: 'Tea Araki', status: 'scheduled', attendance: 'registered' }
       ]
     },
     'Robert Kim': {
@@ -35,6 +40,11 @@ function getResidentData(name: string) {
         { skill: 'Video Calling', progress: 100, status: 'completed' },
         { skill: 'Scam Prevention', progress: 100, status: 'completed' },
         { skill: 'Calendar Management', progress: 80, status: 'in-progress' }
+      ],
+      sessionHistory: [
+        { id: 1, date: 'November 20, 2025', topic: 'Scam Prevention Workshop', type: 'Group Workshop', duration: '90 minutes', instructor: 'Tea Araki', status: 'completed', attendance: 'present', rating: 5, notes: 'Very tech-savvy! Already uses two-factor authentication and helped demonstrate best practices to the group.' },
+        { id: 2, date: 'November 12, 2025', topic: 'Calendar Management', type: 'One-on-One', duration: '60 minutes', instructor: 'Tea Araki', status: 'completed', attendance: 'present', rating: 5, notes: 'Setting up shared calendars with family. Excited to coordinate schedules more easily.' },
+        { id: 3, date: 'October 28, 2025', topic: 'Video Calling Mastery', type: 'One-on-One', duration: '45 minutes', instructor: 'Lindsay Trenton', status: 'completed', attendance: 'present', rating: 5, notes: 'Now uses FaceTime, Zoom, and Google Meet confidently. Regular video calls with grandchildren!' }
       ]
     },
     'Helen Martinez': {
@@ -90,6 +100,12 @@ function getResidentData(name: string) {
         { skill: 'Password Security', progress: 100, status: 'completed' },
         { skill: 'Scam Prevention', progress: 100, status: 'completed' },
         { skill: 'Calendar Management', progress: 85, status: 'in-progress' }
+      ],
+      sessionHistory: [
+        { id: 1, date: 'November 20, 2025', topic: 'Scam Prevention Workshop', type: 'Group Workshop', duration: '90 minutes', instructor: 'Tea Araki', status: 'completed', attendance: 'present', rating: 5, notes: 'Very engaged! Asked excellent questions about identifying phishing emails and shared tips with the group.' },
+        { id: 2, date: 'November 6, 2025', topic: 'iPhone Basics', type: 'Paid Class', duration: '45 minutes', instructor: 'Lindsay Trenton', status: 'completed', attendance: 'present', rating: 5, notes: 'Mastered taking and sharing photos with family members. Now confidently uses the camera app!' },
+        { id: 3, date: 'October 15, 2025', topic: 'Video Calling Setup', type: 'One-on-One', duration: '60 minutes', instructor: 'Tea Araki', status: 'completed', attendance: 'present', rating: 5, notes: 'Successfully FaceTimed her daughter by the end of session! So excited to see grandchildren regularly.' },
+        { id: 4, date: 'December 5, 2025', topic: 'Email & Calendar Basics', type: 'Group Workshop', duration: '90 minutes', instructor: 'Tea Araki', status: 'scheduled', attendance: 'registered' }
       ]
     },
     'George Nakamura': {
@@ -285,6 +301,10 @@ function getResidentData(name: string) {
       { skill: 'Email Basics', progress: 100, status: 'completed' },
       { skill: 'Video Calling', progress: 75, status: 'in-progress' },
       { skill: 'Scam Prevention', progress: 50, status: 'in-progress' }
+    ],
+    sessionHistory: [
+      { id: 1, date: 'November 18, 2025', topic: 'Tech Basics', type: 'Group Workshop', duration: '60 minutes', instructor: 'Tea Araki', status: 'completed', attendance: 'present', rating: 4, notes: 'Good progress on foundational skills. Eager to learn more about staying safe online.' },
+      { id: 2, date: 'December 5, 2025', topic: 'Email & Calendar Basics', type: 'Group Workshop', duration: '90 minutes', instructor: 'Tea Araki', status: 'scheduled', attendance: 'registered' }
     ]
   };
 
@@ -315,55 +335,7 @@ export function ResidentProfile({ residentName = 'Mary Johnson', onBack }: Resid
   ];
 
   const skillsProgress = profileData.skills;
-
-  const sessionHistory = [
-    {
-      id: 1,
-      date: 'November 20, 2025',
-      topic: 'Scam Prevention Workshop',
-      type: 'Group Workshop',
-      duration: '90 minutes',
-      instructor: 'Tea Araki',
-      status: 'completed',
-      attendance: 'present',
-      rating: 5,
-      notes: 'Very engaged! Asked excellent questions about identifying phishing emails.'
-    },
-    {
-      id: 2,
-      date: 'November 6, 2025',
-      topic: 'iPhone Basics',
-      type: 'Paid Class',
-      duration: '45 minutes',
-      instructor: 'Lindsay Trenton',
-      status: 'completed',
-      attendance: 'present',
-      rating: 5,
-      notes: 'Mastered taking and sharing photos with family members.'
-    },
-    {
-      id: 3,
-      date: 'October 15, 2025',
-      topic: 'Video Calling Setup',
-      type: 'One-on-One',
-      duration: '60 minutes',
-      instructor: 'Tea Araki',
-      status: 'completed',
-      attendance: 'present',
-      rating: 5,
-      notes: 'Successfully FaceTimed her daughter by the end of session!'
-    },
-    {
-      id: 4,
-      date: 'December 5, 2025',
-      topic: 'Email & Calendar Basics',
-      type: 'Group Workshop',
-      duration: '90 minutes',
-      instructor: 'Tea Araki',
-      status: 'scheduled',
-      attendance: 'registered'
-    }
-  ];
+  const sessionHistory = profileData.sessionHistory;
 
   const achievements = [
     { title: 'First Video Call', icon: '📹', date: 'Oct 15, 2025' },

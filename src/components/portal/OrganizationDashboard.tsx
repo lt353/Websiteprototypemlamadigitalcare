@@ -227,7 +227,7 @@ export function OrganizationDashboard({ currentView, onNavigate, onLogout }: Org
           {/* Stats Grid */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-6 mb-6 md:mb-8">
             {stats.map((stat, index) => (
-              <Card 
+              <Card
                 key={index}
                 className="cursor-pointer transition-all hover:shadow-lg"
                 onClick={() => {
@@ -255,6 +255,52 @@ export function OrganizationDashboard({ currentView, onNavigate, onLogout }: Org
               </Card>
             ))}
           </div>
+
+          {/* Mālama Subscription Breakdown */}
+          <Card className="mb-6 md:mb-8">
+            <CardHeader>
+              <CardTitle className="text-[21px] md:text-[24px]" style={{ color: '#265073' }}>
+                Mālama Digital Care Subscriptions
+              </CardTitle>
+              <CardDescription className="text-[15px] md:text-[16px]">
+                Resident enrollment across all Mālama plans
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-4">
+                <div className="p-4 rounded-lg" style={{ background: '#F0FDFA', border: '2px solid #2D9596' }}>
+                  <p className="text-[14px] mb-1" style={{ color: '#6B7280' }}>Total Mālama Plans</p>
+                  <p className="text-[28px] font-bold" style={{ color: '#2D9596' }}>34</p>
+                  <p className="text-[13px]" style={{ color: '#6B7280' }}>81% of residents</p>
+                </div>
+                <div className="p-4 rounded-lg" style={{ background: '#F9FAFB' }}>
+                  <p className="text-[14px] mb-1" style={{ color: '#6B7280' }}>Facility Plans</p>
+                  <p className="text-[24px] font-bold" style={{ color: '#265073' }}>12</p>
+                  <p className="text-[13px]" style={{ color: '#6B7280' }}>Bulk subscription</p>
+                </div>
+                <div className="p-4 rounded-lg" style={{ background: '#FEF3C7' }}>
+                  <p className="text-[14px] mb-1" style={{ color: '#6B7280' }}>Premium</p>
+                  <p className="text-[24px] font-bold" style={{ color: '#F59E0B' }}>9</p>
+                  <p className="text-[13px]" style={{ color: '#6B7280' }}>$149/month</p>
+                </div>
+                <div className="p-4 rounded-lg" style={{ background: '#DBEAFE' }}>
+                  <p className="text-[14px] mb-1" style={{ color: '#6B7280' }}>Standard</p>
+                  <p className="text-[24px] font-bold" style={{ color: '#2563EB' }}>10</p>
+                  <p className="text-[13px]" style={{ color: '#6B7280' }}>$79/month</p>
+                </div>
+                <div className="p-4 rounded-lg" style={{ background: '#F3F4F6' }}>
+                  <p className="text-[14px] mb-1" style={{ color: '#6B7280' }}>Basic</p>
+                  <p className="text-[24px] font-bold" style={{ color: '#4B5563' }}>3</p>
+                  <p className="text-[13px]" style={{ color: '#6B7280' }}>$39/month</p>
+                </div>
+              </div>
+              <div className="mt-4 p-3 rounded-lg" style={{ background: '#FEE2E2' }}>
+                <p className="text-[14px]" style={{ color: '#6B7280' }}>
+                  <strong style={{ color: '#DC2626' }}>8 residents</strong> attending workshops only (no Mālama subscription)
+                </p>
+              </div>
+            </CardContent>
+          </Card>
 
           {/* Upcoming Workshops */}
           <Card className="mb-6 md:mb-8">
