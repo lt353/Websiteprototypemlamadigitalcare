@@ -15,7 +15,7 @@ export function ReportsBilling({ onBack }: ReportsBillingProps) {
           <ArrowLeft className="w-5 h-5" />
           Back to Dashboard
         </button>
-        <h1 className="text-[36px] font-bold mb-8" style={{ color: '#265073' }}>Reports & Billing</h1>
+        <h1 className="text-2xl md:text-[36px] font-bold mb-8" style={{ color: '#265073' }}>Reports & Billing</h1>
         
         <Tabs defaultValue="invoices">
           <TabsList className="mb-8">

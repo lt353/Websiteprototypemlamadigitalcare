@@ -90,7 +90,7 @@ export function UpdatePaymentOrg({ onBack }: UpdatePaymentOrgProps) {
 
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-[36px] font-bold mb-2" style={{ color: '#265073' }}>
+          <h1 className="text-2xl md:text-[36px] font-bold mb-2" style={{ color: '#265073' }}>
             Update Payment Method
           </h1>
           <p className="text-[18px]" style={{ color: '#6B7280' }}>

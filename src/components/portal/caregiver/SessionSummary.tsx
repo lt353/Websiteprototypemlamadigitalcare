@@ -127,7 +127,7 @@ export function SessionSummary({ seniorName, onBack, onWatchRecording, onDownloa
                 ADD-ON ${sessionData.type === 'In-Home Visit' ? SESSION_PRICES.IN_HOME.discounted : SESSION_PRICES.VIRTUAL.discounted}
               </Badge>
             )}
-            <h1 className="text-[36px] font-bold" style={{ color: '#265073' }}>
+            <h1 className="text-2xl md:text-[36px] font-bold" style={{ color: '#265073' }}>
               Session Summary
             </h1>
           </div>
@@ -203,7 +203,7 @@ export function SessionSummary({ seniorName, onBack, onWatchRecording, onDownloa
 
         {/* Topics Covered */}
         <div className="mb-6">
-          <h2 className="text-[28px] font-bold mb-4" style={{ color: '#265073' }}>
+          <h2 className="text-xl md:text-[28px] font-bold mb-4" style={{ color: '#265073' }}>
             Topics Covered
           </h2>
           

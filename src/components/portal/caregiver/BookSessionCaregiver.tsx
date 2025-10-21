@@ -127,7 +127,7 @@ export function BookSessionCaregiver({ onBack, onSuccess }: BookSessionCaregiver
 
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-[36px] font-bold mb-2" style={{ color: '#265073' }}>
+          <h1 className="text-2xl md:text-[36px] font-bold mb-2" style={{ color: '#265073' }}>
             Book a Session
           </h1>
           <p className="text-[18px]" style={{ color: '#6B7280' }}>
@@ -489,7 +489,7 @@ export function BookSessionCaregiver({ onBack, onSuccess }: BookSessionCaregiver
         <Dialog open={showSuccessDialog} onOpenChange={setShowSuccessDialog}>
           <DialogContent className="max-w-2xl">
             <DialogHeader>
-              <DialogTitle className="text-[28px] text-center" style={{ color: '#16A34A' }}>
+              <DialogTitle className="text-xl md:text-[28px] text-center" style={{ color: '#16A34A' }}>
                 ✓ Booking Confirmed!
               </DialogTitle>
             </DialogHeader>

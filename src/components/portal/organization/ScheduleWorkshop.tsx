@@ -206,7 +206,7 @@ export function ScheduleWorkshop({ onBack, onSuccess }: ScheduleWorkshopProps) {
           <>
             {/* STEP 1: Workshop Selection */}
             <div className="mb-8">
-              <h1 className="text-[36px] font-bold mb-2" style={{ color: '#265073' }}>
+              <h1 className="text-2xl md:text-[36px] font-bold mb-2" style={{ color: '#265073' }}>
                 Schedule a Workshop or Class
               </h1>
               <p className="text-[18px]" style={{ color: '#6B7280' }}>
@@ -343,7 +343,7 @@ export function ScheduleWorkshop({ onBack, onSuccess }: ScheduleWorkshopProps) {
                 <Badge style={{ background: selectedWorkshop?.type === 'free' ? '#D1FAE5' : '#E0F2FE', color: selectedWorkshop?.type === 'free' ? '#065F46' : '#0284C7' }}>
                   {selectedWorkshop?.type === 'free' ? 'FREE Workshop' : 'Paid Class'}
                 </Badge>
-                <h1 className="text-[36px] font-bold" style={{ color: '#265073' }}>
+                <h1 className="text-2xl md:text-[36px] font-bold" style={{ color: '#265073' }}>
                   {selectedWorkshop?.title}
                 </h1>
               </div>

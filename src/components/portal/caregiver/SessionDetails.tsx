@@ -100,7 +100,7 @@ export function SessionDetails({ seniorName, onBack, onReschedule, onCancel }: S
                 ADD-ON ${sessionData.type === 'In-Home Visit' ? SESSION_PRICES.IN_HOME.discounted : SESSION_PRICES.VIRTUAL.discounted}
               </Badge>
             )}
-            <h1 className="text-[36px] font-bold" style={{ color: '#265073' }}>
+            <h1 className="text-2xl md:text-[36px] font-bold" style={{ color: '#265073' }}>
               Session Details
             </h1>
           </div>
@@ -156,7 +156,7 @@ export function SessionDetails({ seniorName, onBack, onReschedule, onCancel }: S
 
         {/* What They'll Learn */}
         <div className="mb-6">
-          <h2 className="text-[28px] font-bold mb-4" style={{ color: '#265073' }}>
+          <h2 className="text-xl md:text-[28px] font-bold mb-4" style={{ color: '#265073' }}>
             What {seniorName} Will Learn
           </h2>
           

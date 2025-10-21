@@ -779,7 +779,7 @@ export function BookingPage({ onBack, onBookingSuccess }: BookingPageProps) {
                                   <div className="space-y-2">
                                     <div className="flex justify-between items-center">
                                       <span className="text-[18px]" style={{ color: '#065F46' }}>Plan Covered:</span>
-                                      <span className="text-[28px] font-bold" style={{ color: '#065F46' }}>$0</span>
+                                      <span className="text-xl md:text-[28px] font-bold" style={{ color: '#065F46' }}>$0</span>
                                     </div>
                                     <div className="flex justify-between items-center text-[14px]" style={{ color: '#047857' }}>
                                       <span>Remaining after booking:</span>
@@ -919,7 +919,7 @@ export function BookingPage({ onBack, onBookingSuccess }: BookingPageProps) {
         <Dialog open={showTrackChangeDialog} onOpenChange={setShowTrackChangeDialog}>
           <DialogContent className="max-w-2xl">
             <DialogHeader>
-              <DialogTitle className="text-[28px] mb-2" style={{ color: '#265073' }}>
+              <DialogTitle className="text-xl md:text-[28px] mb-2" style={{ color: '#265073' }}>
                 Change Monthly Format
               </DialogTitle>
               <DialogDescription className="text-[16px]" style={{ color: '#4B5563' }}>
@@ -1024,7 +1024,7 @@ export function BookingPage({ onBack, onBookingSuccess }: BookingPageProps) {
                     <p className="text-[14px]" style={{ color: '#6B7280' }}>Your current plan</p>
                   </CardHeader>
                   <CardContent>
-                    <div className="text-[36px] font-bold mb-4" style={{ color: '#2D9596' }}>
+                    <div className="text-2xl md:text-[36px] font-bold mb-4" style={{ color: '#2D9596' }}>
                       $79<span className="text-[18px]">/month</span>
                     </div>
                     <div className="space-y-3">
@@ -1085,7 +1085,7 @@ export function BookingPage({ onBack, onBookingSuccess }: BookingPageProps) {
                     <p className="text-[14px]" style={{ color: '#6B7280' }}>For active users</p>
                   </CardHeader>
                   <CardContent>
-                    <div className="text-[36px] font-bold mb-4" style={{ color: '#2D9596' }}>
+                    <div className="text-2xl md:text-[36px] font-bold mb-4" style={{ color: '#2D9596' }}>
                       $149<span className="text-[18px]">/month</span>
                     </div>
                     <div className="space-y-3">
@@ -1165,7 +1165,7 @@ export function BookingPage({ onBack, onBookingSuccess }: BookingPageProps) {
         <Dialog open={showSuccess} onOpenChange={setShowSuccess}>
           <DialogContent className="max-w-2xl">
             <DialogHeader>
-              <DialogTitle className="text-[28px] text-center" style={{ color: '#16A34A' }}>
+              <DialogTitle className="text-xl md:text-[28px] text-center" style={{ color: '#16A34A' }}>
                 ✓ Booking Confirmed!
               </DialogTitle>
             </DialogHeader>
