@@ -1393,7 +1393,7 @@ Presented in partnership with Mālama Digital Care`,
                 Scam Checker
               </h1>
               <p
-                className="text-xl md:text-[28px] font-bold mb-4"
+                className="text-[28px] font-bold mb-4"
                 style={{ color: "#DC2626" }}
               >
                 Meet Kōkua
@@ -1837,7 +1837,7 @@ Presented in partnership with Mālama Digital Care`,
                       HIGH RISK - DANGER
                     </div>
                     <h2
-                      className="text-2xl md:text-[36px] font-bold"
+                      className="text-[36px] font-bold"
                       style={{ color: "#EF4444" }}
                     >
                       This is almost certainly a SCAM
@@ -1877,7 +1877,7 @@ Presented in partnership with Mālama Digital Care`,
                       MEDIUM RISK - CAUTION
                     </div>
                     <h2
-                      className="text-2xl md:text-[36px] font-bold"
+                      className="text-[36px] font-bold"
                       style={{ color: "#F59E0B" }}
                     >
                       Be very careful with this
@@ -1917,7 +1917,7 @@ Presented in partnership with Mālama Digital Care`,
                       LOW RISK
                     </div>
                     <h2
-                      className="text-2xl md:text-[36px] font-bold"
+                      className="text-[36px] font-bold"
                       style={{ color: "#10B981" }}
                     >
                       This appears legitimate

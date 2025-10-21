@@ -43,7 +43,7 @@ export function LoginPage({ onLogin, onNavigateToRegister, onNavigate }: LoginPa
 
           {/* Heading */}
           <div className="text-center">
-            <h1 className="text-2xl md:text-[36px] font-bold mb-2" style={{ color: '#265073' }}>
+            <h1 className="text-[36px] font-bold mb-2" style={{ color: '#265073' }}>
               Welcome Back
             </h1>
             <p className="text-[18px]" style={{ color: '#4B5563' }}>

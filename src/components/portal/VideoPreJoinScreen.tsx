@@ -118,11 +118,12 @@ export function VideoPreJoinScreen({
           {/* Microphone Toggle */}
           <button
             onClick={() => setIsMicEnabled(!isMicEnabled)}
-            className="flex-1 flex flex-col items-center justify-center gap-2 p-4 rounded-lg transition-all"
+            className="flex-1 flex flex-col items-center justify-center gap-2 py-4 px-6 rounded-lg transition-all"
             style={{
               background: '#FFFFFF',
               border: isMicEnabled ? '2px solid #2D9596' : '2px solid #E5E7EB',
-              minHeight: '100px'
+              height: '48px',
+              minHeight: '80px'
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.transform = 'translateY(-2px)';
@@ -134,25 +135,23 @@ export function VideoPreJoinScreen({
             }}
           >
             {isMicEnabled ? (
-              <Mic className="w-8 h-8" style={{ color: '#2D9596' }} />
+              <Mic className="w-6 h-6" style={{ color: '#2D9596' }} />
             ) : (
-              <MicOff className="w-8 h-8" style={{ color: '#DC2626' }} />
+              <MicOff className="w-6 h-6" style={{ color: '#DC2626' }} />
             )}
-            <span
-              style={{
-                fontSize: '16px',
+            <span 
+              style={{ 
+                fontSize: '16px', 
                 fontWeight: '600',
-                color: isMicEnabled ? '#2D9596' : '#6B7280',
-                textAlign: 'center'
+                color: isMicEnabled ? '#2D9596' : '#6B7280'
               }}
             >
               Microphone
             </span>
-            <span
-              style={{
+            <span 
+              style={{ 
                 fontSize: '13px',
-                color: '#9CA3AF',
-                textAlign: 'center'
+                color: '#9CA3AF'
               }}
             >
               {isMicEnabled ? 'On' : 'Off'}
@@ -162,11 +161,12 @@ export function VideoPreJoinScreen({
           {/* Camera Toggle */}
           <button
             onClick={() => setIsCameraEnabled(!isCameraEnabled)}
-            className="flex-1 flex flex-col items-center justify-center gap-2 p-4 rounded-lg transition-all"
+            className="flex-1 flex flex-col items-center justify-center gap-2 py-4 px-6 rounded-lg transition-all"
             style={{
               background: '#FFFFFF',
               border: isCameraEnabled ? '2px solid #2D9596' : '2px solid #E5E7EB',
-              minHeight: '100px'
+              height: '48px',
+              minHeight: '80px'
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.transform = 'translateY(-2px)';
@@ -178,25 +178,23 @@ export function VideoPreJoinScreen({
             }}
           >
             {isCameraEnabled ? (
-              <Camera className="w-8 h-8" style={{ color: '#2D9596' }} />
+              <Camera className="w-6 h-6" style={{ color: '#2D9596' }} />
             ) : (
-              <CameraOff className="w-8 h-8" style={{ color: '#DC2626' }} />
+              <CameraOff className="w-6 h-6" style={{ color: '#DC2626' }} />
             )}
-            <span
-              style={{
-                fontSize: '16px',
+            <span 
+              style={{ 
+                fontSize: '16px', 
                 fontWeight: '600',
-                color: isCameraEnabled ? '#2D9596' : '#6B7280',
-                textAlign: 'center'
+                color: isCameraEnabled ? '#2D9596' : '#6B7280'
               }}
             >
               Camera
             </span>
-            <span
-              style={{
+            <span 
+              style={{ 
                 fontSize: '13px',
-                color: '#9CA3AF',
-                textAlign: 'center'
+                color: '#9CA3AF'
               }}
             >
               {isCameraEnabled ? 'On' : 'Off'}

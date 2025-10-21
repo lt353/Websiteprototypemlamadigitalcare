@@ -3971,6 +3971,12 @@
   }
 
   @media (width >= 48rem) {
+    .md\:px-5 {
+      padding-inline: calc(var(--spacing) * 5);
+    }
+  }
+
+  @media (width >= 48rem) {
     .md\:px-16 {
       padding-inline: calc(var(--spacing) * 16);
     }
@@ -3979,6 +3985,12 @@
   @media (width >= 48rem) {
     .md\:py-3 {
       padding-block: calc(var(--spacing) * 3);
+    }
+  }
+
+  @media (width >= 48rem) {
+    .md\:py-3\.5 {
+      padding-block: calc(var(--spacing) * 3.5);
     }
   }
 
@@ -4055,6 +4067,12 @@
   @media (width >= 48rem) {
     .md\:text-\[14px\] {
       font-size: 14px;
+    }
+  }
+
+  @media (width >= 48rem) {
+    .md\:text-\[15px\] {
+      font-size: 15px;
     }
   }
 
@@ -4215,12 +4233,6 @@
   }
 
   @media (width >= 64rem) {
-    .lg\:gap-2 {
-      gap: calc(var(--spacing) * 2);
-    }
-  }
-
-  @media (width >= 64rem) {
     .lg\:gap-6 {
       gap: calc(var(--spacing) * 6);
     }
@@ -4257,14 +4269,8 @@
   }
 
   @media (width >= 64rem) {
-    .lg\:px-3 {
-      padding-inline: calc(var(--spacing) * 3);
-    }
-  }
-
-  @media (width >= 64rem) {
-    .lg\:px-4 {
-      padding-inline: calc(var(--spacing) * 4);
+    .lg\:px-5 {
+      padding-inline: calc(var(--spacing) * 5);
     }
   }
 
