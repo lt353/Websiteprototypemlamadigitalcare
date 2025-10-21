@@ -123,7 +123,7 @@ export function ManagePlan({ seniorName, onBack }: ManagePlanProps) {
 
   return (
     <div className="min-h-screen" style={{ background: '#F9FAFB' }}>
-      <div className="max-w-6xl mx-auto p-8">
+      <div className="max-w-6xl mx-auto p-4 md:p-8">
         <button
           onClick={onBack}
           className="flex items-center gap-2 mb-6 hover:underline"

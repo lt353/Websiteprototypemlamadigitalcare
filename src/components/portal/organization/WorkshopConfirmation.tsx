@@ -49,7 +49,7 @@ Email: support@malamadigital.com
 
   return (
     <div className="min-h-screen print:p-8" style={{ background: '#F9FAFB' }}>
-      <div className="max-w-4xl mx-auto p-8">
+      <div className="max-w-4xl mx-auto p-4 md:p-8">
         {/* Success Icon */}
         <div className="text-center mb-8 print:mb-6">
           <div 

@@ -215,7 +215,7 @@ export function UpdatePaymentOrg({ onBack }: UpdatePaymentOrgProps) {
                 />
               </div>
 
-              <div className="grid md:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                 <div>
                   <Label htmlFor="expiry" className="text-[18px] mb-2 block">Expiration</Label>
                   <Input
@@ -392,7 +392,7 @@ export function UpdatePaymentOrg({ onBack }: UpdatePaymentOrgProps) {
                 />
               </div>
 
-              <div className="grid grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div className="col-span-1">
                   <Label htmlFor="city" className="text-[18px] mb-2 block">City</Label>
                   <Input

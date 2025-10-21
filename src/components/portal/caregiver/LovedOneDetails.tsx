@@ -223,7 +223,7 @@ export function LovedOneDetails({ seniorName, onBack, onNavigateToBooking, onNav
 
   return (
     <div className="min-h-screen" style={{ background: '#F8FAFC' }}>
-      <div className="max-w-7xl mx-auto p-6">
+      <div className="max-w-7xl mx-auto p-4 md:p-6">
         {/* Header */}
         <div className="mb-6">
           <Button

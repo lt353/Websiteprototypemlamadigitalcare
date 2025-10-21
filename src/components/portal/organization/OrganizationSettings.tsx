@@ -13,7 +13,7 @@ interface OrganizationSettingsProps {
 export function OrganizationSettings({ onBack, onNavigateToUpdatePayment }: OrganizationSettingsProps) {
   return (
     <div className="min-h-screen" style={{ background: '#F9FAFB' }}>
-      <div className="max-w-4xl mx-auto p-8">
+      <div className="max-w-4xl mx-auto p-4 md:p-8">
         <button onClick={onBack} className="flex items-center gap-2 mb-6 hover:underline" style={{ color: '#2D9596' }}>
           <ArrowLeft className="w-5 h-5" />
           Back to Dashboard

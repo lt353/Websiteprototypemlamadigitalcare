@@ -84,7 +84,7 @@ export function WorkshopDetails({ onBack, onNavigateToManageAttendees, onNavigat
 
   return (
     <div className="min-h-screen" style={{ background: '#F9FAFB' }}>
-      <div className="max-w-6xl mx-auto p-8">
+      <div className="max-w-6xl mx-auto p-4 md:p-8">
         <button
           onClick={onBack}
           className="flex items-center gap-2 mb-6 hover:underline"
@@ -347,7 +347,7 @@ export function WorkshopDetails({ onBack, onNavigateToManageAttendees, onNavigat
                     <div className="flex-1 space-y-2">
                       <Label htmlFor="time-custom" className="text-[16px] cursor-pointer">Custom time:</Label>
                       {rescheduleData.customTime && (
-                        <div className="grid grid-cols-2 gap-3">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                           <Input
                             type="time"
                             value={rescheduleData.customStartTime}

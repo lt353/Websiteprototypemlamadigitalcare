@@ -6,7 +6,7 @@ import { Label } from '../ui/label';
 import { Switch } from '../ui/switch';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '../ui/dialog';
 import { Badge } from '../ui/badge';
-import { toast } from 'sonner@2.0.3';
+import { toast } from 'sonner';
 
 interface SettingsPageProps {
   onBack: () => void;
@@ -575,7 +575,9 @@ export function SettingsPage({ onBack }: SettingsPageProps) {
               <Button
                 onClick={() => {
                   setShowDowngradeDialog(false);
-                  alert('Plan downgrade scheduled for December 1, 2025.');
+                  toast.success('✓ Plan downgrade scheduled', {
+                    description: 'Your plan will change to Basic Care on December 1, 2025'
+                  });
                 }}
                 className="h-12 px-6 text-[16px] font-bold active:scale-95 transition-transform"
                 style={{ background: '#F59E0B', color: '#FFFFFF' }}
