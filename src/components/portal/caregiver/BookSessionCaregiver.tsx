@@ -26,6 +26,16 @@ export function BookSessionCaregiver({ onBack, onSuccess }: BookSessionCaregiver
   const hasActivePlan = true;
   const subscriberDiscount = 0.15;
 
+  // Mary Johnson's Standard Care plan status for October
+  // Selected track: In-Home (1 visit/month)
+  // Already used: 1 in-home session on Oct 13
+  // Result: No remaining plan sessions - all new bookings are add-ons
+  const currentPlanTrack = 'in-home';
+  const inHomeUsed = 1;
+  const inHomeAllowed = 1;
+  const virtualUsed = 0;
+  const virtualAllowed = 0; // Not the selected track for October
+
   const seniors = [
     { id: '1', name: 'Mary Johnson', relationship: 'Mother' }
   ];
@@ -39,7 +49,7 @@ export function BookSessionCaregiver({ onBack, onSuccess }: BookSessionCaregiver
       discountedPrice: 72.25,
       discountedPriceDisplay: '$72.25',
       duration: '90 min',
-      includedInPlan: true // Included in Standard Care
+      includedInPlan: inHomeUsed < inHomeAllowed // false (1 >= 1)
     },
     {
       id: 'virtual',
@@ -49,7 +59,7 @@ export function BookSessionCaregiver({ onBack, onSuccess }: BookSessionCaregiver
       discountedPrice: 29.75,
       discountedPriceDisplay: '$29.75',
       duration: '60 min',
-      includedInPlan: true // Up to 3 virtual included in Standard Care
+      includedInPlan: virtualUsed < virtualAllowed // false (0 >= 0, not selected track)
     },
     {
       id: 'group',
