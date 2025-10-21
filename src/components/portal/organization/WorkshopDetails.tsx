@@ -87,7 +87,7 @@ export function WorkshopDetails({ onBack, onNavigateToManageAttendees, onNavigat
       <div className="max-w-6xl mx-auto p-4 md:p-8">
         <button
           onClick={onBack}
-          className="flex items-center gap-2 mb-6 hover:underline"
+          className="flex items-center gap-2 mb-6 hover:underline active:scale-95 transition-transform"
           style={{ color: '#2D9596', fontSize: '16px' }}
         >
           <ArrowLeft className="w-5 h-5" />
@@ -152,17 +152,17 @@ export function WorkshopDetails({ onBack, onNavigateToManageAttendees, onNavigat
             </Card>
 
             <div className="flex flex-wrap gap-3">
-              <Button 
+              <Button
                 variant="outline"
                 onClick={onNavigateToEdit}
-                className="text-[16px] h-12 flex-1 min-w-[140px]"
+                className="text-[16px] h-12 flex-1 min-w-[140px] active:scale-95 transition-transform"
               >
                 Edit Workshop
               </Button>
-              <Button 
+              <Button
                 variant="outline"
                 onClick={() => setShowRescheduleModal(true)}
-                className="text-[16px] h-12 flex-1 min-w-[140px]"
+                className="text-[16px] h-12 flex-1 min-w-[140px] active:scale-95 transition-transform"
               >
                 Reschedule
               </Button>
@@ -174,15 +174,15 @@ export function WorkshopDetails({ onBack, onNavigateToManageAttendees, onNavigat
                   window.open('about:blank', '_blank');
                 }}
                 variant="outline"
-                className="text-[16px] h-12 flex-1 min-w-[160px]"
+                className="text-[16px] h-12 flex-1 min-w-[160px] active:scale-95 transition-transform"
               >
                 <Download className="w-4 h-4 mr-2" />
                 Download Flyer
               </Button>
-              <Button 
+              <Button
                 variant="destructive"
                 onClick={() => setShowCancelModal(true)}
-                className="text-[16px] h-12 flex-1 min-w-[160px]"
+                className="text-[16px] h-12 flex-1 min-w-[160px] active:scale-95 transition-transform"
               >
                 Cancel Workshop
               </Button>
@@ -194,8 +194,8 @@ export function WorkshopDetails({ onBack, onNavigateToManageAttendees, onNavigat
               <CardHeader>
                 <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                   <CardTitle className="text-[24px]">Registered Attendees</CardTitle>
-                  <Button 
-                    className="w-full sm:w-auto h-12 text-[16px] whitespace-nowrap"
+                  <Button
+                    className="w-full sm:w-auto h-12 text-[16px] whitespace-nowrap active:scale-95 transition-transform"
                     style={{ background: '#2D9596', color: '#FFFFFF' }}
                     onClick={onNavigateToManageAttendees}
                   >
@@ -217,7 +217,7 @@ export function WorkshopDetails({ onBack, onNavigateToManageAttendees, onNavigat
                         <Button
                           onClick={() => handleRemoveAttendee(attendee.name)}
                           variant="ghost"
-                          className="text-[14px]"
+                          className="text-[14px] active:scale-95 transition-transform"
                         >
                           Remove
                         </Button>
@@ -251,7 +251,7 @@ export function WorkshopDetails({ onBack, onNavigateToManageAttendees, onNavigat
                         window.open('about:blank', '_blank');
                       }}
                       variant="outline"
-                      className="h-10 px-4 text-[14px]"
+                      className="h-10 px-4 text-[14px] active:scale-95 transition-transform"
                     >
                       <Download className="w-4 h-4 mr-2" />
                       Download
@@ -380,7 +380,7 @@ export function WorkshopDetails({ onBack, onNavigateToManageAttendees, onNavigat
                   {!availabilityChecked ? (
                     <Button
                       variant="outline"
-                      className="h-10 px-4 text-[14px]"
+                      className="h-10 px-4 text-[14px] active:scale-95 transition-transform"
                       onClick={() => {
                         setAvailabilityChecked(true);
                         toast.success('✓ Tea Araki is available');
@@ -448,7 +448,7 @@ export function WorkshopDetails({ onBack, onNavigateToManageAttendees, onNavigat
                 <Button
                   variant="outline"
                   onClick={() => setShowRescheduleModal(false)}
-                  className="flex-1 h-14 text-[18px]"
+                  className="flex-1 h-14 text-[18px] active:scale-95 transition-transform"
                 >
                   Keep Original Time
                 </Button>
@@ -462,7 +462,7 @@ export function WorkshopDetails({ onBack, onNavigateToManageAttendees, onNavigat
                     setShowRescheduleModal(false);
                   }}
                   disabled={!rescheduleData.newDate || (!rescheduleData.newTime && !rescheduleData.customTime) || !availabilityChecked}
-                  className="flex-1 h-14 text-[18px]"
+                  className="flex-1 h-14 text-[18px] active:scale-95 transition-transform"
                   style={{ background: '#2D9596', color: '#FFFFFF' }}
                 >
                   Confirm Reschedule
@@ -599,7 +599,7 @@ export function WorkshopDetails({ onBack, onNavigateToManageAttendees, onNavigat
                 <Button
                   variant="outline"
                   onClick={() => setShowCancelModal(false)}
-                  className="flex-1 h-14 text-[18px]"
+                  className="flex-1 h-14 text-[18px] active:scale-95 transition-transform"
                 >
                   Keep Workshop
                 </Button>
@@ -614,8 +614,8 @@ export function WorkshopDetails({ onBack, onNavigateToManageAttendees, onNavigat
                     setTimeout(() => onBack(), 2000);
                   }}
                   disabled={cancelData.confirmText !== 'CANCEL WORKSHOP' || !cancelData.reason}
-                  className="flex-1 h-14 text-[18px]"
-                  style={{ 
+                  className="flex-1 h-14 text-[18px] active:scale-95 transition-transform"
+                  style={{
                     background: cancelData.confirmText === 'CANCEL WORKSHOP' ? '#DC2626' : '#9CA3AF',
                     color: '#FFFFFF',
                     cursor: cancelData.confirmText === 'CANCEL WORKSHOP' ? 'pointer' : 'not-allowed'

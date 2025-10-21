@@ -27,7 +27,7 @@ export function CaregiverSettings({ onBack, onNavigate }: CaregiverSettingsProps
       <div className="max-w-4xl mx-auto p-4 sm:p-6 md:p-8">
         <button
           onClick={onBack}
-          className="flex items-center gap-2 mb-4 md:mb-6 hover:underline"
+          className="flex items-center gap-2 mb-4 md:mb-6 hover:underline active:scale-95 transition-transform"
           style={{ color: '#2D9596', fontSize: '16px' }}
         >
           <ArrowLeft className="w-5 h-5" />
@@ -71,7 +71,7 @@ export function CaregiverSettings({ onBack, onNavigate }: CaregiverSettingsProps
                 </div>
                 <Button
                   onClick={() => toast.success('✓ Profile updated successfully')}
-                  className="mt-4 w-full sm:w-auto text-[16px] md:text-[18px] h-12 md:h-14"
+                  className="mt-4 w-full sm:w-auto text-[16px] md:text-[18px] h-12 md:h-14 active:scale-95 transition-transform"
                   style={{ background: '#2D9596', color: '#FFFFFF' }}
                 >
                   Update Profile
@@ -99,7 +99,7 @@ export function CaregiverSettings({ onBack, onNavigate }: CaregiverSettingsProps
                 ))}
                 <Button
                   onClick={() => toast.success('✓ Notification preferences saved')}
-                  className="mt-4 w-full sm:w-auto text-[16px] md:text-[18px] h-12 md:h-14"
+                  className="mt-4 w-full sm:w-auto text-[16px] md:text-[18px] h-12 md:h-14 active:scale-95 transition-transform"
                   style={{ background: '#2D9596', color: '#FFFFFF' }}
                 >
                   Save Preferences
@@ -184,10 +184,10 @@ export function CaregiverSettings({ onBack, onNavigate }: CaregiverSettingsProps
                   </div>
                 </div>
 
-                <Button 
+                <Button
                   onClick={() => toast.success('✓ Payment responsibility updated')}
                   style={{ background: '#2D9596', color: '#FFFFFF' }}
-                  className="w-full sm:w-auto text-[16px] md:text-[18px] h-12 md:h-14"
+                  className="w-full sm:w-auto text-[16px] md:text-[18px] h-12 md:h-14 active:scale-95 transition-transform"
                 >
                   Save Changes
                 </Button>
@@ -208,7 +208,7 @@ export function CaregiverSettings({ onBack, onNavigate }: CaregiverSettingsProps
                 <Button
                   onClick={() => onNavigate?.('update-payment')}
                   variant="outline"
-                  className="w-full sm:w-auto text-[16px] md:text-[18px] h-12 md:h-14"
+                  className="w-full sm:w-auto text-[16px] md:text-[18px] h-12 md:h-14 active:scale-95 transition-transform"
                 >
                   Update Payment Method
                 </Button>
@@ -220,7 +220,7 @@ export function CaregiverSettings({ onBack, onNavigate }: CaregiverSettingsProps
                     window.open('about:blank', '_blank');
                   }}
                   variant="outline"
-                  className="w-full sm:w-auto text-[16px] md:text-[18px] h-12 md:h-14"
+                  className="w-full sm:w-auto text-[16px] md:text-[18px] h-12 md:h-14 active:scale-95 transition-transform"
                 >
                   Download Tax Summary
                 </Button>
@@ -244,7 +244,7 @@ export function CaregiverSettings({ onBack, onNavigate }: CaregiverSettingsProps
                       </div>
                       <div className="flex sm:flex-col items-center sm:items-end justify-between sm:justify-start gap-2 sm:text-right">
                         <p className="text-[16px] md:text-[18px] font-semibold">{item.amount}</p>
-                        <Button variant="ghost" size="sm" className="text-[14px] md:text-[16px]">Download</Button>
+                        <Button variant="ghost" size="sm" className="text-[14px] md:text-[16px] active:scale-95 transition-transform">Download</Button>
                       </div>
                     </div>
                   ))}
@@ -274,7 +274,7 @@ export function CaregiverSettings({ onBack, onNavigate }: CaregiverSettingsProps
                 <Button
                   onClick={() => toast.success('✓ Password updated successfully')}
                   style={{ background: '#2D9596', color: '#FFFFFF' }}
-                  className="w-full sm:w-auto text-[16px] md:text-[18px] h-12 md:h-14"
+                  className="w-full sm:w-auto text-[16px] md:text-[18px] h-12 md:h-14 active:scale-95 transition-transform"
                 >
                   Update Password
                 </Button>
@@ -294,7 +294,7 @@ export function CaregiverSettings({ onBack, onNavigate }: CaregiverSettingsProps
                     description: 'You\'ll receive a verification code via text message'
                   })}
                   variant="outline"
-                  className="w-full sm:w-auto text-[16px] md:text-[18px] h-12 md:h-14"
+                  className="w-full sm:w-auto text-[16px] md:text-[18px] h-12 md:h-14 active:scale-95 transition-transform"
                 >
                   Enable Two-Factor Auth
                 </Button>
