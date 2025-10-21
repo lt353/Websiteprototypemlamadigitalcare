@@ -856,8 +856,8 @@ export function BookingPage({ onBack, onBookingSuccess }: BookingPageProps) {
                                   <strong>Potential Savings:</strong>
                                 </p>
                                 <div className="space-y-1 text-[14px]" style={{ color: '#4B5563' }}>
-                                  <div>Standard + 2 add-ons: $99 + ${info.discountedPrice * 2} = ${99 + (info.discountedPrice * 2)}/month</div>
-                                  <div className="font-bold" style={{ color: '#10B981' }}>Premium: $179/month - Save ${(99 + (info.discountedPrice * 2)) - 179}!</div>
+                                  <div>Standard + 2 add-ons: $79 + ${info.discountedPrice * 2} = ${79 + (info.discountedPrice * 2)}/month</div>
+                                  <div className="font-bold" style={{ color: '#10B981' }}>Premium: $149/month - Save ${(79 + (info.discountedPrice * 2)) - 149}!</div>
                                 </div>
                               </div>
                               <Button
@@ -1025,7 +1025,7 @@ export function BookingPage({ onBack, onBookingSuccess }: BookingPageProps) {
                   </CardHeader>
                   <CardContent>
                     <div className="text-[36px] font-bold mb-4" style={{ color: '#2D9596' }}>
-                      $99<span className="text-[18px]">/month</span>
+                      $79<span className="text-[18px]">/month</span>
                     </div>
                     <div className="space-y-3">
                       <div className="flex items-center gap-2">
@@ -1086,7 +1086,7 @@ export function BookingPage({ onBack, onBookingSuccess }: BookingPageProps) {
                   </CardHeader>
                   <CardContent>
                     <div className="text-[36px] font-bold mb-4" style={{ color: '#2D9596' }}>
-                      $179<span className="text-[18px]">/month</span>
+                      $149<span className="text-[18px]">/month</span>
                     </div>
                     <div className="space-y-3">
                       <div className="flex items-center gap-2">
@@ -1099,7 +1099,7 @@ export function BookingPage({ onBack, onBookingSuccess }: BookingPageProps) {
                       </div>
                       <div className="flex items-center gap-2">
                         <Check className="w-5 h-5 flex-shrink-0" style={{ color: '#10B981' }} />
-                        <span className="text-[16px]" style={{ color: '#4B5563' }}>20% off add-ons</span>
+                        <span className="text-[16px]" style={{ color: '#4B5563' }}>15% off add-ons</span>
                       </div>
                       <div className="flex items-center gap-2">
                         <Check className="w-5 h-5 flex-shrink-0" style={{ color: '#10B981' }} />
