@@ -352,19 +352,17 @@ export function OrganizationDashboard({ currentView, onNavigate, onLogout }: Org
                         </span>
                       </div>
                       <div className="flex gap-2 md:gap-3 w-full sm:w-auto">
-                        <Button 
-                          variant="outline" 
-                          size="sm"
+                        <Button
+                          variant="outline"
                           onClick={() => onNavigate('workshop-details')}
-                          className="flex-1 sm:flex-none text-[13px] md:text-[14px]"
+                          className="flex-1 sm:flex-none h-10 px-4 text-[14px]"
                         >
                           View Details
                         </Button>
                         <Button
                           variant="outline"
-                          size="sm"
                           onClick={() => onNavigate('manage-attendees')}
-                          className="flex-1 sm:flex-none text-[13px] md:text-[14px]"
+                          className="flex-1 sm:flex-none h-10 px-4 text-[14px]"
                         >
                           Manage Attendees
                         </Button>
