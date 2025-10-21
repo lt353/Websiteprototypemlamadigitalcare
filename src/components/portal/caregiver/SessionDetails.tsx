@@ -17,6 +17,7 @@ export function SessionDetails({ seniorName, onBack, onReschedule, onCancel }: S
     duration: '90 minutes',
     type: 'In-Home Visit',
     location: '123 Main St, Kailua, HI 96734',
+    coverage: 'addon', // This session is an add-on (based on LovedOneDetails data)
     instructor: {
       name: 'Tea Araki',
       title: 'Senior Technology Instructor',
@@ -76,8 +77,17 @@ export function SessionDetails({ seniorName, onBack, onReschedule, onCancel }: S
 
         {/* Header */}
         <div className="mb-8">
-          <div className="flex items-center gap-3 mb-3">
+          <div className="flex items-center gap-3 mb-3 flex-wrap">
             <Badge style={{ background: '#E0F2FE', color: '#0284C7' }}>Upcoming</Badge>
+            {sessionData.coverage === 'included' ? (
+              <Badge style={{ background: '#DBEAFE', color: '#1E40AF' }}>
+                PLAN SESSION
+              </Badge>
+            ) : (
+              <Badge style={{ background: '#FEF3C7', color: '#92400E' }}>
+                ADD-ON {sessionData.type === 'In-Home Visit' ? '$72.25' : '$29.75'}
+              </Badge>
+            )}
             <h1 className="text-[36px] font-bold" style={{ color: '#265073' }}>
               Session Details
             </h1>

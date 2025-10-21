@@ -425,17 +425,31 @@ export function LovedOneDetails({ seniorName, onBack, onNavigateToBooking, onNav
               <CardContent>
                 <div className="space-y-4">
                   {sessions.slice(1, 4).map((session) => (
-                    <div key={session.id} className="flex items-center justify-between p-4 rounded-lg border">
-                      <div>
-                        <div className="font-semibold" style={{ color: '#265073' }}>{session.topics}</div>
-                        <div className="text-sm" style={{ color: '#6B7280' }}>
-                          {session.date} • {session.time} • {session.instructor}
+                    <div key={session.id} className="p-4 rounded-lg border">
+                      <div className="flex items-start justify-between mb-2">
+                        <div>
+                          <div className="font-semibold" style={{ color: '#265073' }}>{session.topics}</div>
+                          <div className="text-sm" style={{ color: '#6B7280' }}>
+                            {session.date} • {session.time} • {session.instructor}
+                          </div>
+                        </div>
+                        <div className="flex gap-2 flex-wrap">
+                          {session.coverage === 'included' ? (
+                            <Badge style={{ background: '#DBEAFE', color: '#1E40AF' }}>
+                              PLAN SESSION
+                            </Badge>
+                          ) : (
+                            <Badge style={{ background: '#FEF3C7', color: '#92400E' }}>
+                              ADD-ON
+                            </Badge>
+                          )}
                         </div>
                       </div>
                       <Button
                         onClick={() => onNavigateToSessionSummary?.()}
                         variant="outline"
                         size="sm"
+                        className="w-full"
                       >
                         View Summary
                       </Button>
@@ -513,11 +527,22 @@ export function LovedOneDetails({ seniorName, onBack, onNavigateToBooking, onNav
                               {session.time} • {session.type}
                             </div>
                           </div>
-                          <Badge
-                            className={session.status === 'upcoming' ? 'bg-blue-100 text-blue-800' : 'bg-green-100 text-green-800'}
-                          >
-                            {session.status === 'upcoming' ? 'Upcoming' : 'Completed'}
-                          </Badge>
+                          <div className="flex gap-2 flex-wrap">
+                            <Badge
+                              className={session.status === 'upcoming' ? 'bg-blue-100 text-blue-800' : 'bg-green-100 text-green-800'}
+                            >
+                              {session.status === 'upcoming' ? 'Upcoming' : 'Completed'}
+                            </Badge>
+                            {session.coverage === 'included' ? (
+                              <Badge style={{ background: '#DBEAFE', color: '#1E40AF' }}>
+                                PLAN SESSION
+                              </Badge>
+                            ) : (
+                              <Badge style={{ background: '#FEF3C7', color: '#92400E' }}>
+                                ADD-ON {session.type === 'In-Home Visit' ? '$72.25' : '$29.75'}
+                              </Badge>
+                            )}
+                          </div>
                         </div>
                         <div className="text-sm" style={{ color: '#6B7280' }}>
                           <span className="font-semibold">Instructor:</span> {session.instructor}
