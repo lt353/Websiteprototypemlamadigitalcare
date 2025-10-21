@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { toast } from 'sonner';
 import { CaregiverDashboard } from '../CaregiverDashboard';
 import { LovedOneDetails } from './LovedOneDetails';
@@ -15,10 +15,10 @@ import { SessionDetails } from './SessionDetails';
 import { SessionSummary } from './SessionSummary';
 import { MessageInstructor } from './MessageInstructor';
 
-type CaregiverView = 
-  | 'dashboard' 
-  | 'loved-one-details' 
-  | 'book-session' 
+type CaregiverView =
+  | 'dashboard'
+  | 'loved-one-details'
+  | 'book-session'
   | 'add-senior'
   | 'manage-seniors'
   | 'resources'
@@ -39,6 +39,11 @@ export function CaregiverRouter({ onLogout }: CaregiverRouterProps) {
   const [currentView, setCurrentView] = useState<CaregiverView>('dashboard');
   const [selectedSenior, setSelectedSenior] = useState('Mary Johnson');
   const [rescheduleData, setRescheduleData] = useState({ date: '', time: '' });
+
+  // Scroll to top whenever the view changes
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [currentView]);
 
   const handleNavigate = (view: string, data?: any) => {
     if (data?.seniorName) {
