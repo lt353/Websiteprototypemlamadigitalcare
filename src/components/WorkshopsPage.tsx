@@ -15,7 +15,7 @@ export function WorkshopsPage({ onNavigate }: WorkshopsPageProps) {
       {/* Hero Section */}
       <section className="py-20 px-6" style={{
           background:
-            "linear-gradient(135deg, #F1FADA 0%, #FFFFFF 100%)",
+            "linear-gradient(135deg, #B8E6E3 0%, #FFFFFF 100%)",
         }}>
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="text-[48px] font-bold mb-6" style={{ color: '#265073' }}>
