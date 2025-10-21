@@ -3,6 +3,7 @@ import { Button } from '../../ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '../../ui/card';
 import { Input } from '../../ui/input';
 import { Label } from '../../ui/label';
+import { toast } from 'sonner';
 
 interface OrganizationSettingsProps {
   onBack: () => void;
@@ -37,7 +38,12 @@ export function OrganizationSettings({ onBack, onNavigateToUpdatePayment }: Orga
                 <Label>Phone</Label>
                 <Input defaultValue="(808) 555-1234" className="h-12" />
               </div>
-              <Button style={{ background: '#2D9596', color: '#FFFFFF' }}>Update Information</Button>
+              <Button
+                onClick={() => toast.success('✓ Facility information updated successfully')}
+                style={{ background: '#2D9596', color: '#FFFFFF' }}
+              >
+                Update Information
+              </Button>
             </CardContent>
           </Card>
 
