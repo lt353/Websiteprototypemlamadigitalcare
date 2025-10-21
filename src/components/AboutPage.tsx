@@ -306,7 +306,7 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
               </div>
               <a
                 href="#"
-                className="text-[#2D3748] hover:text-[#4DB8A8] transition-colors mt-auto"
+                className="text-[#2D3748] hover:text-[#2D9596] transition-colors mt-auto"
               >
                 <Linkedin className="w-6 h-6" strokeWidth={2} />
               </a>
@@ -353,7 +353,7 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
               </div>
               <a
                 href="#"
-                className="text-[#2D3748] hover:text-[#4DB8A8] transition-colors mt-auto"
+                className="text-[#2D3748] hover:text-[#2D9596] transition-colors mt-auto"
               >
                 <Linkedin className="w-6 h-6" strokeWidth={2} />
               </a>
@@ -400,7 +400,7 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
               </div>
               <a
                 href="#"
-                className="text-[#2D3748] hover:text-[#4DB8A8] transition-colors mt-auto"
+                className="text-[#2D3748] hover:text-[#2D9596] transition-colors mt-auto"
               >
                 <Linkedin className="w-6 h-6" strokeWidth={2} />
               </a>

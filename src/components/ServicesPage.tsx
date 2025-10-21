@@ -348,7 +348,7 @@ export function ServicesPage({ onNavigate }: ServicesPageProps) {
           {/* RESPONSIVE PRICING GRID - Stack on mobile, show Standard first */}
           <div className="flex flex-col md:grid md:grid-cols-3 gap-8 mb-8">
             {/* Basic Plan */}
-            <div className="bg-white border-2 border-gray-300 rounded-xl p-8 order-2 md:order-1">
+            <div className="bg-white border-2 border-gray-300 rounded-xl p-8 order-2 md:order-1 flex flex-col">
               <div className="text-center mb-8">
                 <h3 className="text-[#2D3748] mb-4" style={{ fontSize: '28px', fontWeight: 700 }}>
                   Basic Plan
@@ -364,8 +364,8 @@ export function ServicesPage({ onNavigate }: ServicesPageProps) {
                   $390/year (save 2 months)
                 </p>
               </div>
-              
-              <ul className="space-y-4 mb-8">
+
+              <ul className="space-y-4 mb-8 flex-grow">
                 <li className="flex items-start gap-3">
                   <Check className="w-6 h-6 text-primary flex-shrink-0 mt-0.5" />
                   <span style={{ fontSize: '16px' }}>1 virtual check-in monthly (30 min)</span>
@@ -396,10 +396,8 @@ export function ServicesPage({ onNavigate }: ServicesPageProps) {
                 </li>
 
               </ul>
-              <br />
-              <br />
-              <br />
-              <div className="space-y-3">
+
+              <div className="space-y-3 mt-auto">
                 <Button
                   onClick={() => onNavigate('register')}
                   className="w-full min-h-[56px] bg-primary hover:bg-primary/90"
@@ -419,7 +417,7 @@ export function ServicesPage({ onNavigate }: ServicesPageProps) {
             </div>
 
             {/* Standard Plan - Most Popular */}
-            <div className="bg-white border-4 border-primary rounded-xl p-8 relative shadow-xl order-1 md:order-2">
+            <div className="bg-white border-4 border-primary rounded-xl p-8 relative shadow-xl order-1 md:order-2 flex flex-col">
               <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-secondary text-white px-6 py-2 rounded-full" style={{ fontSize: '14px', fontWeight: 700 }}>
                 ⭐ MOST POPULAR
               </div>
@@ -439,8 +437,8 @@ export function ServicesPage({ onNavigate }: ServicesPageProps) {
                   $790/year (save 2 months)
                 </p>
               </div>
-              
-              <ul className="space-y-4 mb-8">
+
+              <ul className="space-y-4 mb-8 flex-grow">
                 <li className="flex items-start gap-3">
                   <Check className="w-6 h-6 text-primary flex-shrink-0 mt-0.5" />
                   <span style={{ fontSize: '16px' }}>1 in-home visit (90 min) OR 3 virtual sessions</span>
@@ -475,7 +473,7 @@ export function ServicesPage({ onNavigate }: ServicesPageProps) {
                 </li>
               </ul>
 
-              <div className="space-y-3">
+              <div className="space-y-3 mt-auto">
                 <Button
                   onClick={() => onNavigate('register')}
                   className="w-full min-h-[56px] bg-primary hover:bg-primary/90"
@@ -495,7 +493,7 @@ export function ServicesPage({ onNavigate }: ServicesPageProps) {
             </div>
 
             {/* Premium Plan */}
-            <div className="bg-white border-2 border-gray-300 rounded-xl p-8 order-3 md:order-3">
+            <div className="bg-white border-2 border-gray-300 rounded-xl p-8 order-3 md:order-3 flex flex-col">
               <div className="text-center mb-8">
                 <h3 className="text-[#2D3748] mb-4" style={{ fontSize: '28px', fontWeight: 700 }}>
                   Premium Plan
@@ -511,8 +509,8 @@ export function ServicesPage({ onNavigate }: ServicesPageProps) {
                   $1,490/year (save 2 months)
                 </p>
               </div>
-              
-              <ul className="space-y-4 mb-8">
+
+              <ul className="space-y-4 mb-8 flex-grow">
                 <li className="flex items-start gap-3">
                   <Check className="w-6 h-6 text-primary flex-shrink-0 mt-0.5" />
                   <span style={{ fontSize: '16px' }}>2 in-home visits (90 min each) monthly</span>
@@ -551,7 +549,7 @@ export function ServicesPage({ onNavigate }: ServicesPageProps) {
                 </li>
               </ul>
 
-              <div className="space-y-3">
+              <div className="space-y-3 mt-auto">
                 <Button
                   onClick={() => onNavigate('register')}
                   className="w-full min-h-[56px] bg-primary hover:bg-primary/90"

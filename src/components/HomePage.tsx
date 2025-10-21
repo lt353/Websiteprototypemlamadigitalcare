@@ -615,9 +615,9 @@ export function HomePage({ onNavigate }: HomePageProps) {
                   Ongoing learning
                 </h3>
 
-                {/* Description - grows to fill space - ADDED mt-6 */}
+                {/* Description - grows to fill space */}
                 <p
-                  className="text-[16px] flex-grow mt-6"
+                  className="text-[16px] flex-grow"
                   style={{
                     fontWeight: 400,
                     lineHeight: 1.7,
@@ -765,7 +765,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
                   Initial consultation
                 </h3>
                 <p
-                  className="text-[16px] flex-grow mt-4"
+                  className="text-[16px] flex-grow"
                   style={{ lineHeight: 1.6, color: "#4A5568" }}
                 >
                   We listen to your challenges and recommend the
@@ -796,7 +796,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
                   Choose Your Service
                 </h3>
                 <p
-                  className="text-[16px] flex-grow mt-4"
+                  className="text-[16px] flex-grow"
                   style={{ lineHeight: 1.6, color: "#4A5568" }}
                 >
                   Pick the format that fits your comfort level
