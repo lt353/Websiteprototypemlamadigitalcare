@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { OrganizationDashboard } from '../OrganizationDashboard';
 import { ScheduleWorkshop } from './ScheduleWorkshop';
 import { WorkshopDetails } from './WorkshopDetails';
@@ -34,6 +34,11 @@ export function OrganizationRouter({ onLogout }: OrganizationRouterProps) {
   const [currentView, setCurrentView] = useState<OrgView>('dashboard');
   const [workshopData, setWorkshopData] = useState<any>(null);
   const [selectedResidentName, setSelectedResidentName] = useState<string>('Mary Johnson');
+
+  // Scroll to top whenever the view changes
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [currentView]);
 
   const handleNavigate = (view: string) => {
     setCurrentView(view as OrgView);

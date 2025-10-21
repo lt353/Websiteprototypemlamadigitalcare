@@ -35,6 +35,11 @@ export function KupunaPortalLayout({
     { id: 'library', icon: BookOpen, label: 'Videos', color: '#6366F1' },
   ];
 
+  // Scroll to top whenever the view changes
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [currentView]);
+
   // Hide mic button when scrolled near bottom to avoid covering "Need help?" card
   useEffect(() => {
     const handleScroll = () => {
