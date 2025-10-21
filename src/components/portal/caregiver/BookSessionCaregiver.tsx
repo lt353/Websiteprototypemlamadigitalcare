@@ -226,7 +226,7 @@ export function BookSessionCaregiver({ onBack, onSuccess }: BookSessionCaregiver
                         Add-on (15% off)
                       </Badge>
                     )}
-                    <CardContent className="p-6">
+                    <CardContent className="p-6" style={{ paddingTop: (isIncluded || isAddOn) ? '3.5rem' : '1.5rem' }}>
                       <div className="flex items-center justify-between">
                         <div className="flex-1">
                           <p className="text-[20px] font-bold mb-1" style={{ color: '#265073' }}>{type.name}</p>
