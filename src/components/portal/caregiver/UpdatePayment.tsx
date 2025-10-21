@@ -5,7 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../..
 import { Input } from '../../ui/input';
 import { Label } from '../../ui/label';
 import { RadioGroup, RadioGroupItem } from '../../ui/radio-group';
-import { toast } from 'sonner@2.0.3';
+import { toast } from 'sonner';
 
 interface UpdatePaymentProps {
   onBack: () => void;
