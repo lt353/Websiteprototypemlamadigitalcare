@@ -22,7 +22,7 @@ export function ServicesPage({ onNavigate }: ServicesPageProps) {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative overflow-hidden py-20 md:py-32"
+      <section className="relative overflow-hidden py-16 md:py-20"
         style={{
           background:
             "linear-gradient(135deg, #B8E6E3 0%, #FFFFFF 100%)",

@@ -21,7 +21,7 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
     <div className="bg-white">
       {/* Hero Section */}
       <section
-        className="relative overflow-hidden py-20 md:py-32"
+        className="relative overflow-hidden py-16 md:py-20"
         style={{
           background:
             "linear-gradient(135deg, #B8E6E3 0%, #FFFFFF 100%)",
