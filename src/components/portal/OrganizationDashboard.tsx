@@ -128,13 +128,13 @@ export function OrganizationDashboard({ currentView, onNavigate, onLogout }: Org
              
               <button
                 onClick={onLogout}
-                className="flex-1 flex items-center justify-center gap-2 px-3 py-2 rounded-lg transition-all text-[14px]"
-                style={{ 
+                className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg transition-all text-[14px]"
+                style={{
                   background: 'rgba(255,255,255,0.1)',
                   color: 'rgba(255,255,255,0.9)'
                 }}
               >
-                <LogOut className="w-4 h-4" />
+                <LogOut className="w-5 h-5" />
                 Logout
               </button>
             </div>
@@ -539,7 +539,7 @@ export function OrganizationDashboard({ currentView, onNavigate, onLogout }: Org
                 <button
                   key={item.id}
                   onClick={() => onNavigate(item.id)}
-                  className="flex flex-col items-center gap-1 p-3 rounded-xl transition-all"
+                  className="flex flex-col items-center gap-2 p-3 rounded-xl transition-all"
                   style={{
                     background: isActive ? '#E6F7F4' : 'transparent',
                     color: isActive ? '#2D9596' : '#6B7280'

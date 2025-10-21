@@ -45,10 +45,10 @@ export function CaregiverSettings({ onBack, onNavigate }: CaregiverSettingsProps
 
         <Tabs defaultValue="profile">
           <TabsList className="mb-6 md:mb-8 h-auto grid grid-cols-2 gap-2 p-2">
-            <TabsTrigger value="profile" className="text-[14px] md:text-[16px] px-3 md:px-4 py-2 md:py-3">My Profile</TabsTrigger>
-            <TabsTrigger value="notifications" className="text-[14px] md:text-[16px] px-3 md:px-4 py-2 md:py-3">Notifications</TabsTrigger>
-            <TabsTrigger value="billing" className="text-[14px] md:text-[16px] px-3 md:px-4 py-2 md:py-3">Billing & Payment</TabsTrigger>
-            <TabsTrigger value="security" className="text-[14px] md:text-[16px] px-3 md:px-4 py-2 md:py-3">Security</TabsTrigger>
+            <TabsTrigger value="profile" className="text-[14px] md:text-[16px] px-4 md:px-5 py-2.5 md:py-3.5">My Profile</TabsTrigger>
+            <TabsTrigger value="notifications" className="text-[14px] md:text-[16px] px-4 md:px-5 py-2.5 md:py-3.5">Notifications</TabsTrigger>
+            <TabsTrigger value="billing" className="text-[14px] md:text-[16px] px-4 md:px-5 py-2.5 md:py-3.5">Billing & Payment</TabsTrigger>
+            <TabsTrigger value="security" className="text-[14px] md:text-[16px] px-4 md:px-5 py-2.5 md:py-3.5">Security</TabsTrigger>
           </TabsList>
 
           <TabsContent value="profile">
