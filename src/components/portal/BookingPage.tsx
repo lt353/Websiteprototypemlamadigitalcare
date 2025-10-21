@@ -141,16 +141,20 @@ export function BookingPage({ onBack, onBookingSuccess }: BookingPageProps) {
   };
 
   const handleConfirmBooking = () => {
-    const service = services.find(s => s.id === selectedService);
+    const sessionInfo = getSessionInfo(selectedService);
+    const serviceTitle = selectedService === 'in-home' ? 'In-Home Visit'
+                        : selectedService === 'virtual' ? 'Virtual Session'
+                        : 'Group Session';
+
     const bookingData = {
-      type: service?.title || '',
+      type: serviceTitle,
       date: new Date(bookingDate).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }),
       time: bookingTime,
       topics: bookingTopics,
       technician: selectedTechnician || 'No preference',
-      price: service?.includedInPlan ? 'Included in Plan' : service?.discountedPriceDisplay,
-      originalPrice: service?.priceDisplay,
-      isAddon: !service?.includedInPlan,
+      price: sessionInfo?.isCovered ? 'Included in Plan' : `$${sessionInfo?.discountedPrice}`,
+      originalPrice: `$${sessionInfo?.price}`,
+      isAddon: !sessionInfo?.isCovered,
       confirmationNumber: 'BOOK-' + Math.random().toString(36).substring(2, 10).toUpperCase()
     };
 
@@ -989,7 +993,6 @@ export function BookingPage({ onBack, onBookingSuccess }: BookingPageProps) {
                 }}
                 className="h-12 px-6 text-[16px] font-bold active:scale-95 transition-transform"
                 style={{ background: '#2D9596', color: '#FFFFFF' }}
-                disabled={!bookingDate}
               >
                 Save Changes
               </Button>

@@ -6,7 +6,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '../../ui/tabs';
 import { Input } from '../../ui/input';
 import { Label } from '../../ui/label';
 import { RadioGroup, RadioGroupItem } from '../../ui/radio-group';
-import { toast } from 'sonner@2.0.3';
+import { toast } from 'sonner';
 import { CaregiverBottomNav } from './CaregiverBottomNav';
 
 interface CaregiverSettingsProps {
@@ -63,7 +63,11 @@ export function CaregiverSettings({ onBack, onNavigate }: CaregiverSettingsProps
                   <Label className="text-[16px] md:text-[18px]">Phone</Label>
                   <Input type="tel" defaultValue="(808) 555-5678" className="h-12 md:h-14 text-[16px] md:text-[18px]" />
                 </div>
-                <Button className="mt-4 w-full sm:w-auto text-[16px] md:text-[18px] h-12 md:h-14" style={{ background: '#2D9596', color: '#FFFFFF' }}>
+                <Button
+                  onClick={() => toast.success('✓ Profile updated successfully')}
+                  className="mt-4 w-full sm:w-auto text-[16px] md:text-[18px] h-12 md:h-14"
+                  style={{ background: '#2D9596', color: '#FFFFFF' }}
+                >
                   Update Profile
                 </Button>
               </CardContent>
@@ -87,7 +91,11 @@ export function CaregiverSettings({ onBack, onNavigate }: CaregiverSettingsProps
                     <label className="text-[16px] md:text-[18px] break-words">{pref}</label>
                   </div>
                 ))}
-                <Button className="mt-4 w-full sm:w-auto text-[16px] md:text-[18px] h-12 md:h-14" style={{ background: '#2D9596', color: '#FFFFFF' }}>
+                <Button
+                  onClick={() => toast.success('✓ Notification preferences saved')}
+                  className="mt-4 w-full sm:w-auto text-[16px] md:text-[18px] h-12 md:h-14"
+                  style={{ background: '#2D9596', color: '#FFFFFF' }}
+                >
                   Save Preferences
                 </Button>
               </CardContent>
@@ -191,8 +199,25 @@ export function CaregiverSettings({ onBack, onNavigate }: CaregiverSettingsProps
                   </p>
                   <p className="text-[14px] md:text-[16px]" style={{ color: '#6B7280' }}>Expires 12/2025</p>
                 </div>
-                <Button variant="outline" className="w-full sm:w-auto text-[16px] md:text-[18px] h-12 md:h-14">Update Payment Method</Button>
-                <Button variant="outline" className="w-full sm:w-auto text-[16px] md:text-[18px] h-12 md:h-14">Download Tax Summary</Button>
+                <Button
+                  onClick={() => onNavigate?.('update-payment')}
+                  variant="outline"
+                  className="w-full sm:w-auto text-[16px] md:text-[18px] h-12 md:h-14"
+                >
+                  Update Payment Method
+                </Button>
+                <Button
+                  onClick={() => {
+                    toast.success('Downloading tax summary...', {
+                      description: 'PDF will open in a new window'
+                    });
+                    window.open('about:blank', '_blank');
+                  }}
+                  variant="outline"
+                  className="w-full sm:w-auto text-[16px] md:text-[18px] h-12 md:h-14"
+                >
+                  Download Tax Summary
+                </Button>
               </CardContent>
             </Card>
 
@@ -240,7 +265,11 @@ export function CaregiverSettings({ onBack, onNavigate }: CaregiverSettingsProps
                   <Label className="text-[16px] md:text-[18px]">Confirm New Password</Label>
                   <Input type="password" className="h-12 md:h-14 text-[16px] md:text-[18px]" />
                 </div>
-                <Button style={{ background: '#2D9596', color: '#FFFFFF' }} className="w-full sm:w-auto text-[16px] md:text-[18px] h-12 md:h-14">
+                <Button
+                  onClick={() => toast.success('✓ Password updated successfully')}
+                  style={{ background: '#2D9596', color: '#FFFFFF' }}
+                  className="w-full sm:w-auto text-[16px] md:text-[18px] h-12 md:h-14"
+                >
                   Update Password
                 </Button>
               </CardContent>
@@ -254,7 +283,15 @@ export function CaregiverSettings({ onBack, onNavigate }: CaregiverSettingsProps
                 <p className="text-[16px] md:text-[18px] mb-4 break-words" style={{ color: '#6B7280' }}>
                   Add an extra layer of security to your account
                 </p>
-                <Button variant="outline" className="w-full sm:w-auto text-[16px] md:text-[18px] h-12 md:h-14">Enable Two-Factor Auth</Button>
+                <Button
+                  onClick={() => toast.success('✓ Two-Factor Authentication enabled', {
+                    description: 'You\'ll receive a verification code via text message'
+                  })}
+                  variant="outline"
+                  className="w-full sm:w-auto text-[16px] md:text-[18px] h-12 md:h-14"
+                >
+                  Enable Two-Factor Auth
+                </Button>
               </CardContent>
             </Card>
           </TabsContent>

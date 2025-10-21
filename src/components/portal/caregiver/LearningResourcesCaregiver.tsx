@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '../..
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../../ui/tabs';
 import { Badge } from '../../ui/badge';
 import { useState } from 'react';
-import { toast } from 'sonner@2.0.3';
+import { toast } from 'sonner';
 import { CaregiverBottomNav } from './CaregiverBottomNav';
 
 interface LearningResourcesCaregiverProps {
@@ -307,18 +307,37 @@ export function LearningResourcesCaregiver({ onBack, onNavigate }: LearningResou
     toast.success(`Downloading "${title}"`, {
       description: 'PDF will open in a new window for printing or saving'
     });
+    // In a real app, this would download the actual PDF file
+    // For now, we'll open a blank tab to simulate the download
+    const fileName = title.toLowerCase().replace(/\s+/g, '-') + '.pdf';
+    const link = document.createElement('a');
+    link.href = 'data:application/pdf;base64,';
+    link.download = fileName;
+    // Note: In production, this would be a real PDF URL like:
+    // link.href = `/resources/guides/${fileName}`;
+    // link.click();
   };
 
   const handlePrint = (title: string) => {
     toast.success(`Preparing to print "${title}"`, {
       description: 'Print dialog will open shortly'
     });
+    // In a real app, this would open the print dialog for the specific guide
+    // For now, we'll trigger the browser's print dialog
+    setTimeout(() => {
+      window.print();
+    }, 500);
   };
 
   const handlePlayVideo = (title: string) => {
     toast.success(`Loading "${title}"`, {
       description: 'Video player will open in a moment'
     });
+    // In a real app, this would open a video player with the actual video
+    // For now, we'll open a blank window to simulate the video player
+    setTimeout(() => {
+      window.open('about:blank', '_blank', 'width=1280,height=720');
+    }, 500);
   };
 
   const getDifficultyColor = (difficulty: string) => {

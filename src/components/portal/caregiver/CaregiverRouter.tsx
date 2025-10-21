@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { toast } from 'sonner';
 import { CaregiverDashboard } from '../CaregiverDashboard';
 import { LovedOneDetails } from './LovedOneDetails';
 import { BookSessionCaregiver } from './BookSessionCaregiver';
@@ -51,12 +52,16 @@ export function CaregiverRouter({ onLogout }: CaregiverRouterProps) {
   };
 
   const handleBookingSuccess = () => {
-    alert('✓ Session Booked Successfully!\n\nConfirmation sent to your loved one and you.');
+    toast.success('✓ Session Booked Successfully!', {
+      description: 'Confirmation sent to your loved one and you.'
+    });
     setCurrentView('dashboard');
   };
 
   const handleAddSeniorSuccess = () => {
-    alert('✓ Loved One Added Successfully!\n\nWe\'ll send them a confirmation and permission request.');
+    toast.success('✓ Loved One Added Successfully!', {
+      description: 'We\'ll send them a confirmation and permission request.'
+    });
     setCurrentView('dashboard');
   };
 
@@ -113,7 +118,9 @@ export function CaregiverRouter({ onLogout }: CaregiverRouterProps) {
           onReschedule={() => setCurrentView('reschedule')}
           onCancel={() => {
             if (confirm('Are you sure you want to cancel this session?')) {
-              alert('Session canceled');
+              toast.success('✓ Session canceled', {
+                description: 'Cancellation confirmation has been sent to you and the instructor.'
+              });
               setCurrentView('loved-one-details');
             }
           }}
@@ -125,8 +132,23 @@ export function CaregiverRouter({ onLogout }: CaregiverRouterProps) {
         <SessionSummary
           seniorName={selectedSenior}
           onBack={() => setCurrentView('loved-one-details')}
-          onWatchRecording={() => alert('Video player opening...')}
-          onDownloadGuide={() => alert('Downloading guide...')}
+          onWatchRecording={() => {
+            toast.success('Opening session recording...', {
+              description: 'Video player will open in a new window'
+            });
+            // In a real app, this would open a video player with the session recording
+            window.open('about:blank', '_blank');
+          }}
+          onDownloadGuide={() => {
+            toast.success('Downloading session guide...', {
+              description: 'PDF will open in a new window for printing or saving'
+            });
+            // In a real app, this would download the actual PDF
+            const link = document.createElement('a');
+            link.href = 'data:application/pdf;base64,';
+            link.download = 'session-guide.pdf';
+            // Note: In production, this would be a real PDF URL
+          }}
         />
       );
 
@@ -137,8 +159,7 @@ export function CaregiverRouter({ onLogout }: CaregiverRouterProps) {
           onBack={() => setCurrentView('loved-one-details')}
         />
       );
-  
-    case 'loved-one-details':
+
     case 'loved-one-details':
       return (
         <LovedOneDetails

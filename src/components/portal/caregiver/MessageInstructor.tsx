@@ -6,7 +6,7 @@ import { Textarea } from '../../ui/textarea';
 import { Label } from '../../ui/label';
 import { RadioGroup, RadioGroupItem } from '../../ui/radio-group';
 import { Badge } from '../../ui/badge';
-import { toast } from 'sonner@2.0.3';
+import { toast } from 'sonner';
 
 interface MessageInstructorProps {
   seniorName: string;

@@ -52,6 +52,8 @@ export function CaregiverDashboard({ currentView, onNavigate, onLogout }: Caregi
       name: 'Mary Johnson',
       relationship: 'Mother',
       nextSession: getDynamicDateTime(5, '2:00 PM'),
+      nextSessionType: 'In-Home Visit',
+      nextSessionCoverage: 'addon', // Already used October in-home session
       lastSession: getDynamicDate(-7),
       status: 'active',
       progress: 'Making great progress with email',
@@ -240,9 +242,20 @@ export function CaregiverDashboard({ currentView, onNavigate, onLogout }: Caregi
                   <div className="flex items-start gap-3 p-3 md:p-4 rounded-lg" style={{ background: '#E6F7F4' }}>
                     <Calendar className="w-5 h-5 mt-0.5 flex-shrink-0" style={{ color: '#2D9596' }} />
                     <div className="flex-1 min-w-0">
-                      <p className="font-semibold text-[15px] md:text-[16px]" style={{ color: '#265073' }}>
-                        Next Session
-                      </p>
+                      <div className="flex items-center gap-2 mb-2 flex-wrap">
+                        <p className="font-semibold text-[15px] md:text-[16px]" style={{ color: '#265073' }}>
+                          Next Session
+                        </p>
+                        {senior.nextSessionCoverage === 'included' ? (
+                          <Badge style={{ background: '#DBEAFE', color: '#1E40AF', fontSize: '12px', padding: '2px 8px' }}>
+                            PLAN SESSION
+                          </Badge>
+                        ) : (
+                          <Badge style={{ background: '#FEF3C7', color: '#92400E', fontSize: '12px', padding: '2px 8px' }}>
+                            ADD-ON {senior.nextSessionType === 'In-Home Visit' ? '$72.25' : '$29.75'}
+                          </Badge>
+                        )}
+                      </div>
                       <p className="text-[15px] md:text-[16px] break-words" style={{ color: '#6B7280' }}>
                         {senior.nextSession}
                       </p>
@@ -403,15 +416,17 @@ export function CaregiverDashboard({ currentView, onNavigate, onLogout }: Caregi
                     Our team is here to answer questions and provide guidance on how to best support your loved one's digital learning journey.
                   </p>
                   <div className="flex flex-col sm:flex-row gap-3">
-                    <Button 
+                    <Button
+                      onClick={() => window.open('tel:+18085555432', '_self')}
                       className="text-[14px] md:text-[16px] whitespace-nowrap w-full sm:w-auto justify-center"
                       style={{ background: '#2D9596', color: '#FFFFFF' }}
                     >
                       <Phone className="w-4 h-4 mr-2 flex-shrink-0" />
                       Call Us
                     </Button>
-                    <Button 
-                      variant="outline" 
+                    <Button
+                      onClick={() => window.open('mailto:support@malamadigitalcare.com?subject=Support%20Request', '_self')}
+                      variant="outline"
                       className="text-[14px] md:text-[16px] whitespace-nowrap w-full sm:w-auto justify-center"
                       style={{ borderColor: '#2D9596', color: '#2D9596' }}
                     >
