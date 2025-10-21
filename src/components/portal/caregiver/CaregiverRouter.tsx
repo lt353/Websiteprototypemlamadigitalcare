@@ -159,7 +159,8 @@ export function CaregiverRouter({ onLogout }: CaregiverRouterProps) {
           onBack={() => setCurrentView('loved-one-details')}
         />
       );
-
+  
+    case 'loved-one-details':
     case 'loved-one-details':
       return (
         <LovedOneDetails

@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '../..
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../../ui/tabs';
 import { Badge } from '../../ui/badge';
 import { useState } from 'react';
-import { toast } from 'sonner';
+import { toast } from 'sonner@2.0.3';
 import { CaregiverBottomNav } from './CaregiverBottomNav';
 
 interface LearningResourcesCaregiverProps {
