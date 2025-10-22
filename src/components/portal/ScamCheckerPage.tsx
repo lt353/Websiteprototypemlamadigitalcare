@@ -1730,6 +1730,25 @@ Presented in partnership with Mālama Digital Care`,
                       Check all that apply to this message:
                     </h4>
                     {(() => {
+                      // Group indicators by category
+                      const allIndicators = getRelevantIndicators();
+                      const groupedByCategory: Record<string, { key: keyof Indicators; label: string }[]> = {};
+
+                      allIndicators.forEach((indicator) => {
+                        if (!groupedByCategory[indicator.category]) {
+                          groupedByCategory[indicator.category] = [];
+                        }
+                        groupedByCategory[indicator.category].push({
+                          key: indicator.key,
+                          label: indicator.label
+                        });
+                      });
+
+                      const indicatorCategories = Object.keys(groupedByCategory).map((category) => ({
+                        title: category,
+                        items: groupedByCategory[category]
+                      }));
+
                       return indicatorCategories.map((category) => {
                         return (
                           <div
