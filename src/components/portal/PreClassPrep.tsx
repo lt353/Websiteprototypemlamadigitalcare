@@ -13,6 +13,18 @@ interface PreClassPrepProps {
 
 export function PreClassPrep({ classSession, onBack, onStartClass }: PreClassPrepProps) {
   const [showWalkInModal, setShowWalkInModal] = useState(false);
+
+  // Get appropriate header text based on class type
+  const getStudentListHeader = () => {
+    if (classSession.classType === '1-on-1-in-person' || classSession.classType === '1-on-1-virtual') {
+      return 'Student Information';
+    } else if (classSession.classType === 'small-group') {
+      return 'Participants';
+    } else {
+      return 'Student Roster';
+    }
+  };
+
   const [students, setStudents] = useState<Student[]>([
     {
       id: '1',
@@ -264,15 +276,27 @@ export function PreClassPrep({ classSession, onBack, onStartClass }: PreClassPre
             </div>
           </div>
 
+          {/* Custom Notes Section */}
+          {classSession.customNotes && (
+            <div className="mb-6 p-6 rounded-xl" style={{ background: '#FEF3C7', border: '2px solid #FCD34D' }}>
+              <h3 className="text-[18px] font-bold mb-2" style={{ color: '#92400E' }}>
+                📝 Custom Topic Notes
+              </h3>
+              <p className="text-[16px]" style={{ color: '#92400E' }}>
+                {classSession.customNotes}
+              </p>
+            </div>
+          )}
+
           {/* Student Roster */}
           <div className="mb-6">
             <div className="flex items-center justify-between mb-6">
               <div>
                 <h2 className="text-[28px] font-bold" style={{ color: '#265073' }}>
-                  Student Roster
+                  {getStudentListHeader()}
                 </h2>
                 <p className="text-[16px]" style={{ color: '#6B7280' }}>
-                  {students.length} students registered
+                  {students.length} {students.length === 1 ? 'student' : 'students'} registered
                 </p>
               </div>
             </div>
