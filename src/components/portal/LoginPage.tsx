@@ -228,7 +228,7 @@ export function LoginPage({ onLogin, onNavigateToRegister, onNavigate }: LoginPa
                       checked={userType === 'organization'}
                       onChange={(e) => setUserType(e.target.value as UserType)}
                       className="w-5 h-5 cursor-pointer"
-                      style={{
+                      style={{ 
                         accentColor: '#2D9596',
                         transform: 'scale(1.2)'
                       }}
