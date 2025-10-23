@@ -8,10 +8,11 @@ import {
   Eye,
   Ear,
   Accessibility,
-  AlertCircle
+  AlertCircle,
+  Zap
 } from 'lucide-react';
 import { Student, ClassSession } from './TeacherRouter';
-import { IssueTrackingPanel } from './IssueTrackingPanel';
+import { FastIssueTracker } from './FastIssueTracker';
 import { SessionSummary } from './SessionSummary';
 
 interface ActiveClassViewProps {
@@ -24,8 +25,8 @@ interface ActiveClassViewProps {
 interface TrackedIssue {
   categoryId: string;
   categoryLabel: string;
-  subIssue: string;
   timestamp: Date;
+  notes?: string;
 }
 
 interface StudentIssues {
@@ -38,9 +39,9 @@ export function ActiveClassView({
   onBack,
   onEndClass
 }: ActiveClassViewProps) {
-  const [selectedStudent, setSelectedStudent] = useState<Student | null>(null);
   const [studentIssues, setStudentIssues] = useState<StudentIssues>({});
   const [showSummary, setShowSummary] = useState(false);
+  const [showFastTracker, setShowFastTracker] = useState(false);
 
   const getDeviceIcon = (deviceType: string) => {
     switch (deviceType) {
@@ -68,19 +69,16 @@ export function ActiveClassView({
     return statusConfig[status] || statusConfig['new'];
   };
 
-  const addIssue = (studentId: string, issue: TrackedIssue) => {
-    setStudentIssues(prev => ({
-      ...prev,
-      [studentId]: [...(prev[studentId] || []), issue]
-    }));
-  };
-
   const getIssueCount = (studentId: string) => {
     return studentIssues[studentId]?.length || 0;
   };
 
   const handleEndClass = () => {
     setShowSummary(true);
+  };
+
+  const handleUpdateIssues = (updatedIssues: StudentIssues) => {
+    setStudentIssues(updatedIssues);
   };
 
   return (
@@ -113,6 +111,17 @@ export function ActiveClassView({
             </div>
             <div className="flex items-center gap-3">
               <Button
+                onClick={() => setShowFastTracker(true)}
+                className="h-[50px] px-6"
+                style={{
+                  background: '#2D9596',
+                  color: '#FFFFFF'
+                }}
+              >
+                <Zap className="w-5 h-5 mr-2" />
+                Quick Track Issues
+              </Button>
+              <Button
                 onClick={() => setShowSummary(true)}
                 variant="outline"
                 className="h-[50px] px-6"
@@ -144,13 +153,12 @@ export function ActiveClassView({
             const hasAccessibilityNeeds = Object.values(student.accessibilityNeeds).some(need => need);
 
             return (
-              <button
+              <div
                 key={student.id}
-                onClick={() => setSelectedStudent(student)}
-                className="p-6 rounded-xl border-2 text-left transition-all hover:shadow-lg active:scale-98"
+                className="p-6 rounded-xl border-2 text-left transition-all hover:shadow-md"
                 style={{
                   background: '#FFFFFF',
-                  borderColor: selectedStudent?.id === student.id ? '#2D9596' : '#E5E7EB'
+                  borderColor: '#E5E7EB'
                 }}
               >
                 {/* Student Name */}
@@ -233,20 +241,20 @@ export function ActiveClassView({
                     {issueCount > 1 && `${issueCount} issues tracked`}
                   </span>
                 </div>
-              </button>
+              </div>
             );
           })}
         </div>
       </div>
 
-      {/* Issue Tracking Panel */}
-      {selectedStudent && (
-        <IssueTrackingPanel
-          student={selectedStudent}
-          classTopic={classSession.topic}
-          existingIssues={studentIssues[selectedStudent.id] || []}
-          onClose={() => setSelectedStudent(null)}
-          onAddIssue={(issue) => addIssue(selectedStudent.id, issue)}
+      {/* Fast Issue Tracker */}
+      {showFastTracker && (
+        <FastIssueTracker
+          classSession={classSession}
+          students={students}
+          studentIssues={studentIssues}
+          onUpdateIssues={handleUpdateIssues}
+          onClose={() => setShowFastTracker(false)}
         />
       )}
 
