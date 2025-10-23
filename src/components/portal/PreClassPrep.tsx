@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { ArrowLeft, Smartphone, Tablet, Eye, Ear, User, Plus, Play } from 'lucide-react';
-import { Button } from '../../ui/button';
+import { Button } from '../ui/button';
 import { ClassSession, Student } from './TeacherRouter';
 import { WalkInRegistrationModal } from './WalkInRegistrationModal';
 import logoWithTagline from 'figma:asset/67e57119f09275ddba6aeee613daad29af3852a3.png';
