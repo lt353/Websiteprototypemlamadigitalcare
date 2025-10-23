@@ -12,7 +12,7 @@ import {
   Zap
 } from 'lucide-react';
 import { Student, ClassSession } from './TeacherRouter';
-import { RapidIssueTracker } from './RapidIssueTracker';
+import RapidIssueTracker from './RapidIssueTracker';
 import { SessionSummary } from './SessionSummary';
 
 interface ActiveClassViewProps {

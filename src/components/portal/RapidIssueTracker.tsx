@@ -28,7 +28,7 @@ interface Action {
   issue: TrackedIssue;
 }
 
-export function RapidIssueTracker({
+export default function RapidIssueTracker({
   classSession,
   students,
   studentIssues,
@@ -407,3 +407,6 @@ export function RapidIssueTracker({
     </div>
   );
 }
+
+// Also export as named export for flexibility
+export { RapidIssueTracker };
