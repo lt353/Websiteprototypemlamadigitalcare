@@ -1,4 +1,4 @@
-import { Shield, MessageCircle, Calendar, BookOpen, Phone, CheckCircle, ChevronRight, Video, Edit3 } from 'lucide-react';
+import { Shield, MessageCircle, Calendar, BookOpen, Phone, CheckCircle, ChevronRight, Video, Edit3, TrendingUp } from 'lucide-react';
 import { KupunaPortalLayout } from './KupunaPortalLayout';
 import { ReadAloudButton } from './ReadAloudButton';
 
@@ -402,58 +402,75 @@ export function CustomerDashboard({ currentView, onNavigate, onLogout }: Custome
           </div>
         </div>
 
-        {/* ACHIEVEMENTS SECTION - Updated for Michele's 2-month journey */}
+      {/* ACHIEVEMENTS SECTION with Progress Link */}
         <div 
-          className="rounded-2xl p-6 md:p-8 border-2"
-          style={{ 
-            background: 'linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%)',
-            borderColor: '#F59E0B'
-          }}
-        >
-          <div className="flex flex-col md:flex-row items-start md:items-center gap-4 mb-6">
-            <div 
-              className="w-14 h-14 md:w-16 md:h-16 rounded-xl flex items-center justify-center"
-              style={{ background: '#F59E0B' }}
-            >
-              <CheckCircle className="w-7 h-7 md:w-8 md:h-8 text-white" />
-            </div>
-            <div>
-              <h3 style={{ color: '#265073', fontSize: 'clamp(22px, 4vw, 28px)', lineHeight: '1.2' }}>
-                You're doing great!
-              </h3>
-              <p style={{ fontSize: 'clamp(16px, 3.5vw, 20px)', color: '#6B7280' }}>
-                Keep up the excellent progress
-              </p>
-            </div>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="text-center p-6 rounded-xl" style={{ background: '#FFFFFF' }}>
-              <p style={{ fontSize: '48px', color: '#16A34A', marginBottom: '8px' }}>
-                5
-              </p>
-              <p style={{ fontSize: '18px', color: '#6B7280' }}>
-                Sessions Completed
-              </p>
-            </div>
-            <div className="text-center p-6 rounded-xl" style={{ background: '#FFFFFF' }}>
-              <p style={{ fontSize: '48px', color: '#F59E0B', marginBottom: '8px' }}>
-                14
-              </p>
-              <p style={{ fontSize: '18px', color: '#6B7280' }}>
-                Day Learning Streak
-              </p>
-            </div>
-            <div className="text-center p-6 rounded-xl" style={{ background: '#FFFFFF' }}>
-              <p style={{ fontSize: '48px', color: '#6366F1', marginBottom: '8px' }}>
-                11
-              </p>
-              <p style={{ fontSize: '18px', color: '#6B7280' }}>
-                Videos Watched
-              </p>
-            </div>
-          </div>
-        </div>
+  className="rounded-2xl p-6 md:p-8 border-2"
+  style={{ 
+    background: 'linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%)',
+    borderColor: '#F59E0B'
+  }}
+>
+  <div className="flex flex-col md:flex-row items-start md:items-center gap-4 mb-6">
+    <div 
+      className="w-14 h-14 md:w-16 md:h-16 rounded-xl flex items-center justify-center"
+      style={{ background: '#F59E0B' }}
+    >
+      <CheckCircle className="w-7 h-7 md:w-8 md:h-8 text-white" />
+    </div>
+    <div>
+      <h3 style={{ color: '#265073', fontSize: 'clamp(22px, 4vw, 28px)', lineHeight: '1.2' }}>
+        You're doing great!
+      </h3>
+      <p style={{ fontSize: 'clamp(16px, 3.5vw, 20px)', color: '#6B7280' }}>
+        Keep up the excellent progress
+      </p>
+    </div>
+  </div>
+  
+  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div className="text-center p-6 rounded-xl" style={{ background: '#FFFFFF' }}>
+      <p style={{ fontSize: '48px', color: '#16A34A', marginBottom: '8px' }}>
+        5
+      </p>
+      <p style={{ fontSize: '18px', color: '#6B7280' }}>
+        Sessions Completed
+      </p>
+    </div>
+    <div className="text-center p-6 rounded-xl" style={{ background: '#FFFFFF' }}>
+      <p style={{ fontSize: '48px', color: '#F59E0B', marginBottom: '8px' }}>
+        14
+      </p>
+      <p style={{ fontSize: '18px', color: '#6B7280' }}>
+        Day Learning Streak
+      </p>
+    </div>
+    <div className="text-center p-6 rounded-xl" style={{ background: '#FFFFFF' }}>
+      <p style={{ fontSize: '48px', color: '#6366F1', marginBottom: '8px' }}>
+        11
+      </p>
+      <p style={{ fontSize: '18px', color: '#6B7280' }}>
+        Videos Watched
+      </p>
+    </div>
+  </div>
+
+  {/* NEW: View Full Progress Button */}
+  <div className="mt-6 text-center">
+    <button
+      onClick={() => onNavigate('progress')}
+      className="px-8 py-4 rounded-xl font-bold text-[18px] transition-all hover:scale-105 active:scale-95"
+      style={{
+        background: '#2D9596',
+        color: '#FFFFFF',
+        boxShadow: '0 4px 12px rgba(45, 149, 150, 0.3)'
+      }}
+    >
+      <TrendingUp className="w-5 h-5 inline mr-2 mb-1" />
+      View My Full Progress
+    </button>
+  </div>
+</div>
+
 
         {/* NEED HELP? - Always Visible */}
         <div 

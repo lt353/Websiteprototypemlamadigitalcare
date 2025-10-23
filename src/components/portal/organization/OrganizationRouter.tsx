@@ -11,9 +11,9 @@ import { UpdatePaymentOrg } from './UpdatePaymentOrg';
 import { WorkshopConfirmation } from './WorkshopConfirmation';
 import { EditWorkshop } from './EditWorkshop';
 
-type OrgView =
-  | 'dashboard'
-  | 'schedule'
+type OrgView = 
+  | 'dashboard' 
+  | 'schedule' 
   | 'workshop-details'
   | 'residents'
   | 'billing'
