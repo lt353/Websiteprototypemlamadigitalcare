@@ -404,20 +404,189 @@ export const classIssuesData: ClassIssues = {
         ]
       }
     }
+  ],
+
+  // Add default issues for classes without specific data
+  'default': [
+    {
+      id: 'device-basics',
+      label: 'Device Basics',
+      subIssues: {
+        'All Devices': [
+          'Turning device on/off',
+          'Charging issues',
+          'Screen brightness',
+          'Volume control',
+          'Taking screenshots',
+          'Battery draining fast'
+        ]
+      }
+    },
+    {
+      id: 'app-management',
+      label: 'App Management',
+      subIssues: {
+        'All Devices': [
+          'Installing apps',
+          'Updating apps',
+          'Deleting apps',
+          'App permissions',
+          'App not responding',
+          'App Store/Play Store login'
+        ]
+      }
+    },
+    {
+      id: 'connectivity',
+      label: 'Connectivity',
+      subIssues: {
+        'All Devices': [
+          'WiFi connection',
+          'Mobile data on/off',
+          'Bluetooth pairing',
+          'AirDrop/Nearby Share',
+          'Hotspot setup',
+          'Airplane mode confusion'
+        ]
+      }
+    },
+    {
+      id: 'photos-camera',
+      label: 'Photos & Camera',
+      subIssues: {
+        'All Devices': [
+          'Taking photos',
+          'Viewing photos',
+          'Deleting photos',
+          'Sharing photos',
+          'Storage full',
+          'Camera not opening',
+          'Blurry photos',
+          'Flash on/off'
+        ]
+      }
+    },
+    {
+      id: 'texting-calls',
+      label: 'Texting & Calls',
+      subIssues: {
+        'All Devices': [
+          'Sending text messages',
+          'Group messages',
+          'Attaching photos to texts',
+          'Making phone calls',
+          'Adding contacts',
+          'Blocking spam calls',
+          'Voicemail access',
+          'Emergency calls'
+        ]
+      }
+    },
+    {
+      id: 'email-basics',
+      label: 'Email Basics',
+      subIssues: {
+        'All Devices': [
+          'Checking email',
+          'Sending email',
+          'Replying to email',
+          'Attaching files',
+          'Deleting email',
+          'Spam/junk folder',
+          'Email not syncing',
+          'Too many unread emails'
+        ]
+      }
+    },
+    {
+      id: 'web-browsing',
+      label: 'Web Browsing',
+      subIssues: {
+        'All Devices': [
+          'Opening browser',
+          'Typing web address',
+          'Using Google search',
+          'Bookmarking pages',
+          'Opening new tabs',
+          'Closing tabs',
+          'History/back button',
+          'Pop-up ads'
+        ]
+      }
+    },
+    {
+      id: 'security-privacy',
+      label: 'Security & Privacy',
+      subIssues: {
+        'All Devices': [
+          'Setting passcode/PIN',
+          'Fingerprint/Face ID setup',
+          'Suspicious text messages',
+          'Phishing emails',
+          'App permissions scary',
+          'Location tracking concerns',
+          'Privacy settings',
+          'Scam calls'
+        ]
+      }
+    },
+    {
+      id: 'accessibility-features',
+      label: 'Accessibility Features',
+      subIssues: {
+        'All Devices': [
+          'Text size too small',
+          'Screen magnifier',
+          'Voice control',
+          'Hearing aids pairing',
+          'Closed captions',
+          'Color contrast',
+          'Reduce motion',
+          'Speak screen'
+        ]
+      }
+    },
+    {
+      id: 'general-confusion',
+      label: 'General Confusion',
+      subIssues: {
+        'All Devices': [
+          'Device running slow',
+          'Unexpected restart',
+          'Updates taking forever',
+          'Storage management',
+          'Backup confusion',
+          'Cloud storage questions',
+          'Forgot Apple ID/Google password',
+          'Screen frozen',
+          'Battery percentage not showing',
+          'Dark mode vs light mode'
+        ]
+      }
+    }
   ]
 };
 
 // Helper function to get issues for a class topic
 export function getIssuesForClass(classTopic: string): IssueCategory[] {
-  return classIssuesData[classTopic] || [];
+  return classIssuesData[classTopic] || classIssuesData['default'];
 }
 
-// Helper function to get device-specific sub-issues
-export function getSubIssuesForDevice(
-  category: IssueCategory,
-  deviceType: 'iPhone' | 'Android' | 'iPad' | 'Other'
-): string[] {
-  const deviceIssues = category.subIssues[deviceType] || [];
-  const allDevicesIssues = category.subIssues['All Devices'] || [];
-  return [...deviceIssues, ...allDevicesIssues];
+// Helper function to get ALL flattened issues for a class (for display as buttons)
+export function getFlattenedIssues(classTopic: string, deviceType?: string): string[] {
+  const categories = getIssuesForClass(classTopic);
+  const allIssues: string[] = [];
+
+  categories.forEach(category => {
+    if (deviceType && category.subIssues[deviceType as keyof typeof category.subIssues]) {
+      const deviceIssues = category.subIssues[deviceType as keyof typeof category.subIssues] || [];
+      allIssues.push(...deviceIssues);
+    }
+    // Always include "All Devices" issues
+    if (category.subIssues['All Devices']) {
+      allIssues.push(...category.subIssues['All Devices']);
+    }
+  });
+
+  return allIssues;
 }
