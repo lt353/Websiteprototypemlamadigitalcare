@@ -8,7 +8,7 @@ import {
   FileText
 } from 'lucide-react';
 import { Student, ClassSession } from './TeacherRouter';
-import { getFlattenedIssues } from './classIssuesData';
+import { getIssuesForClass } from './classIssuesData';
 import { SessionSummary } from './SessionSummary';
 
 interface ActiveClassViewProps {
@@ -39,8 +39,8 @@ export function ActiveClassView({
   const [studentIssues, setStudentIssues] = useState<StudentIssues>({});
   const [showSummary, setShowSummary] = useState(false);
 
-  // Get all issue options for this class
-  const allIssues = getFlattenedIssues(classSession.topic);
+  // Get categorized issue options for this class
+  const issueCategories = getIssuesForClass(classSession.topic);
 
   const toggleStudentSelection = (studentId: string) => {
     setSelectedStudentIds(prev =>
@@ -231,37 +231,61 @@ export function ActiveClassView({
             </p>
           </div>
 
-          <div className="grid grid-cols-3 gap-3">
-            {allIssues.map((issue, index) => {
-              const isSelected = selectedIssues.includes(issue);
+          {/* Categorized Issues */}
+          <div className="space-y-6">
+            {issueCategories.map((category) => {
+              // Flatten all sub-issues for this category
+              const allSubIssues = Object.values(category.subIssues).flat();
 
               return (
-                <button
-                  key={index}
-                  onClick={() => toggleIssueSelection(issue)}
-                  className="p-4 rounded-lg border-2 text-left transition-all hover:shadow-md"
-                  style={{
-                    background: isSelected ? '#E6F7F4' : '#FFFFFF',
-                    borderColor: isSelected ? '#2D9596' : '#E5E7EB'
-                  }}
-                >
-                  <div className="flex items-center justify-between">
-                    <span
-                      className="text-[14px] font-medium"
-                      style={{ color: isSelected ? '#2D9596' : '#265073' }}
-                    >
-                      {issue}
-                    </span>
-                    {isSelected && (
-                      <div
-                        className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 ml-2"
-                        style={{ background: '#2D9596' }}
-                      >
-                        <Check className="w-4 h-4 text-white" />
-                      </div>
-                    )}
+                <div key={category.id}>
+                  {/* Category Header */}
+                  <h4
+                    className="text-[16px] font-bold mb-3 pb-2 border-b-2"
+                    style={{
+                      color: '#265073',
+                      borderColor: '#2D9596'
+                    }}
+                  >
+                    {category.label}
+                  </h4>
+
+                  {/* Issue Buttons */}
+                  <div className="grid grid-cols-3 gap-3">
+                    {allSubIssues.map((issue, index) => {
+                      const isSelected = selectedIssues.includes(issue);
+
+                      return (
+                        <button
+                          key={`${category.id}-${index}`}
+                          onClick={() => toggleIssueSelection(issue)}
+                          className="p-3 rounded-lg border-2 text-left transition-all hover:shadow-md"
+                          style={{
+                            background: isSelected ? '#E6F7F4' : '#FFFFFF',
+                            borderColor: isSelected ? '#2D9596' : '#E5E7EB'
+                          }}
+                        >
+                          <div className="flex items-center justify-between">
+                            <span
+                              className="text-[13px] font-medium"
+                              style={{ color: isSelected ? '#2D9596' : '#265073' }}
+                            >
+                              {issue}
+                            </span>
+                            {isSelected && (
+                              <div
+                                className="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 ml-2"
+                                style={{ background: '#2D9596' }}
+                              >
+                                <Check className="w-3 h-3 text-white" />
+                              </div>
+                            )}
+                          </div>
+                        </button>
+                      );
+                    })}
                   </div>
-                </button>
+                </div>
               );
             })}
           </div>
