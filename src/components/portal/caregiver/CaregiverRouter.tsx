@@ -15,10 +15,10 @@ import { SessionDetails } from './SessionDetails';
 import { SessionSummary } from './SessionSummary';
 import { MessageInstructor } from './MessageInstructor';
 
-type CaregiverView =
-  | 'dashboard'
-  | 'loved-one-details'
-  | 'book-session'
+type CaregiverView = 
+  | 'dashboard' 
+  | 'loved-one-details' 
+  | 'book-session' 
   | 'add-senior'
   | 'manage-seniors'
   | 'resources'

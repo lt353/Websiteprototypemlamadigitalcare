@@ -17,6 +17,7 @@ import { OrganizationRouter } from './components/portal/organization/Organizatio
 import { TeacherRouter } from './components/portal/TeacherRouter';
 import { TeacherLoginPage } from './components/portal/TeacherLoginPage';
 import { ScamCheckerPage } from './components/portal/ScamCheckerPage';
+import { ProgressDashboard } from './components/portal/ProgressDashboard';
 import { TechHelperPage } from './components/portal/TechHelperPage';
 import { BookingPage } from './components/portal/BookingPage';
 import { LearningLibraryPage } from './components/portal/LearningLibraryPage';
@@ -300,6 +301,15 @@ export default function App() {
               onContinue={() => handlePortalNavigate('dashboard')}
             />
           ) : null;
+
+          case 'progress':
+  return (
+    <ProgressDashboard
+      userName="Michele"
+      onNavigateToLearning={() => handlePortalNavigate('booking')}
+      onBack={() => handlePortalNavigate('dashboard')}
+    />
+  );
         case 'scam-checker':
           return (
             <ScamCheckerPage 

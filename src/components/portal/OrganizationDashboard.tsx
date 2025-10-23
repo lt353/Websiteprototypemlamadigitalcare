@@ -123,23 +123,34 @@ export function OrganizationDashboard({ currentView, onNavigate, onLogout }: Org
                 </p>
               </div>
             </div>
-            {/* Quick Action Buttons */}
-            <div className="flex gap-2">
-             
-              <button
-                onClick={onLogout}
-                className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg transition-all text-[14px] active:scale-95 transition-transform"
-                style={{
-                  background: 'rgba(255,255,255,0.1)',
-                  color: 'rgba(255,255,255,0.9)'
-                }}
-              >
-                <LogOut className="w-5 h-5" />
-                Logout
-              </button>
-            </div>
-          </div>
-
+         
+{/* Quick Action Buttons */}
+<div className="flex gap-2">
+  <button
+    onClick={() => onNavigate('schedule')}
+    className="flex-1 flex items-center justify-center gap-2 px-3 py-2.5 rounded-lg transition-all text-[13px] active:scale-95 transition-transform"
+    style={{
+      background: '#2D9596',
+      color: '#FFFFFF'
+    }}
+  >
+    <Calendar className="w-4 h-4" />
+    Schedule
+  </button>
+  
+  <button
+    onClick={onLogout}
+    className="flex items-center justify-center gap-2 px-3 py-2.5 rounded-lg transition-all text-[13px] active:scale-95 transition-transform"
+    style={{
+      background: 'rgba(255,255,255,0.1)',
+      color: 'rgba(255,255,255,0.9)'
+    }}
+  >
+    <LogOut className="w-4 h-4" />
+    Logout
+  </button>
+</div>
+  </div>
           {/* Navigation */}
           <nav className="flex-1 p-4">
             {navigationItems.map((item) => {
