@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import { Mail, Lock, Eye, EyeOff } from 'lucide-react';
-import { Button } from '../../ui/button';
-import { Input } from '../../ui/input';
-import { Label } from '../../ui/label';
+import { Button } from '../ui/button';
+import { Input } from '../ui/input';
 import logoWithTagline from 'figma:asset/67e57119f09275ddba6aeee613daad29af3852a3.png';
 
 interface TeacherLoginPageProps {
@@ -92,9 +91,9 @@ export function TeacherLoginPage({ onLogin }: TeacherLoginPageProps) {
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Email */}
             <div className="space-y-2">
-              <Label htmlFor="email" className="text-[16px]">
+              <label htmlFor="email" className="text-[16px] font-medium" style={{ color: '#265073' }}>
                 Email Address
-              </Label>
+              </label>
               <div className="relative">
                 <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5" style={{ color: '#6B7280' }} />
                 <Input
@@ -115,9 +114,9 @@ export function TeacherLoginPage({ onLogin }: TeacherLoginPageProps) {
 
             {/* Password */}
             <div className="space-y-2">
-              <Label htmlFor="password" className="text-[16px]">
+              <label htmlFor="password" className="text-[16px] font-medium" style={{ color: '#265073' }}>
                 Password
-              </Label>
+              </label>
               <div className="relative">
                 <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5" style={{ color: '#6B7280' }} />
                 <Input
