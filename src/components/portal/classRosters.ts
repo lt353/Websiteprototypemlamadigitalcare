@@ -1,7 +1,7 @@
 import { Student } from './TeacherRouter';
 
 // Class-specific rosters mapped by class ID
-export const CLASS_ROSTERS: { [classId: string]: Student[] } = {
+const CLASS_ROSTERS: { [classId: string]: Student[] } = {
   // Monday, Dec 2 - 10:00 AM - iPhone Basics for Beginners (Group)
   '1': [
     { id: '1-1', name: 'Helen Rodriguez', deviceType: 'iPhone', status: 'new', accessibilityNeeds: { vision: false, hearing: false, mobility: false }, email: 'helen.rodriguez@email.com', phone: '(808) 555-0201' },
@@ -149,6 +149,9 @@ export const CLASS_ROSTERS: { [classId: string]: Student[] } = {
 };
 
 // Helper function to get roster for a class
-export function getRosterForClass(classId: string): Student[] {
+export default function getRosterForClass(classId: string): Student[] {
   return CLASS_ROSTERS[classId] || [];
 }
+
+// Also export as named export for flexibility
+export { getRosterForClass };
