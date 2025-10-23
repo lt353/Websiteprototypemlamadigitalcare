@@ -83,6 +83,7 @@ export function ServicesPage({ onNavigate }: ServicesPageProps) {
                 <p className="text-[#2D3748] mb-4" style={{ fontSize: '18px', lineHeight: 1.6 }}>
                   Set up password managers, recover accounts, organize logins
                 </p>
+                <br /><br />
                 <p className="text-primary italic" style={{ fontSize: '16px', fontWeight: 600 }}>
                   "We don't just fix it—we teach you how"
                 </p>
@@ -122,6 +123,7 @@ export function ServicesPage({ onNavigate }: ServicesPageProps) {
                 <p className="text-[#2D3748] mb-4" style={{ fontSize: '18px', lineHeight: 1.6 }}>
                   Declutter apps, adjust settings, patient troubleshooting
                 </p>
+                <br />
                 <p className="text-primary italic" style={{ fontSize: '16px', fontWeight: 600 }}>
                   "Your device should work for you, not against you"
                 </p>
