@@ -9,6 +9,36 @@ interface WeeklyScheduleProps {
 }
 
 export function WeeklySchedule({ onBack, onClassSelect }: WeeklyScheduleProps) {
+  // Generate dynamic dates for this week
+  const getDynamicDates = () => {
+    const today = new Date();
+    const dayOfWeek = today.getDay(); // 0 = Sunday, 1 = Monday, etc.
+
+    // Get Monday of this week (or next Monday if today is weekend)
+    const monday = new Date(today);
+    if (dayOfWeek === 0) {
+      // Sunday - go to next Monday
+      monday.setDate(today.getDate() + 1);
+    } else if (dayOfWeek === 6) {
+      // Saturday - go to next Monday
+      monday.setDate(today.getDate() + 2);
+    } else {
+      // Weekday - go back to Monday of this week
+      monday.setDate(today.getDate() - (dayOfWeek - 1));
+    }
+
+    const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+    return days.map((day, index) => {
+      const date = new Date(monday);
+      date.setDate(monday.getDate() + index);
+      return `${day}, ${months[date.getMonth()]} ${date.getDate()}`;
+    });
+  };
+
+  const [mondayDate, tuesdayDate, wednesdayDate, thursdayDate, fridayDate] = getDynamicDates();
+
   const getClassTypeBadge = (classType: ClassSession['classType']) => {
     const typeConfig = {
       'group': { label: 'Group Class', color: '#2D9596', bg: '#E6F7F4' },
@@ -19,13 +49,13 @@ export function WeeklySchedule({ onBack, onClassSelect }: WeeklyScheduleProps) {
     return typeConfig[classType];
   };
 
-  // Sample weekly schedule data - Lindsay's full week
+  // Sample weekly schedule data - Lindsay's full week (dynamically dated)
   const weeklyClasses: ClassSession[] = [
-    // MONDAY, DEC 2
+    // MONDAY
     {
       id: '1',
       topic: 'iPhone Basics for Beginners',
-      date: 'Monday, Dec 2',
+      date: mondayDate,
       time: '10:00 AM',
       venue: 'Lanakila Senior Center',
       address: '1640 Lanakila Ave, Honolulu, HI 96817',
@@ -45,7 +75,7 @@ export function WeeklySchedule({ onBack, onClassSelect }: WeeklyScheduleProps) {
     {
       id: '2',
       topic: 'FaceTime Help with Grandkids',
-      date: 'Monday, Dec 2',
+      date: mondayDate,
       time: '12:30 PM',
       venue: 'Virtual (Zoom)',
       address: 'https://zoom.us/j/example',
@@ -65,7 +95,7 @@ export function WeeklySchedule({ onBack, onClassSelect }: WeeklyScheduleProps) {
     {
       id: '3',
       topic: 'Health Apps & Patient Portals',
-      date: 'Monday, Dec 2',
+      date: mondayDate,
       time: '2:00 PM',
       venue: "'Ilima at Leihano",
       address: '1130 N Nimitz Hwy, Honolulu, HI 96817',
@@ -88,7 +118,7 @@ export function WeeklySchedule({ onBack, onClassSelect }: WeeklyScheduleProps) {
     {
       id: '4',
       topic: 'Password Management Made Easy',
-      date: 'Tuesday, Dec 3',
+      date: tuesdayDate,
       time: '10:00 AM',
       venue: 'Hawaii State Library',
       address: '478 S King St, Honolulu, HI 96813',
@@ -109,7 +139,7 @@ export function WeeklySchedule({ onBack, onClassSelect }: WeeklyScheduleProps) {
     {
       id: '5',
       topic: 'Setting up MyChart on iPad',
-      date: 'Tuesday, Dec 3',
+      date: tuesdayDate,
       time: '1:00 PM',
       venue: 'Student Home',
       address: '1250 Nehoa St, Honolulu, HI 96822',
@@ -127,7 +157,7 @@ export function WeeklySchedule({ onBack, onClassSelect }: WeeklyScheduleProps) {
     {
       id: '6',
       topic: 'Video Calling with Family',
-      date: 'Tuesday, Dec 3',
+      date: tuesdayDate,
       time: '3:00 PM',
       venue: 'Lanakila Senior Center',
       address: '1640 Lanakila Ave, Honolulu, HI 96817',
@@ -149,7 +179,7 @@ export function WeeklySchedule({ onBack, onClassSelect }: WeeklyScheduleProps) {
     {
       id: '7',
       topic: 'iPhone Photo Organization',
-      date: 'Wednesday, Dec 4',
+      date: wednesdayDate,
       time: '9:00 AM',
       venue: 'Arcadia Assisted Living',
       address: '1434 Punahou St, Honolulu, HI 96822',
@@ -168,7 +198,7 @@ export function WeeklySchedule({ onBack, onClassSelect }: WeeklyScheduleProps) {
     {
       id: '8',
       topic: 'Health Apps & Patient Portals',
-      date: 'Wednesday, Dec 4',
+      date: wednesdayDate,
       time: '11:00 AM',
       venue: 'Lanakila Senior Center',
       address: '1640 Lanakila Ave, Honolulu, HI 96817',
@@ -189,7 +219,7 @@ export function WeeklySchedule({ onBack, onClassSelect }: WeeklyScheduleProps) {
     {
       id: '9',
       topic: 'Email Management',
-      date: 'Wednesday, Dec 4',
+      date: wednesdayDate,
       time: '2:00 PM',
       venue: 'Virtual (Zoom)',
       address: 'https://zoom.us/j/example',
@@ -211,7 +241,7 @@ export function WeeklySchedule({ onBack, onClassSelect }: WeeklyScheduleProps) {
     {
       id: '10',
       topic: 'Video Calling with Family',
-      date: 'Thursday, Dec 5',
+      date: thursdayDate,
       time: '10:00 AM',
       venue: 'Hawaii State Library',
       address: '478 S King St, Honolulu, HI 96813',
@@ -231,7 +261,7 @@ export function WeeklySchedule({ onBack, onClassSelect }: WeeklyScheduleProps) {
     {
       id: '11',
       topic: 'Facebook Account Setup',
-      date: 'Thursday, Dec 5',
+      date: thursdayDate,
       time: '12:30 PM',
       venue: 'Student Home',
       address: '789 Makiki St, Honolulu, HI 96814',
@@ -249,7 +279,7 @@ export function WeeklySchedule({ onBack, onClassSelect }: WeeklyScheduleProps) {
     {
       id: '12',
       topic: 'iPhone Basics for Beginners',
-      date: 'Thursday, Dec 5',
+      date: thursdayDate,
       time: '3:00 PM',
       venue: "'Ilima at Leihano",
       address: '1130 N Nimitz Hwy, Honolulu, HI 96817',
@@ -271,7 +301,7 @@ export function WeeklySchedule({ onBack, onClassSelect }: WeeklyScheduleProps) {
     {
       id: '13',
       topic: 'Online Banking Help',
-      date: 'Friday, Dec 6',
+      date: fridayDate,
       time: '9:00 AM',
       venue: 'Student Home',
       address: '2542 Date St, Honolulu, HI 96826',
@@ -290,7 +320,7 @@ export function WeeklySchedule({ onBack, onClassSelect }: WeeklyScheduleProps) {
     {
       id: '14',
       topic: 'Password Management Made Easy',
-      date: 'Friday, Dec 6',
+      date: fridayDate,
       time: '11:00 AM',
       venue: 'Lanakila Senior Center',
       address: '1640 Lanakila Ave, Honolulu, HI 96817',
@@ -311,7 +341,7 @@ export function WeeklySchedule({ onBack, onClassSelect }: WeeklyScheduleProps) {
     {
       id: '15',
       topic: 'iPhone Calendar & Reminders',
-      date: 'Friday, Dec 6',
+      date: fridayDate,
       time: '2:00 PM',
       venue: 'Virtual (Zoom)',
       address: 'https://zoom.us/j/example',
@@ -330,8 +360,42 @@ export function WeeklySchedule({ onBack, onClassSelect }: WeeklyScheduleProps) {
     }
   ];
 
+  // Sort classes by date and time (upcoming first)
+  const sortedClasses = [...weeklyClasses].sort((a, b) => {
+    // Parse dates
+    const getDateTime = (classItem: ClassSession) => {
+      const [dayName, monthDay] = classItem.date.split(', ');
+      const [month, day] = monthDay.split(' ');
+      const year = new Date().getFullYear();
+
+      const monthMap: { [key: string]: number } = {
+        'Jan': 0, 'Feb': 1, 'Mar': 2, 'Apr': 3, 'May': 4, 'Jun': 5,
+        'Jul': 6, 'Aug': 7, 'Sep': 8, 'Oct': 9, 'Nov': 10, 'Dec': 11
+      };
+
+      // Parse time
+      const timeParts = classItem.time.match(/(\d+):(\d+)\s*(AM|PM)/);
+      if (!timeParts) return new Date();
+
+      let hours = parseInt(timeParts[1]);
+      const minutes = parseInt(timeParts[2]);
+      const isPM = timeParts[3] === 'PM';
+
+      if (isPM && hours !== 12) hours += 12;
+      if (!isPM && hours === 12) hours = 0;
+
+      const date = new Date(year, monthMap[month], parseInt(day), hours, minutes);
+      return date;
+    };
+
+    const dateA = getDateTime(a);
+    const dateB = getDateTime(b);
+
+    return dateA.getTime() - dateB.getTime();
+  });
+
   // Group classes by day
-  const groupedClasses = weeklyClasses.reduce((acc, classItem) => {
+  const groupedClasses = sortedClasses.reduce((acc, classItem) => {
     const day = classItem.date;
     if (!acc[day]) {
       acc[day] = [];
