@@ -5,8 +5,8 @@ import { Student, ClassSession } from './TeacherRouter';
 interface TrackedIssue {
   categoryId: string;
   categoryLabel: string;
-  subIssue: string;
   timestamp: Date;
+  notes?: string;
 }
 
 interface StudentIssues {

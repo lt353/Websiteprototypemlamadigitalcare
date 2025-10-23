@@ -19,8 +19,9 @@ export function WeeklySchedule({ onBack, onClassSelect }: WeeklyScheduleProps) {
     return typeConfig[classType];
   };
 
-  // Sample weekly schedule data
+  // Sample weekly schedule data - Lindsay's full week
   const weeklyClasses: ClassSession[] = [
+    // MONDAY, DEC 2
     {
       id: '1',
       topic: 'iPhone Basics for Beginners',
@@ -37,13 +38,15 @@ export function WeeklySchedule({ onBack, onClassSelect }: WeeklyScheduleProps) {
         'iPad/phone for quick portal updates'
       ],
       status: 'today',
-      classType: 'group'
+      classType: 'group',
+      studentName: null,
+      customNotes: null
     },
     {
       id: '2',
-      topic: 'Video Calling with Family',
+      topic: 'FaceTime Help with Grandkids',
       date: 'Monday, Dec 2',
-      time: '2:00 PM',
+      time: '12:30 PM',
       venue: 'Virtual (Zoom)',
       address: 'https://zoom.us/j/example',
       duration: '1 hr',
@@ -55,29 +58,14 @@ export function WeeklySchedule({ onBack, onClassSelect }: WeeklyScheduleProps) {
         'iPad for portal updates'
       ],
       status: 'upcoming',
-      classType: '1-on-1-virtual'
+      classType: '1-on-1-virtual',
+      studentName: 'Margaret Santos',
+      customNotes: 'Wants to learn how to do group FaceTime calls with all 4 grandchildren at once. Also needs help adding contacts.'
     },
     {
       id: '3',
-      topic: 'Password Management Made Easy',
-      date: 'Tuesday, Dec 3',
-      time: '10:00 AM',
-      venue: 'Student Home',
-      address: '1250 Nehoa St, Honolulu, HI 96822',
-      duration: '1 hr',
-      price: 50,
-      expectedAttendance: 1,
-      materialsNeeded: [
-        'iPad/phone for portal updates',
-        'Password manager demo ready'
-      ],
-      status: 'upcoming',
-      classType: '1-on-1-in-person'
-    },
-    {
-      id: '4',
       topic: 'Health Apps & Patient Portals',
-      date: 'Tuesday, Dec 3',
+      date: 'Monday, Dec 2',
       time: '2:00 PM',
       venue: "'Ilima at Leihano",
       address: '1130 N Nimitz Hwy, Honolulu, HI 96817',
@@ -91,32 +79,58 @@ export function WeeklySchedule({ onBack, onClassSelect }: WeeklyScheduleProps) {
         'iPad/phone for quick portal updates'
       ],
       status: 'upcoming',
-      classType: 'group'
+      classType: 'group',
+      studentName: null,
+      customNotes: null
+    },
+
+    // TUESDAY, DEC 3
+    {
+      id: '4',
+      topic: 'Password Management Made Easy',
+      date: 'Tuesday, Dec 3',
+      time: '10:00 AM',
+      venue: 'Hawaii State Library',
+      address: '478 S King St, Honolulu, HI 96813',
+      duration: '1 hr',
+      price: 20,
+      expectedAttendance: 12,
+      materialsNeeded: [
+        'Password manager demo account',
+        'Follow-up QR cards',
+        'Laptop for projecting demos',
+        'iPad/phone for quick portal updates'
+      ],
+      status: 'upcoming',
+      classType: 'group',
+      studentName: null,
+      customNotes: null
     },
     {
       id: '5',
-      topic: 'iPhone Basics for Beginners',
-      date: 'Wednesday, Dec 4',
-      time: '11:00 AM',
-      venue: 'Arcadia Assisted Living',
-      address: '1434 Punahou St, Honolulu, HI 96822',
-      duration: '1.5 hrs',
-      price: 60,
-      expectedAttendance: 3,
+      topic: 'Setting up MyChart on iPad',
+      date: 'Tuesday, Dec 3',
+      time: '1:00 PM',
+      venue: 'Student Home',
+      address: '1250 Nehoa St, Honolulu, HI 96822',
+      duration: '1 hr',
+      price: 50,
+      expectedAttendance: 1,
       materialsNeeded: [
-        'Follow-up QR cards',
-        'iPad for demos and portal updates'
+        'iPad/phone for portal updates'
       ],
       status: 'upcoming',
-      classType: 'small-group'
+      classType: '1-on-1-in-person',
+      studentName: 'Dorothy Chang',
+      customNotes: 'First time using MyChart. Needs help creating account, viewing test results, and messaging her doctor.'
     },
     {
       id: '6',
       topic: 'Video Calling with Family',
-      date: 'Thursday, Dec 5',
-      time: '10:00 AM',
-      venue: 'Hawaii State Library',
-      address: '478 S King St, Honolulu, HI 96813',
+      date: 'Tuesday, Dec 3',
+      time: '3:00 PM',
+      venue: 'Lanakila Senior Center',
+      address: '1640 Lanakila Ave, Honolulu, HI 96817',
       duration: '45 min',
       price: 15,
       expectedAttendance: 8,
@@ -126,13 +140,57 @@ export function WeeklySchedule({ onBack, onClassSelect }: WeeklyScheduleProps) {
         'iPad/phone for quick portal updates'
       ],
       status: 'upcoming',
-      classType: 'group'
+      classType: 'group',
+      studentName: null,
+      customNotes: null
     },
+
+    // WEDNESDAY, DEC 4
     {
       id: '7',
-      topic: 'Password Management Made Easy',
-      date: 'Thursday, Dec 5',
-      time: '2:30 PM',
+      topic: 'iPhone Photo Organization',
+      date: 'Wednesday, Dec 4',
+      time: '9:00 AM',
+      venue: 'Arcadia Assisted Living',
+      address: '1434 Punahou St, Honolulu, HI 96822',
+      duration: '1.5 hrs',
+      price: 60,
+      expectedAttendance: 2,
+      materialsNeeded: [
+        'Follow-up QR cards',
+        'iPad for demos and portal updates'
+      ],
+      status: 'upcoming',
+      classType: 'small-group',
+      studentName: 'Robert Tanaka & Patricia Kim',
+      customNotes: 'Both have thousands of unorganized photos. Want to learn albums, sharing photos with family, and freeing up storage space.'
+    },
+    {
+      id: '8',
+      topic: 'Health Apps & Patient Portals',
+      date: 'Wednesday, Dec 4',
+      time: '11:00 AM',
+      venue: 'Lanakila Senior Center',
+      address: '1640 Lanakila Ave, Honolulu, HI 96817',
+      duration: '1 hr',
+      price: 20,
+      expectedAttendance: 10,
+      materialsNeeded: [
+        'Sample patient portal screenshots',
+        'Follow-up QR cards',
+        'Laptop for projecting demos',
+        'iPad/phone for quick portal updates'
+      ],
+      status: 'upcoming',
+      classType: 'group',
+      studentName: null,
+      customNotes: null
+    },
+    {
+      id: '9',
+      topic: 'Email Management',
+      date: 'Wednesday, Dec 4',
+      time: '2:00 PM',
       venue: 'Virtual (Zoom)',
       address: 'https://zoom.us/j/example',
       duration: '1 hr',
@@ -144,13 +202,77 @@ export function WeeklySchedule({ onBack, onClassSelect }: WeeklyScheduleProps) {
         'iPad for portal updates'
       ],
       status: 'upcoming',
-      classType: '1-on-1-virtual'
+      classType: '1-on-1-virtual',
+      studentName: 'James Wong',
+      customNotes: 'Inbox has 3,000+ emails. Needs help organizing into folders, unsubscribing from junk, and setting up filters.'
+    },
+
+    // THURSDAY, DEC 5
+    {
+      id: '10',
+      topic: 'Video Calling with Family',
+      date: 'Thursday, Dec 5',
+      time: '10:00 AM',
+      venue: 'Hawaii State Library',
+      address: '478 S King St, Honolulu, HI 96813',
+      duration: '45 min',
+      price: 15,
+      expectedAttendance: 7,
+      materialsNeeded: [
+        'Follow-up QR cards',
+        'Laptop for projecting demos',
+        'iPad/phone for quick portal updates'
+      ],
+      status: 'upcoming',
+      classType: 'group',
+      studentName: null,
+      customNotes: null
     },
     {
-      id: '8',
+      id: '11',
+      topic: 'Facebook Account Setup',
+      date: 'Thursday, Dec 5',
+      time: '12:30 PM',
+      venue: 'Student Home',
+      address: '789 Makiki St, Honolulu, HI 96814',
+      duration: '1 hr',
+      price: 50,
+      expectedAttendance: 1,
+      materialsNeeded: [
+        'iPad/phone for portal updates'
+      ],
+      status: 'upcoming',
+      classType: '1-on-1-in-person',
+      studentName: 'Mary Nakamura',
+      customNotes: 'Never used Facebook before. Wants to create account, find old friends from high school, and learn privacy settings.'
+    },
+    {
+      id: '12',
       topic: 'iPhone Basics for Beginners',
+      date: 'Thursday, Dec 5',
+      time: '3:00 PM',
+      venue: "'Ilima at Leihano",
+      address: '1130 N Nimitz Hwy, Honolulu, HI 96817',
+      duration: '1 hr',
+      price: 20,
+      expectedAttendance: 11,
+      materialsNeeded: [
+        'Follow-up QR cards',
+        'Laptop for projecting demos',
+        'iPad/phone for quick portal updates'
+      ],
+      status: 'upcoming',
+      classType: 'group',
+      studentName: null,
+      customNotes: null
+    },
+
+    // FRIDAY, DEC 6
+    {
+      id: '13',
+      topic: 'Online Banking Help',
       date: 'Friday, Dec 6',
-      time: '9:30 AM',
+      time: '9:00 AM',
       venue: 'Student Home',
       address: '2542 Date St, Honolulu, HI 96826',
       duration: '1.5 hrs',
@@ -161,26 +283,50 @@ export function WeeklySchedule({ onBack, onClassSelect }: WeeklyScheduleProps) {
         'iPad for demos and portal updates'
       ],
       status: 'upcoming',
-      classType: 'small-group'
+      classType: 'small-group',
+      studentName: 'Thomas Martinez & Barbara Fernandez',
+      customNotes: 'Both want to set up Bank of Hawaii mobile app, learn to deposit checks with camera, and pay bills online.'
     },
     {
-      id: '9',
-      topic: 'Health Apps & Patient Portals',
+      id: '14',
+      topic: 'Password Management Made Easy',
       date: 'Friday, Dec 6',
-      time: '1:00 PM',
+      time: '11:00 AM',
       venue: 'Lanakila Senior Center',
       address: '1640 Lanakila Ave, Honolulu, HI 96817',
-      duration: '1.5 hrs',
-      price: 25,
-      expectedAttendance: 11,
+      duration: '1 hr',
+      price: 20,
+      expectedAttendance: 9,
       materialsNeeded: [
-        'Sample patient portal screenshots',
+        'Password manager demo account',
         'Follow-up QR cards',
         'Laptop for projecting demos',
         'iPad/phone for quick portal updates'
       ],
       status: 'upcoming',
-      classType: 'group'
+      classType: 'group',
+      studentName: null,
+      customNotes: null
+    },
+    {
+      id: '15',
+      topic: 'iPhone Calendar & Reminders',
+      date: 'Friday, Dec 6',
+      time: '2:00 PM',
+      venue: 'Virtual (Zoom)',
+      address: 'https://zoom.us/j/example',
+      duration: '1 hr',
+      price: 40,
+      expectedAttendance: 1,
+      materialsNeeded: [
+        'Zoom link ready',
+        'Screen sharing prepared',
+        'iPad for portal updates'
+      ],
+      status: 'upcoming',
+      classType: '1-on-1-virtual',
+      studentName: 'William Lee',
+      customNotes: 'Forgets doctor appointments. Wants to learn calendar app, set up medication reminders, and sync with wife\'s calendar.'
     }
   ];
 
@@ -289,7 +435,7 @@ export function WeeklySchedule({ onBack, onClassSelect }: WeeklyScheduleProps) {
                           </span>
                         )}
                       </div>
-                      <div>
+                      <div className="flex items-center gap-2">
                         <span
                           className="px-3 py-1 rounded-full text-[13px] font-medium"
                           style={{
@@ -299,7 +445,19 @@ export function WeeklySchedule({ onBack, onClassSelect }: WeeklyScheduleProps) {
                         >
                           {getClassTypeBadge(classItem.classType).label}
                         </span>
+                        {classItem.studentName && (
+                          <span className="text-[14px] font-medium" style={{ color: '#6B7280' }}>
+                            • {classItem.studentName}
+                          </span>
+                        )}
                       </div>
+                      {classItem.customNotes && (
+                        <div className="mt-3 p-3 rounded-lg" style={{ background: '#FEF3C7', border: '1px solid #FCD34D' }}>
+                          <p className="text-[13px]" style={{ color: '#92400E' }}>
+                            📝 <strong>Custom Topic:</strong> {classItem.customNotes}
+                          </p>
+                        </div>
+                      )}
                     </div>
 
                     {/* Details Grid */}

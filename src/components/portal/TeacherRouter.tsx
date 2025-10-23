@@ -24,6 +24,8 @@ export interface ClassSession {
   materialsNeeded: string[];
   status: 'upcoming' | 'today' | 'completed';
   classType: 'group' | '1-on-1-in-person' | '1-on-1-virtual' | 'small-group';
+  studentName?: string | null;
+  customNotes?: string | null;
 }
 
 export interface Student {

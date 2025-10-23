@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ArrowLeft, Smartphone, Tablet, Eye, Ear, User, Plus, Play } from 'lucide-react';
 import { Button } from '../ui/button';
 import { ClassSession, Student } from './TeacherRouter';
 import { WalkInRegistrationModal } from './WalkInRegistrationModal';
+import { getRosterForClass } from './classRosters';
 import logoWithTagline from 'figma:asset/67e57119f09275ddba6aeee613daad29af3852a3.png';
 
 interface PreClassPrepProps {
@@ -13,138 +14,24 @@ interface PreClassPrepProps {
 
 export function PreClassPrep({ classSession, onBack, onStartClass }: PreClassPrepProps) {
   const [showWalkInModal, setShowWalkInModal] = useState(false);
-  const [students, setStudents] = useState<Student[]>([
-    {
-      id: '1',
-      name: 'Margaret Santos',
-      deviceType: 'iPhone',
-      status: 'premium',
-      accessibilityNeeds: {
-        vision: true,
-        hearing: false,
-        mobility: false
-      },
-      email: 'margaret.santos@email.com',
-      phone: '(808) 555-0123'
-    },
-    {
-      id: '2',
-      name: 'Robert Tanaka',
-      deviceType: 'Android',
-      status: 'standard',
-      accessibilityNeeds: {
-        vision: false,
-        hearing: true,
-        mobility: false
-      },
-      email: 'robert.tanaka@email.com',
-      phone: '(808) 555-0124'
-    },
-    {
-      id: '3',
-      name: 'Dorothy Chang',
-      deviceType: 'iPad',
-      status: 'new',
-      accessibilityNeeds: {
-        vision: false,
-        hearing: false,
-        mobility: false
-      },
-      email: 'dorothy.chang@email.com',
-      phone: '(808) 555-0125'
-    },
-    {
-      id: '4',
-      name: 'William Lee',
-      deviceType: 'iPhone',
-      status: 'returning',
-      accessibilityNeeds: {
-        vision: true,
-        hearing: true,
-        mobility: false
-      },
-      email: 'william.lee@email.com',
-      phone: '(808) 555-0126'
-    },
-    {
-      id: '5',
-      name: 'Patricia Kim',
-      deviceType: 'Android',
-      status: 'basic',
-      accessibilityNeeds: {
-        vision: false,
-        hearing: false,
-        mobility: false
-      },
-      email: 'patricia.kim@email.com',
-      phone: '(808) 555-0127'
-    },
-    {
-      id: '6',
-      name: 'James Wong',
-      deviceType: 'iPad',
-      status: 'community',
-      accessibilityNeeds: {
-        vision: false,
-        hearing: false,
-        mobility: false
-      },
-      email: 'james.wong@email.com',
-      phone: '(808) 555-0128'
-    },
-    {
-      id: '7',
-      name: 'Mary Nakamura',
-      deviceType: 'iPhone',
-      status: 'returning',
-      accessibilityNeeds: {
-        vision: false,
-        hearing: false,
-        mobility: false
-      },
-      email: 'mary.nakamura@email.com',
-      phone: '(808) 555-0129'
-    },
-    {
-      id: '8',
-      name: 'Richard Silva',
-      deviceType: 'Android',
-      status: 'new',
-      accessibilityNeeds: {
-        vision: false,
-        hearing: false,
-        mobility: false
-      },
-      email: 'richard.silva@email.com',
-      phone: '(808) 555-0130'
-    },
-    {
-      id: '9',
-      name: 'Barbara Fernandez',
-      deviceType: 'iPhone',
-      status: 'standard',
-      accessibilityNeeds: {
-        vision: false,
-        hearing: false,
-        mobility: false
-      },
-      email: 'barbara.fernandez@email.com',
-      phone: '(808) 555-0131'
-    },
-    {
-      id: '10',
-      name: 'Thomas Martinez',
-      deviceType: 'iPad',
-      status: 'basic',
-      accessibilityNeeds: {
-        vision: false,
-        hearing: false,
-        mobility: false
-      },
-      email: 'thomas.martinez@email.com',
-      phone: '(808) 555-0132'
+  const [students, setStudents] = useState<Student[]>([]);
+
+  // Load roster for this specific class
+  useEffect(() => {
+    const roster = getRosterForClass(classSession.id);
+    setStudents(roster);
+  }, [classSession.id]);
+
+  // Get appropriate header text based on class type
+  const getStudentListHeader = () => {
+    if (classSession.classType === '1-on-1-in-person' || classSession.classType === '1-on-1-virtual') {
+      return 'Student Information';
+    } else if (classSession.classType === 'small-group') {
+      return 'Participants';
+    } else {
+      return 'Student Roster';
     }
-  ]);
+  };
 
   const handleAddWalkIn = (newStudent: Student) => {
     setStudents([...students, newStudent]);
@@ -264,15 +151,27 @@ export function PreClassPrep({ classSession, onBack, onStartClass }: PreClassPre
             </div>
           </div>
 
+          {/* Custom Notes Section */}
+          {classSession.customNotes && (
+            <div className="mb-6 p-6 rounded-xl" style={{ background: '#FEF3C7', border: '2px solid #FCD34D' }}>
+              <h3 className="text-[18px] font-bold mb-2" style={{ color: '#92400E' }}>
+                📝 Custom Topic Notes
+              </h3>
+              <p className="text-[16px]" style={{ color: '#92400E' }}>
+                {classSession.customNotes}
+              </p>
+            </div>
+          )}
+
           {/* Student Roster */}
           <div className="mb-6">
             <div className="flex items-center justify-between mb-6">
               <div>
                 <h2 className="text-[28px] font-bold" style={{ color: '#265073' }}>
-                  Student Roster
+                  {getStudentListHeader()}
                 </h2>
                 <p className="text-[16px]" style={{ color: '#6B7280' }}>
-                  {students.length} students registered
+                  {students.length} {students.length === 1 ? 'student' : 'students'} registered
                 </p>
               </div>
             </div>

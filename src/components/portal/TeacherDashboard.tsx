@@ -9,7 +9,7 @@ interface TeacherDashboardProps {
 }
 
 export function TeacherDashboard({ currentView, onNavigate, onLogout }: TeacherDashboardProps) {
-  // Sample data for today's classes
+  // Sample data for today's classes (Monday, Dec 2)
   const todaysClasses = [
     {
       id: '1',
@@ -18,24 +18,42 @@ export function TeacherDashboard({ currentView, onNavigate, onLogout }: TeacherD
       venue: 'Lanakila Senior Center',
       address: '1640 Lanakila Ave, Honolulu, HI 96817',
       expectedAttendance: 10,
-      status: 'upcoming' as const
+      status: 'upcoming' as const,
+      classType: 'group' as const,
+      studentName: null,
+      customNotes: null
     },
     {
       id: '2',
-      topic: 'Video Calling with Family',
-      time: '2:00 PM - 2:45 PM',
+      topic: 'FaceTime Help with Grandkids',
+      time: '12:30 PM - 1:30 PM',
+      venue: 'Virtual (Zoom)',
+      address: 'https://zoom.us/j/example',
+      expectedAttendance: 1,
+      status: 'upcoming' as const,
+      classType: '1-on-1-virtual' as const,
+      studentName: 'Margaret Santos',
+      customNotes: 'Wants to learn how to do group FaceTime calls with all 4 grandchildren at once'
+    },
+    {
+      id: '3',
+      topic: 'Health Apps & Patient Portals',
+      time: '2:00 PM - 3:30 PM',
       venue: "'Ilima at Leihano",
       address: '1130 N Nimitz Hwy, Honolulu, HI 96817',
-      expectedAttendance: 12,
-      status: 'today' as const
+      expectedAttendance: 9,
+      status: 'today' as const,
+      classType: 'group' as const,
+      studentName: null,
+      customNotes: null
     }
   ];
 
   // Weekly stats
   const weeklyStats = [
-    { label: 'Classes This Week', value: '8', color: '#2D9596' },
-    { label: 'Students Taught', value: '84', color: '#E67E50' },
-    { label: 'Pending Follow-ups', value: '3', color: '#F59E0B' }
+    { label: 'Your Classes This Week', value: '15', color: '#2D9596' },
+    { label: 'Your Students Taught', value: '92', color: '#E67E50' },
+    { label: 'Your Pending Follow-ups', value: '3', color: '#F59E0B' }
   ];
 
   return (
@@ -61,10 +79,10 @@ export function TeacherDashboard({ currentView, onNavigate, onLogout }: TeacherD
             <div className="flex items-center gap-4">
               <div className="hidden sm:block text-right">
                 <p className="text-[16px] font-semibold" style={{ color: '#265073' }}>
-                  Lindsay, Tea & DJ
+                  Lindsay
                 </p>
                 <p className="text-[14px]" style={{ color: '#6B7280' }}>
-                  Digital Care Guides
+                  Digital Care Guide
                 </p>
               </div>
               <Button
@@ -89,10 +107,10 @@ export function TeacherDashboard({ currentView, onNavigate, onLogout }: TeacherD
         {/* Welcome Section */}
         <div className="mb-8">
           <h1 className="text-[36px] font-bold mb-2" style={{ color: '#265073' }}>
-            Aloha, Digital Care Guides!
+            Aloha, Lindsay!
           </h1>
           <p className="text-[18px]" style={{ color: '#6B7280' }}>
-            Here's what's happening today, {new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' })}
+            Here's your schedule for today, {new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' })}
           </p>
         </div>
 
