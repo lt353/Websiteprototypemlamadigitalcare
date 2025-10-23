@@ -96,3 +96,4 @@ export function TeacherRouter({ onLogout }: TeacherRouterProps) {
       );
   }
 }
+
