@@ -3,8 +3,9 @@ import { toast } from 'sonner';
 import { TeacherDashboard } from './TeacherDashboard';
 import { WeeklySchedule } from './WeeklySchedule';
 import { PreClassPrep } from './PreClassPrep';
+import { ActiveClassView } from './ActiveClassView';
 
-type TeacherView = 'dashboard' | 'schedule' | 'pre-class-prep';
+type TeacherView = 'dashboard' | 'schedule' | 'pre-class-prep' | 'active-class';
 
 interface TeacherRouterProps {
   onLogout: () => void;
@@ -22,6 +23,7 @@ export interface ClassSession {
   expectedAttendance: number;
   materialsNeeded: string[];
   status: 'upcoming' | 'today' | 'completed';
+  classType: 'group' | '1-on-1-in-person' | '1-on-1-virtual' | 'small-group';
 }
 
 export interface Student {
@@ -41,6 +43,7 @@ export interface Student {
 export function TeacherRouter({ onLogout }: TeacherRouterProps) {
   const [currentView, setCurrentView] = useState<TeacherView>('dashboard');
   const [selectedClass, setSelectedClass] = useState<ClassSession | null>(null);
+  const [activeStudents, setActiveStudents] = useState<Student[]>([]);
 
   // Scroll to top whenever the view changes
   useEffect(() => {
@@ -57,6 +60,24 @@ export function TeacherRouter({ onLogout }: TeacherRouterProps) {
   const handleBackToDashboard = () => {
     setCurrentView('dashboard');
     setSelectedClass(null);
+    setActiveStudents([]);
+  };
+
+  const handleStartClass = (students: Student[]) => {
+    setActiveStudents(students);
+    setCurrentView('active-class');
+    toast.success('Class started!', {
+      description: `${selectedClass?.topic} is now in session`
+    });
+  };
+
+  const handleEndClass = () => {
+    toast.success('Class ended!', {
+      description: `Session saved successfully`
+    });
+    setCurrentView('dashboard');
+    setSelectedClass(null);
+    setActiveStudents([]);
   };
 
   // Render current view
@@ -77,11 +98,17 @@ export function TeacherRouter({ onLogout }: TeacherRouterProps) {
         <PreClassPrep
           classSession={selectedClass}
           onBack={() => setCurrentView('schedule')}
-          onStartClass={() => {
-            toast.success('Class started!', {
-              description: `${selectedClass.topic} is now in session`
-            });
-          }}
+          onStartClass={handleStartClass}
+        />
+      ) : null;
+
+    case 'active-class':
+      return selectedClass ? (
+        <ActiveClassView
+          classSession={selectedClass}
+          students={activeStudents}
+          onBack={() => setCurrentView('pre-class-prep')}
+          onEndClass={handleEndClass}
         />
       ) : null;
 

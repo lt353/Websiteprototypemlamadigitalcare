@@ -12,16 +12,28 @@ export function TeacherLoginPage({ onLogin }: TeacherLoginPageProps) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState('');
+
+  // Lindsay's credentials (in production, this would be handled securely on the backend)
+  const LINDSAY_EMAIL = 'lindsay@malamadigitalcare.com';
+  const LINDSAY_PASSWORD = 'malama2024';
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Demo: Accept any email/password for teacher login
-    onLogin();
+    setError('');
+
+    // Validate Lindsay's credentials
+    if (email === LINDSAY_EMAIL && password === LINDSAY_PASSWORD) {
+      onLogin();
+    } else {
+      setError('Invalid email or password. Please check your credentials and try again.');
+    }
   };
 
   const handleDemoFill = () => {
-    setEmail('lindsay@malamadigitalcare.com');
-    setPassword('demo123');
+    setEmail(LINDSAY_EMAIL);
+    setPassword(LINDSAY_PASSWORD);
+    setError('');
   };
 
   return (
@@ -154,6 +166,22 @@ export function TeacherLoginPage({ onLogin }: TeacherLoginPageProps) {
               </button>
             </div>
 
+            {/* Error Message */}
+            {error && (
+              <div
+                className="rounded-lg p-4 border-2"
+                style={{
+                  background: '#FEE2E2',
+                  borderColor: '#DC2626',
+                  color: '#991B1B'
+                }}
+              >
+                <p className="text-[14px] font-medium">
+                  ❌ {error}
+                </p>
+              </div>
+            )}
+
             {/* Login Button */}
             <Button
               type="submit"
@@ -177,7 +205,7 @@ export function TeacherLoginPage({ onLogin }: TeacherLoginPageProps) {
           {/* Demo Note */}
           <div className="mt-4 rounded-lg p-3" style={{ background: '#E6F4FF', border: '1px solid #3B82F6' }}>
             <p className="text-[12px] text-center" style={{ color: '#1E40AF' }}>
-              🎨 <strong>Demo Mode:</strong> Any email/password will work for this demonstration.
+              🎨 <strong>Demo Credentials:</strong> Use the "Fill Demo Credentials" button above to auto-fill Lindsay's login info.
             </p>
           </div>
         </div>

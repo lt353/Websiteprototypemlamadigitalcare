@@ -9,6 +9,16 @@ interface WeeklyScheduleProps {
 }
 
 export function WeeklySchedule({ onBack, onClassSelect }: WeeklyScheduleProps) {
+  const getClassTypeBadge = (classType: ClassSession['classType']) => {
+    const typeConfig = {
+      'group': { label: 'Group Class', color: '#2D9596', bg: '#E6F7F4' },
+      '1-on-1-in-person': { label: '1:1 In-Person', color: '#9333EA', bg: '#F3E8FF' },
+      '1-on-1-virtual': { label: '1:1 Virtual', color: '#3B82F6', bg: '#DBEAFE' },
+      'small-group': { label: 'Small Group', color: '#E67E50', bg: '#FED7AA' }
+    };
+    return typeConfig[classType];
+  };
+
   // Sample weekly schedule data
   const weeklyClasses: ClassSession[] = [
     {
@@ -26,130 +36,151 @@ export function WeeklySchedule({ onBack, onClassSelect }: WeeklyScheduleProps) {
         'Laptop for projecting demos',
         'iPad/phone for quick portal updates'
       ],
-      status: 'today'
+      status: 'today',
+      classType: 'group'
     },
     {
       id: '2',
       topic: 'Video Calling with Family',
       date: 'Monday, Dec 2',
       time: '2:00 PM',
-      venue: "'Ilima at Leihano",
-      address: '1130 N Nimitz Hwy, Honolulu, HI 96817',
-      duration: '45 min',
-      price: 15,
-      expectedAttendance: 12,
+      venue: 'Virtual (Zoom)',
+      address: 'https://zoom.us/j/example',
+      duration: '1 hr',
+      price: 40,
+      expectedAttendance: 1,
       materialsNeeded: [
-        'Follow-up QR cards',
-        'Laptop for projecting demos',
-        'iPad/phone for quick portal updates'
+        'Zoom link ready',
+        'Screen sharing prepared',
+        'iPad for portal updates'
       ],
-      status: 'upcoming'
+      status: 'upcoming',
+      classType: '1-on-1-virtual'
     },
     {
       id: '3',
       topic: 'Password Management Made Easy',
       date: 'Tuesday, Dec 3',
-      time: '1:00 PM',
-      venue: 'Hawaii State Library',
-      address: '478 S King St, Honolulu, HI 96813',
-      duration: '1.5 hrs',
-      price: 25,
-      expectedAttendance: 8,
+      time: '10:00 AM',
+      venue: 'Student Home',
+      address: '1250 Nehoa St, Honolulu, HI 96822',
+      duration: '1 hr',
+      price: 50,
+      expectedAttendance: 1,
       materialsNeeded: [
-        'Password manager demo account',
-        'Follow-up QR cards',
-        'Laptop for projecting demos',
-        'iPad/phone for quick portal updates'
+        'iPad/phone for portal updates',
+        'Password manager demo ready'
       ],
-      status: 'upcoming'
+      status: 'upcoming',
+      classType: '1-on-1-in-person'
     },
     {
       id: '4',
       topic: 'Health Apps & Patient Portals',
-      date: 'Wednesday, Dec 4',
-      time: '10:30 AM',
-      venue: 'Lanakila Senior Center',
-      address: '1640 Lanakila Ave, Honolulu, HI 96817',
+      date: 'Tuesday, Dec 3',
+      time: '2:00 PM',
+      venue: "'Ilima at Leihano",
+      address: '1130 N Nimitz Hwy, Honolulu, HI 96817',
       duration: '1.5 hrs',
       price: 25,
-      expectedAttendance: 10,
+      expectedAttendance: 9,
       materialsNeeded: [
         'Sample patient portal screenshots',
         'Follow-up QR cards',
         'Laptop for projecting demos',
         'iPad/phone for quick portal updates'
       ],
-      status: 'upcoming'
+      status: 'upcoming',
+      classType: 'group'
     },
     {
       id: '5',
       topic: 'iPhone Basics for Beginners',
-      date: 'Thursday, Dec 5',
-      time: '9:30 AM',
-      venue: "'Ilima at Leihano",
-      address: '1130 N Nimitz Hwy, Honolulu, HI 96817',
-      duration: '45 min',
-      price: 15,
-      expectedAttendance: 11,
+      date: 'Wednesday, Dec 4',
+      time: '11:00 AM',
+      venue: 'Arcadia Assisted Living',
+      address: '1434 Punahou St, Honolulu, HI 96822',
+      duration: '1.5 hrs',
+      price: 60,
+      expectedAttendance: 3,
       materialsNeeded: [
         'Follow-up QR cards',
-        'Laptop for projecting demos',
-        'iPad/phone for quick portal updates'
+        'iPad for demos and portal updates'
       ],
-      status: 'upcoming'
+      status: 'upcoming',
+      classType: 'small-group'
     },
     {
       id: '6',
       topic: 'Video Calling with Family',
       date: 'Thursday, Dec 5',
-      time: '3:00 PM',
+      time: '10:00 AM',
       venue: 'Hawaii State Library',
       address: '478 S King St, Honolulu, HI 96813',
       duration: '45 min',
       price: 15,
-      expectedAttendance: 9,
+      expectedAttendance: 8,
       materialsNeeded: [
         'Follow-up QR cards',
         'Laptop for projecting demos',
         'iPad/phone for quick portal updates'
       ],
-      status: 'upcoming'
+      status: 'upcoming',
+      classType: 'group'
     },
     {
       id: '7',
-      topic: 'Avoiding Online Scams',
-      date: 'Friday, Dec 6',
-      time: '11:00 AM',
-      venue: 'Lanakila Senior Center',
-      address: '1640 Lanakila Ave, Honolulu, HI 96817',
+      topic: 'Password Management Made Easy',
+      date: 'Thursday, Dec 5',
+      time: '2:30 PM',
+      venue: 'Virtual (Zoom)',
+      address: 'https://zoom.us/j/example',
       duration: '1 hr',
-      price: 20,
-      expectedAttendance: 12,
+      price: 40,
+      expectedAttendance: 1,
       materialsNeeded: [
-        'Scam example screenshots',
-        'Follow-up QR cards',
-        'Laptop for projecting demos',
-        'iPad/phone for quick portal updates'
+        'Zoom link ready',
+        'Screen sharing prepared',
+        'iPad for portal updates'
       ],
-      status: 'upcoming'
+      status: 'upcoming',
+      classType: '1-on-1-virtual'
     },
     {
       id: '8',
-      topic: 'Social Media Safety',
+      topic: 'iPhone Basics for Beginners',
       date: 'Friday, Dec 6',
-      time: '2:30 PM',
-      venue: "'Ilima at Leihano",
-      address: '1130 N Nimitz Hwy, Honolulu, HI 96817',
-      duration: '1 hr',
-      price: 20,
-      expectedAttendance: 10,
+      time: '9:30 AM',
+      venue: 'Student Home',
+      address: '2542 Date St, Honolulu, HI 96826',
+      duration: '1.5 hrs',
+      price: 75,
+      expectedAttendance: 2,
       materialsNeeded: [
-        'Privacy settings guides',
+        'Follow-up QR cards',
+        'iPad for demos and portal updates'
+      ],
+      status: 'upcoming',
+      classType: 'small-group'
+    },
+    {
+      id: '9',
+      topic: 'Health Apps & Patient Portals',
+      date: 'Friday, Dec 6',
+      time: '1:00 PM',
+      venue: 'Lanakila Senior Center',
+      address: '1640 Lanakila Ave, Honolulu, HI 96817',
+      duration: '1.5 hrs',
+      price: 25,
+      expectedAttendance: 11,
+      materialsNeeded: [
+        'Sample patient portal screenshots',
         'Follow-up QR cards',
         'Laptop for projecting demos',
         'iPad/phone for quick portal updates'
       ],
-      status: 'upcoming'
+      status: 'upcoming',
+      classType: 'group'
     }
   ];
 
@@ -257,6 +288,17 @@ export function WeeklySchedule({ onBack, onClassSelect }: WeeklyScheduleProps) {
                             Today
                           </span>
                         )}
+                      </div>
+                      <div>
+                        <span
+                          className="px-3 py-1 rounded-full text-[13px] font-medium"
+                          style={{
+                            background: getClassTypeBadge(classItem.classType).bg,
+                            color: getClassTypeBadge(classItem.classType).color
+                          }}
+                        >
+                          {getClassTypeBadge(classItem.classType).label}
+                        </span>
                       </div>
                     </div>
 

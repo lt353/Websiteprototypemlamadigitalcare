@@ -8,7 +8,7 @@ import logoWithTagline from 'figma:asset/67e57119f09275ddba6aeee613daad29af3852a
 interface PreClassPrepProps {
   classSession: ClassSession;
   onBack: () => void;
-  onStartClass: () => void;
+  onStartClass: (students: Student[]) => void;
 }
 
 export function PreClassPrep({ classSession, onBack, onStartClass }: PreClassPrepProps) {
@@ -250,7 +250,7 @@ export function PreClassPrep({ classSession, onBack, onStartClass }: PreClassPre
               </div>
               {canStartClass && (
                 <Button
-                  onClick={onStartClass}
+                  onClick={() => onStartClass(students)}
                   className="h-14 px-8 whitespace-nowrap"
                   style={{
                     background: '#16A34A',
