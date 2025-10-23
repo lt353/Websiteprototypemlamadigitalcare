@@ -12,7 +12,7 @@ import {
   Zap
 } from 'lucide-react';
 import { Student, ClassSession } from './TeacherRouter';
-import { FastIssueTracker } from './FastIssueTracker';
+import RapidIssueTracker from './RapidIssueTracker';
 import { SessionSummary } from './SessionSummary';
 
 interface ActiveClassViewProps {
@@ -41,7 +41,7 @@ export function ActiveClassView({
 }: ActiveClassViewProps) {
   const [studentIssues, setStudentIssues] = useState<StudentIssues>({});
   const [showSummary, setShowSummary] = useState(false);
-  const [showFastTracker, setShowFastTracker] = useState(false);
+  const [showRapidTracker, setShowRapidTracker] = useState(false);
 
   const getDeviceIcon = (deviceType: string) => {
     switch (deviceType) {
@@ -111,7 +111,7 @@ export function ActiveClassView({
             </div>
             <div className="flex items-center gap-3">
               <Button
-                onClick={() => setShowFastTracker(true)}
+                onClick={() => setShowRapidTracker(true)}
                 className="h-[50px] px-6"
                 style={{
                   background: '#2D9596',
@@ -119,7 +119,7 @@ export function ActiveClassView({
                 }}
               >
                 <Zap className="w-5 h-5 mr-2" />
-                Quick Track Issues
+                Rapid Track Issues
               </Button>
               <Button
                 onClick={() => setShowSummary(true)}
@@ -247,14 +247,14 @@ export function ActiveClassView({
         </div>
       </div>
 
-      {/* Fast Issue Tracker */}
-      {showFastTracker && (
-        <FastIssueTracker
+      {/* Rapid Issue Tracker */}
+      {showRapidTracker && (
+        <RapidIssueTracker
           classSession={classSession}
           students={students}
           studentIssues={studentIssues}
           onUpdateIssues={handleUpdateIssues}
-          onClose={() => setShowFastTracker(false)}
+          onClose={() => setShowRapidTracker(false)}
         />
       )}
 

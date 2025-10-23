@@ -50,7 +50,7 @@ export function WeeklySchedule({ onBack, onClassSelect }: WeeklyScheduleProps) {
       venue: 'Virtual (Zoom)',
       address: 'https://zoom.us/j/example',
       duration: '1 hr',
-      price: 40,
+      price: 0, // Variable pricing for 1:1 sessions
       expectedAttendance: 1,
       materialsNeeded: [
         'Zoom link ready',
@@ -114,7 +114,7 @@ export function WeeklySchedule({ onBack, onClassSelect }: WeeklyScheduleProps) {
       venue: 'Student Home',
       address: '1250 Nehoa St, Honolulu, HI 96822',
       duration: '1 hr',
-      price: 50,
+      price: 0, // Variable pricing for 1:1 sessions
       expectedAttendance: 1,
       materialsNeeded: [
         'iPad/phone for portal updates'
@@ -154,7 +154,7 @@ export function WeeklySchedule({ onBack, onClassSelect }: WeeklyScheduleProps) {
       venue: 'Arcadia Assisted Living',
       address: '1434 Punahou St, Honolulu, HI 96822',
       duration: '1.5 hrs',
-      price: 60,
+      price: 0, // Variable pricing for small groups
       expectedAttendance: 2,
       materialsNeeded: [
         'Follow-up QR cards',
@@ -194,7 +194,7 @@ export function WeeklySchedule({ onBack, onClassSelect }: WeeklyScheduleProps) {
       venue: 'Virtual (Zoom)',
       address: 'https://zoom.us/j/example',
       duration: '1 hr',
-      price: 40,
+      price: 0, // Variable pricing for 1:1 sessions
       expectedAttendance: 1,
       materialsNeeded: [
         'Zoom link ready',
@@ -236,7 +236,7 @@ export function WeeklySchedule({ onBack, onClassSelect }: WeeklyScheduleProps) {
       venue: 'Student Home',
       address: '789 Makiki St, Honolulu, HI 96814',
       duration: '1 hr',
-      price: 50,
+      price: 0, // Variable pricing for 1:1 sessions
       expectedAttendance: 1,
       materialsNeeded: [
         'iPad/phone for portal updates'
@@ -276,7 +276,7 @@ export function WeeklySchedule({ onBack, onClassSelect }: WeeklyScheduleProps) {
       venue: 'Student Home',
       address: '2542 Date St, Honolulu, HI 96826',
       duration: '1.5 hrs',
-      price: 75,
+      price: 0, // Variable pricing for small groups
       expectedAttendance: 2,
       materialsNeeded: [
         'Follow-up QR cards',
@@ -316,7 +316,7 @@ export function WeeklySchedule({ onBack, onClassSelect }: WeeklyScheduleProps) {
       venue: 'Virtual (Zoom)',
       address: 'https://zoom.us/j/example',
       duration: '1 hr',
-      price: 40,
+      price: 0, // Variable pricing for 1:1 sessions
       expectedAttendance: 1,
       materialsNeeded: [
         'Zoom link ready',
@@ -510,20 +510,22 @@ export function WeeklySchedule({ onBack, onClassSelect }: WeeklyScheduleProps) {
                         </div>
                       </div>
 
-                      {/* Price */}
-                      <div className="flex items-center gap-3">
-                        <div
-                          className="w-9 h-9 rounded-full flex items-center justify-center flex-shrink-0"
-                          style={{ background: '#E6F7F4' }}
-                        >
-                          <DollarSign className="w-4 h-4" style={{ color: '#2D9596' }} />
+                      {/* Price - Only show for group classes */}
+                      {classItem.classType === 'group' && classItem.price > 0 && (
+                        <div className="flex items-center gap-3">
+                          <div
+                            className="w-9 h-9 rounded-full flex items-center justify-center flex-shrink-0"
+                            style={{ background: '#E6F7F4' }}
+                          >
+                            <DollarSign className="w-4 h-4" style={{ color: '#2D9596' }} />
+                          </div>
+                          <div>
+                            <p className="text-[16px] font-semibold" style={{ color: '#265073' }}>
+                              ${classItem.price} per student
+                            </p>
+                          </div>
                         </div>
-                        <div>
-                          <p className="text-[16px] font-semibold" style={{ color: '#265073' }}>
-                            ${classItem.price} per student
-                          </p>
-                        </div>
-                      </div>
+                      )}
                     </div>
 
                     {/* Materials Needed */}
