@@ -1,5 +1,5 @@
 import { ArrowLeft, MapPin, Clock, DollarSign, Users, ExternalLink } from 'lucide-react';
-import { Button } from '../ui/button';
+import { Button } from '../../ui/button';
 import { ClassSession } from './TeacherRouter';
 import logoWithTagline from 'figma:asset/67e57119f09275ddba6aeee613daad29af3852a3.png';
 
