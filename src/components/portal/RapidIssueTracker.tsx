@@ -407,6 +407,3 @@ export default function RapidIssueTracker({
     </div>
   );
 }
-
-// Also export as named export for flexibility
-export { RapidIssueTracker };
