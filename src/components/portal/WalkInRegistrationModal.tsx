@@ -1,9 +1,8 @@
 import { useState } from 'react';
 import { X, Smartphone, Tablet, Eye, Ear, Navigation } from 'lucide-react';
-import { Button } from '../../ui/button';
-import { Input } from '../../ui/input';
-import { Label } from '../../ui/label';
-import { Checkbox } from '../../ui/checkbox';
+import { Button } from '../ui/button';
+import { Input } from '../ui/input';
+import { Checkbox } from '../ui/checkbox';
 import { Student } from './TeacherRouter';
 import { toast } from 'sonner';
 
@@ -97,9 +96,9 @@ export function WalkInRegistrationModal({ onClose, onAddStudent }: WalkInRegistr
         <form onSubmit={handleSubmit} className="p-6 space-y-6">
           {/* Full Name */}
           <div className="space-y-2">
-            <Label htmlFor="name" className="text-[18px]">
+            <label htmlFor="name" className="text-[18px] font-medium" style={{ color: '#265073' }}>
               Full Name <span style={{ color: '#DC2626' }}>*</span>
-            </Label>
+            </label>
             <Input
               id="name"
               type="text"
@@ -117,9 +116,9 @@ export function WalkInRegistrationModal({ onClose, onAddStudent }: WalkInRegistr
 
           {/* Phone Number */}
           <div className="space-y-2">
-            <Label htmlFor="phone" className="text-[18px]">
+            <label htmlFor="phone" className="text-[18px] font-medium" style={{ color: '#265073' }}>
               Phone Number <span style={{ color: '#DC2626' }}>*</span>
-            </Label>
+            </label>
             <Input
               id="phone"
               type="tel"
@@ -137,9 +136,9 @@ export function WalkInRegistrationModal({ onClose, onAddStudent }: WalkInRegistr
 
           {/* Email (Optional) */}
           <div className="space-y-2">
-            <Label htmlFor="email" className="text-[18px]">
+            <label htmlFor="email" className="text-[18px] font-medium" style={{ color: '#265073' }}>
               Email Address <span className="text-[14px] italic" style={{ color: '#6B7280' }}>(Optional)</span>
-            </Label>
+            </label>
             <Input
               id="email"
               type="email"
@@ -156,9 +155,9 @@ export function WalkInRegistrationModal({ onClose, onAddStudent }: WalkInRegistr
 
           {/* Device Type */}
           <div className="space-y-3">
-            <Label className="text-[18px]">
+            <label className="text-[18px] font-medium block" style={{ color: '#265073' }}>
               Device Type <span style={{ color: '#DC2626' }}>*</span>
-            </Label>
+            </label>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
               {deviceOptions.map((option) => {
                 const Icon = option.icon;
@@ -187,9 +186,9 @@ export function WalkInRegistrationModal({ onClose, onAddStudent }: WalkInRegistr
 
           {/* Accessibility Needs */}
           <div className="space-y-3">
-            <Label className="text-[18px]">
+            <label className="text-[18px] font-medium block" style={{ color: '#265073' }}>
               Accessibility Needs
-            </Label>
+            </label>
             <div
               className="rounded-lg p-4 space-y-4"
               style={{ background: '#F9FAFB' }}
@@ -204,13 +203,14 @@ export function WalkInRegistrationModal({ onClose, onAddStudent }: WalkInRegistr
                   }
                   className="w-6 h-6"
                 />
-                <Label
+                <label
                   htmlFor="vision"
                   className="flex items-center gap-2 cursor-pointer text-[18px]"
+                  style={{ color: '#265073' }}
                 >
                   <Eye className="w-5 h-5" style={{ color: '#6B7280' }} />
                   Vision Needs (larger text, high contrast)
-                </Label>
+                </label>
               </div>
 
               {/* Hearing */}
@@ -223,13 +223,14 @@ export function WalkInRegistrationModal({ onClose, onAddStudent }: WalkInRegistr
                   }
                   className="w-6 h-6"
                 />
-                <Label
+                <label
                   htmlFor="hearing"
                   className="flex items-center gap-2 cursor-pointer text-[18px]"
+                  style={{ color: '#265073' }}
                 >
                   <Ear className="w-5 h-5" style={{ color: '#6B7280' }} />
                   Hearing Needs (speak clearly, face student)
-                </Label>
+                </label>
               </div>
 
               {/* Mobility */}
@@ -242,13 +243,14 @@ export function WalkInRegistrationModal({ onClose, onAddStudent }: WalkInRegistr
                   }
                   className="w-6 h-6"
                 />
-                <Label
+                <label
                   htmlFor="mobility"
                   className="flex items-center gap-2 cursor-pointer text-[18px]"
+                  style={{ color: '#265073' }}
                 >
                   <Navigation className="w-5 h-5" style={{ color: '#6B7280' }} />
                   Mobility Needs (ensure accessible seating)
-                </Label>
+                </label>
               </div>
 
               {/* None */}
@@ -263,12 +265,13 @@ export function WalkInRegistrationModal({ onClose, onAddStudent }: WalkInRegistr
                   }}
                   className="w-6 h-6"
                 />
-                <Label
+                <label
                   htmlFor="none"
                   className="cursor-pointer text-[18px]"
+                  style={{ color: '#265073' }}
                 >
                   No accessibility needs at this time
-                </Label>
+                </label>
               </div>
             </div>
           </div>
