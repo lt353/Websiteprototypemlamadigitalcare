@@ -14,6 +14,7 @@ import { CustomerDashboard } from './components/portal/CustomerDashboard';
 import { KupunaPortalLayout } from './components/portal/KupunaPortalLayout';
 import { CaregiverRouter } from './components/portal/caregiver/CaregiverRouter';
 import { OrganizationRouter } from './components/portal/organization/OrganizationRouter';
+import { TeacherRouter } from './components/portal/teacher/TeacherRouter';
 import { ScamCheckerPage } from './components/portal/ScamCheckerPage';
 import { TechHelperPage } from './components/portal/TechHelperPage';
 import { BookingPage } from './components/portal/BookingPage';
@@ -28,7 +29,7 @@ import { Toaster } from './components/ui/sonner';
 
 type Page = 'home' | 'about' | 'services' | 'contact' | 'workshops' | 'partners' | 'careers' | 'login' | 'register' | 'portal';
 type PortalView = 'dashboard' | 'scam-checker' | 'tech-helper' | 'booking' | 'library' | 'sessions' | 'settings' | 'success' | 'video-prejoin' | 'video-call' | 'post-session';
-type UserType = 'kupuna' | 'caregiver' | 'organization';
+type UserType = 'kupuna' | 'caregiver' | 'organization' | 'teacher';
 
 interface SuccessData {
   type: 'booking' | 'reschedule' | 'cancel' | 'subscription' | 'payment';
@@ -258,6 +259,14 @@ export default function App() {
     if (userType === 'organization') {
       return (
         <OrganizationRouter
+          onLogout={handleLogout}
+        />
+      );
+    }
+
+    if (userType === 'teacher') {
+      return (
+        <TeacherRouter
           onLogout={handleLogout}
         />
       );

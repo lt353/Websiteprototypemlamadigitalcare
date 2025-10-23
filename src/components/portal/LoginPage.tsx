@@ -6,7 +6,7 @@ import { Checkbox } from '../ui/checkbox';
 import { Label } from '../ui/label';
 import logoWithTagline from 'figma:asset/67e57119f09275ddba6aeee613daad29af3852a3.png';
 
-type UserType = 'kupuna' | 'caregiver' | 'organization';
+type UserType = 'kupuna' | 'caregiver' | 'organization' | 'teacher';
 
 interface LoginPageProps {
   onLogin: (userType: UserType) => void;
@@ -56,7 +56,7 @@ export function LoginPage({ onLogin, onNavigateToRegister, onNavigate }: LoginPa
             <p className="text-[16px] font-semibold mb-4 text-center" style={{ color: '#265073' }}>
               Try Demo Account
             </p>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
               <button
                 type="button"
                 onClick={() => {
@@ -110,6 +110,24 @@ export function LoginPage({ onLogin, onNavigateToRegister, onNavigate }: LoginPa
                 }}
               >
                 Organization
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setEmail('teacher@demo.com');
+                  setPassword('demo123');
+                  setUserType('teacher');
+                }}
+                className="px-4 py-3 rounded-lg border-2 transition-all active:scale-95 hover:shadow-md"
+                style={{
+                  background: '#FFFFFF',
+                  borderColor: '#E67E50',
+                  color: '#E67E50',
+                  fontSize: '16px',
+                  fontWeight: '600'
+                }}
+              >
+                Teacher
               </button>
             </div>
             <p className="text-[13px] text-center mt-3" style={{ color: '#6B7280' }}>
@@ -228,7 +246,7 @@ export function LoginPage({ onLogin, onNavigateToRegister, onNavigate }: LoginPa
                       checked={userType === 'organization'}
                       onChange={(e) => setUserType(e.target.value as UserType)}
                       className="w-5 h-5 cursor-pointer"
-                      style={{ 
+                      style={{
                         accentColor: '#2D9596',
                         transform: 'scale(1.2)'
                       }}
@@ -236,6 +254,27 @@ export function LoginPage({ onLogin, onNavigateToRegister, onNavigate }: LoginPa
                   </div>
                   <span className="text-[18px] group-hover:text-[#2D9596] transition-colors" style={{ color: '#2D3748' }}>
                     Organization/Facility
+                  </span>
+                </label>
+
+                {/* Teacher Option */}
+                <label className="flex items-center gap-3 cursor-pointer group">
+                  <div className="relative flex items-center">
+                    <input
+                      type="radio"
+                      name="userType"
+                      value="teacher"
+                      checked={userType === 'teacher'}
+                      onChange={(e) => setUserType(e.target.value as UserType)}
+                      className="w-5 h-5 cursor-pointer"
+                      style={{
+                        accentColor: '#E67E50',
+                        transform: 'scale(1.2)'
+                      }}
+                    />
+                  </div>
+                  <span className="text-[18px] group-hover:text-[#E67E50] transition-colors" style={{ color: '#2D3748' }}>
+                    Digital Care Guide (Teacher)
                   </span>
                 </label>
               </div>
