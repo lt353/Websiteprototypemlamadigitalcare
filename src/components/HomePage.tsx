@@ -769,6 +769,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
                 >
                   Initial consultation
                 </h3>
+                <br/ >
                 <p
                   className="text-[16px] flex-grow"
                   style={{ lineHeight: 1.6, color: "#4A5568" }}
@@ -800,6 +801,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
                 >
                   Choose Your Service
                 </h3>
+                <br/ >
                 <p
                   className="text-[16px] flex-grow"
                   style={{ lineHeight: 1.6, color: "#4A5568" }}
