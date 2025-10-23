@@ -15,6 +15,7 @@ import { KupunaPortalLayout } from './components/portal/KupunaPortalLayout';
 import { CaregiverRouter } from './components/portal/caregiver/CaregiverRouter';
 import { OrganizationRouter } from './components/portal/organization/OrganizationRouter';
 import { TeacherRouter } from './components/portal/teacher/TeacherRouter';
+import { TeacherLoginPage } from './components/portal/teacher/TeacherLoginPage';
 import { ScamCheckerPage } from './components/portal/ScamCheckerPage';
 import { TechHelperPage } from './components/portal/TechHelperPage';
 import { BookingPage } from './components/portal/BookingPage';
@@ -27,7 +28,7 @@ import { VideoCallScreen } from './components/portal/VideoCallScreen';
 import { PostSessionScreen } from './components/portal/PostSessionScreen';
 import { Toaster } from './components/ui/sonner';
 
-type Page = 'home' | 'about' | 'services' | 'contact' | 'workshops' | 'partners' | 'careers' | 'login' | 'register' | 'portal';
+type Page = 'home' | 'about' | 'services' | 'contact' | 'workshops' | 'partners' | 'careers' | 'login' | 'register' | 'portal' | 'teacher-login';
 type PortalView = 'dashboard' | 'scam-checker' | 'tech-helper' | 'booking' | 'library' | 'sessions' | 'settings' | 'success' | 'video-prejoin' | 'video-call' | 'post-session';
 type UserType = 'kupuna' | 'caregiver' | 'organization' | 'teacher';
 
@@ -64,7 +65,7 @@ export default function App() {
   useEffect(() => {
     const handleHashChange = () => {
       const hash = window.location.hash.slice(1) || 'home';
-      if (['home', 'about', 'services', 'contact', 'workshops', 'partners', 'careers', 'login', 'register', 'portal'].includes(hash)) {
+      if (['home', 'about', 'services', 'contact', 'workshops', 'partners', 'careers', 'login', 'register', 'portal', 'teacher-login'].includes(hash)) {
         setCurrentPage(hash as Page);
       }
     };
@@ -91,6 +92,12 @@ export default function App() {
     if (selectedUserType) {
       setUserType(selectedUserType);
     }
+    handleNavigate('portal');
+  };
+
+  const handleTeacherLogin = () => {
+    setIsLoggedIn(true);
+    setUserType('teacher');
     handleNavigate('portal');
   };
 
@@ -238,6 +245,12 @@ export default function App() {
             onRegister={handleLogin}
             onNavigateToLogin={() => handleNavigate('login')}
             onNavigate={handleNavigate}
+          />
+        );
+      case 'teacher-login':
+        return (
+          <TeacherLoginPage
+            onLogin={handleTeacherLogin}
           />
         );
       default:
@@ -394,8 +407,8 @@ export default function App() {
     );
   };
 
-  // Auth pages (login/register) don't show header/footer
-  if (currentPage === 'login' || currentPage === 'register') {
+  // Auth pages (login/register/teacher-login) don't show header/footer
+  if (currentPage === 'login' || currentPage === 'register' || currentPage === 'teacher-login') {
     return (
       <div className="min-h-screen">
         {renderMarketingSite()}
