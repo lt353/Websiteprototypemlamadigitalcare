@@ -314,6 +314,20 @@ export function LoginPage({ onLogin, onNavigateToRegister, onNavigate }: LoginPa
               </div>
             )}
           </form>
+
+          {/* Teacher/Staff Login Link - Discreet */}
+          {onNavigate && (
+            <div className="mt-8 pt-6 border-t" style={{ borderColor: '#E5E7EB' }}>
+              <button
+                type="button"
+                onClick={() => onNavigate('teacher-login')}
+                className="w-full text-center text-[14px] hover:underline transition-colors"
+                style={{ color: '#9CA3AF' }}
+              >
+                🍎 Teacher/Staff Login
+              </button>
+            </div>
+          )}
         </div>
       </div>
 
