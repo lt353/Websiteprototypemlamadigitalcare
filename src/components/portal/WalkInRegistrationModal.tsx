@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { X, Smartphone, Tablet, Eye, Ear, Navigation } from 'lucide-react';
-import { Button } from '../../ui/button';
-import { Input } from '../../ui/input';
-import { Label } from '../../ui/label';
-import { Checkbox } from '../../ui/checkbox';
+import { Button } from '../ui/button';
+import { Input } from '../ui/input';
+import { Label } from '../ui/label';
+import { Checkbox } from '../ui/checkbox';
 import { Student } from './TeacherRouter';
 import { toast } from 'sonner';
 
