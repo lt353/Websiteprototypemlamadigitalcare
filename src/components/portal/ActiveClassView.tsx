@@ -28,6 +28,10 @@ interface StudentIssues {
   [studentId: string]: TrackedIssue[];
 }
 
+interface StudentNotes {
+  [studentId: string]: string;
+}
+
 export function ActiveClassView({
   classSession,
   students,
@@ -38,6 +42,12 @@ export function ActiveClassView({
   const [selectedIssues, setSelectedIssues] = useState<string[]>([]);
   const [studentIssues, setStudentIssues] = useState<StudentIssues>({});
   const [showSummary, setShowSummary] = useState(false);
+
+  // Persist notes state across summary opens/closes
+  const [studentNotes, setStudentNotes] = useState<StudentNotes>({});
+  const [savedStudentNotes, setSavedStudentNotes] = useState<StudentNotes>({});
+  const [classWideNotes, setClassWideNotes] = useState('');
+  const [savedClassWideNotes, setSavedClassWideNotes] = useState('');
 
   // Get categorized issue options for this class
   const issueCategories = getIssuesForClass(classSession.topic);
@@ -348,6 +358,14 @@ export function ActiveClassView({
           classSession={classSession}
           students={students}
           studentIssues={studentIssues}
+          studentNotes={studentNotes}
+          setStudentNotes={setStudentNotes}
+          savedStudentNotes={savedStudentNotes}
+          setSavedStudentNotes={setSavedStudentNotes}
+          classWideNotes={classWideNotes}
+          setClassWideNotes={setClassWideNotes}
+          savedClassWideNotes={savedClassWideNotes}
+          setSavedClassWideNotes={setSavedClassWideNotes}
           onClose={() => setShowSummary(false)}
           onEndClass={onEndClass}
         />

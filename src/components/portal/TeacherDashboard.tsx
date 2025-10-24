@@ -1,4 +1,4 @@
-import { Home, Calendar, Users, Clock, MapPin, LogOut, ChevronRight, History, CheckCircle2 } from 'lucide-react';
+import { Calendar, Users, Clock, MapPin, LogOut, ChevronRight, History } from 'lucide-react';
 import { Button } from '../ui/button';
 import logoWithTagline from 'figma:asset/67e57119f09275ddba6aeee613daad29af3852a3.png';
 import { getUniqueStudentCount, getTotalClassCount } from './classRosters';
@@ -10,24 +10,7 @@ interface TeacherDashboardProps {
 }
 
 export function TeacherDashboard({ currentView, onNavigate, onLogout }: TeacherDashboardProps) {
-  // Helper to check if a class time has passed
-  const isClassCompleted = (timeStr: string) => {
-    const now = new Date();
-    const [timeRange] = timeStr.split(' - ');
-    const [time, period] = timeRange.split(' ');
-    const [hours, minutes] = time.split(':').map(Number);
-
-    let hour24 = hours;
-    if (period === 'PM' && hours !== 12) hour24 += 12;
-    if (period === 'AM' && hours === 12) hour24 = 0;
-
-    const classTime = new Date(now);
-    classTime.setHours(hour24, minutes || 0, 0, 0);
-
-    return now > classTime;
-  };
-
-  // Sample data for today's classes with dynamic statuses
+  // Sample data for today's classes - all set to upcoming for demo
   const allTodaysClasses = [
     {
       id: '1',
@@ -64,18 +47,11 @@ export function TeacherDashboard({ currentView, onNavigate, onLogout }: TeacherD
     }
   ];
 
-  // Add status based on time
+  // All classes set to upcoming for demo purposes
   const todaysClasses = allTodaysClasses.map(c => ({
     ...c,
-    status: isClassCompleted(c.time) ? 'completed' as const : 'upcoming' as const
+    status: 'upcoming' as const
   }));
-
-  // Sort: upcoming first, then completed
-  const sortedClasses = [...todaysClasses].sort((a, b) => {
-    if (a.status === 'upcoming' && b.status === 'completed') return -1;
-    if (a.status === 'completed' && b.status === 'upcoming') return 1;
-    return 0;
-  });
 
   // Calculate class type breakdown for this week
   const classTypeBreakdown = {
@@ -246,20 +222,18 @@ export function TeacherDashboard({ currentView, onNavigate, onLogout }: TeacherD
             </Button>
           </div>
 
-          {sortedClasses.length > 0 ? (
+          {todaysClasses.length > 0 ? (
             <div className="space-y-4">
-              {sortedClasses.map((classItem) => (
+              {todaysClasses.map((classItem) => (
                 <div
                   key={classItem.id}
                   className="rounded-xl p-6 border-2 hover:shadow-lg transition-all cursor-pointer"
                   style={{
-                    background: classItem.status === 'completed' ? '#F9FAFB' : '#FFFFFF',
-                    borderColor: classItem.status === 'completed' ? '#10B981' : '#E5E7EB',
-                    opacity: classItem.status === 'completed' ? 0.8 : 1
+                    background: '#FFFFFF',
+                    borderColor: '#E5E7EB'
                   }}
                   onClick={() => {
-                    if (classItem.status === 'upcoming') {
-                      onNavigate('pre-class-prep', { classSession: {
+                    onNavigate('pre-class-prep', { classSession: {
                         id: classItem.id,
                         topic: classItem.topic,
                         date: new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' }),
@@ -274,9 +248,8 @@ export function TeacherDashboard({ currentView, onNavigate, onLogout }: TeacherD
                           'Laptop for projecting demos',
                           'iPad/phone for quick portal updates'
                         ],
-                        status: classItem.status
+                        status: 'upcoming'
                       }});
-                    }
                   }}
                 >
                   <div className="flex items-start justify-between">
@@ -286,29 +259,15 @@ export function TeacherDashboard({ currentView, onNavigate, onLogout }: TeacherD
                         <h3 className="text-[24px] font-bold" style={{ color: '#265073' }}>
                           {classItem.topic}
                         </h3>
-                        {classItem.status === 'completed' && (
-                          <span
-                            className="px-3 py-1 rounded-full text-[14px] font-semibold flex items-center gap-2"
-                            style={{
-                              background: '#10B981',
-                              color: '#FFFFFF'
-                            }}
-                          >
-                            <CheckCircle2 className="w-4 h-4" />
-                            Completed
-                          </span>
-                        )}
-                        {classItem.status === 'upcoming' && (
-                          <span
-                            className="px-3 py-1 rounded-full text-[14px] font-semibold"
-                            style={{
-                              background: '#E67E50',
-                              color: '#FFFFFF'
-                            }}
-                          >
-                            Upcoming
-                          </span>
-                        )}
+                        <span
+                          className="px-3 py-1 rounded-full text-[14px] font-semibold"
+                          style={{
+                            background: '#E67E50',
+                            color: '#FFFFFF'
+                          }}
+                        >
+                          Upcoming
+                        </span>
                       </div>
 
                       {/* Details Grid */}
