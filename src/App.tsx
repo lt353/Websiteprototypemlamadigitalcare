@@ -18,6 +18,7 @@ import { TeacherRouter } from './components/portal/TeacherRouter';
 import { TeacherLoginPage } from './components/portal/TeacherLoginPage';
 import { ScamCheckerPage } from './components/portal/ScamCheckerPage';
 import { ProgressDashboard } from './components/portal/ProgressDashboard';
+import { MobileDemoRouter } from './components/mobile-demo/MobileDemoRouter';
 import { TechHelperPage } from './components/portal/TechHelperPage';
 import { BookingPage } from './components/portal/BookingPage';
 import { LearningLibraryPage } from './components/portal/LearningLibraryPage';
@@ -29,7 +30,7 @@ import { VideoCallScreen } from './components/portal/VideoCallScreen';
 import { PostSessionScreen } from './components/portal/PostSessionScreen';
 import { Toaster } from './components/ui/sonner';
 
-type Page = 'home' | 'about' | 'services' | 'contact' | 'workshops' | 'partners' | 'careers' | 'login' | 'register' | 'portal' | 'teacher-login';
+type Page = 'home' | 'about' | 'services' | 'contact' | 'workshops' | 'partners' | 'careers' | 'login' | 'register' | 'portal' | 'teacher-login' | 'mobile-demo';
 type PortalView = 'dashboard' | 'scam-checker' | 'tech-helper' | 'booking' | 'library' | 'sessions' | 'settings' | 'success' | 'video-prejoin' | 'video-call' | 'post-session';
 type UserType = 'kupuna' | 'caregiver' | 'organization' | 'teacher';
 
@@ -66,7 +67,7 @@ export default function App() {
   useEffect(() => {
     const handleHashChange = () => {
       const hash = window.location.hash.slice(1) || 'home';
-      if (['home', 'about', 'services', 'contact', 'workshops', 'partners', 'careers', 'login', 'register', 'portal', 'teacher-login'].includes(hash)) {
+      if (['home', 'about', 'services', 'contact', 'workshops', 'partners', 'careers', 'login', 'register', 'portal', 'teacher-login', 'mobile-demo'].includes(hash)) {
         setCurrentPage(hash as Page);
       }
     };
@@ -254,6 +255,8 @@ export default function App() {
             onLogin={handleTeacherLogin}
           />
         );
+      case 'mobile-demo':
+        return <MobileDemoRouter />;
       default:
         return <HomePage onNavigate={handleNavigate} />;
     }
@@ -417,8 +420,8 @@ export default function App() {
     );
   };
 
-  // Auth pages (login/register/teacher-login) don't show header/footer
-  if (currentPage === 'login' || currentPage === 'register' || currentPage === 'teacher-login') {
+  // Auth pages and mobile demo don't show header/footer
+  if (currentPage === 'login' || currentPage === 'register' || currentPage === 'teacher-login' || currentPage === 'mobile-demo') {
     return (
       <div className="min-h-screen">
         {renderMarketingSite()}

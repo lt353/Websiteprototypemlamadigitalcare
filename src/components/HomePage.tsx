@@ -39,9 +39,24 @@ export function HomePage({ onNavigate }: HomePageProps) {
             </h1>
 
             {/* Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4">
-              <button
-                onClick={() => onNavigate("register")}
+            <div className="flex flex-col gap-4 mb-6">
+              {/* Mobile Demo Link */}
+              <div className="p-4 rounded-lg border-2 border-dashed" style={{ borderColor: '#E67E50', background: '#FFF7ED' }}>
+                <p className="text-[14px] mb-2" style={{ color: '#9A3412', fontWeight: 600 }}>
+                  📱 NEW: Interactive Mobile Demo
+                </p>
+                <button
+                  onClick={() => onNavigate("mobile-demo")}
+                  className="text-sm underline hover:no-underline"
+                  style={{ color: '#EA580C', fontWeight: 600 }}
+                >
+                  See Michelle's Password Management Journey →
+                </button>
+              </div>
+
+              <div className="flex flex-col sm:flex-row gap-4">
+                <button
+                  onClick={() => onNavigate("register")}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.background = '#257D7E';
                   e.currentTarget.style.boxShadow = '0 8px 20px rgba(45, 149, 150, 0.4)';
@@ -95,6 +110,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
               >
                 Free Consultation
               </button>
+              </div>
             </div>
           </div>
         </div>
