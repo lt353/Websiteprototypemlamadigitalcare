@@ -26,23 +26,6 @@ export function TeacherDashboard({ currentView, onNavigate, onLogout }: TeacherD
     return now > classTime;
   };
 
-  // Get pending follow-ups from localStorage
-  const getPendingFollowUps = () => {
-    const sessions = JSON.parse(localStorage.getItem('teacherSessions') || '[]');
-    // Count unique students who need follow-ups
-    const studentsNeedingFollowUp = new Set();
-    sessions.forEach((session: any) => {
-      session.students?.forEach((student: any) => {
-        if (student.issues?.length > 0 || student.personalizedNotes) {
-          studentsNeedingFollowUp.add(student.id);
-        }
-      });
-    });
-    return studentsNeedingFollowUp.size;
-  };
-
-  const pendingCount = getPendingFollowUps();
-
   // Sample data for today's classes with dynamic statuses
   const allTodaysClasses = [
     {
@@ -108,17 +91,10 @@ export function TeacherDashboard({ currentView, onNavigate, onLogout }: TeacherD
     'small-group': { label: 'Small Group', color: '#E67E50', bg: '#FED7AA' }
   };
 
-  // Weekly stats
+  // Weekly stats - using sample data for demo
   const weeklyStats = [
-    { label: 'Your Classes This Week', value: '15', color: '#2D9596' },
-    { label: 'Unique Students This Week', value: '92', color: '#E67E50' },
-    {
-      label: 'Pending Follow-ups',
-      value: pendingCount.toString(),
-      color: '#F59E0B',
-      clickable: true,
-      onClick: () => onNavigate('past-sessions')
-    }
+    { label: 'Classes This Week', value: '15', color: '#2D9596', subtext: '8 Group, 3 Virtual, 2 In-Person, 2 Small Group' },
+    { label: 'Total Student Sessions', value: '92', color: '#E67E50', subtext: 'Some students attend multiple classes' }
   ];
 
   return (
@@ -192,16 +168,15 @@ export function TeacherDashboard({ currentView, onNavigate, onLogout }: TeacherD
         </div>
 
         {/* Quick Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
           {weeklyStats.map((stat, index) => (
             <div
               key={index}
-              className={`rounded-xl p-6 border-2 ${stat.clickable ? 'cursor-pointer hover:shadow-lg transition-all' : ''}`}
+              className="rounded-xl p-6 border-2"
               style={{
                 background: '#FFFFFF',
                 borderColor: '#E5E7EB'
               }}
-              onClick={stat.onClick}
             >
               <p className="text-[16px] mb-2" style={{ color: '#6B7280' }}>
                 {stat.label}
@@ -209,6 +184,11 @@ export function TeacherDashboard({ currentView, onNavigate, onLogout }: TeacherD
               <p className="text-[48px] font-bold" style={{ color: stat.color }}>
                 {stat.value}
               </p>
+              {stat.subtext && (
+                <p className="text-[14px] mt-2" style={{ color: '#9CA3AF' }}>
+                  {stat.subtext}
+                </p>
+              )}
             </div>
           ))}
         </div>
