@@ -9,7 +9,7 @@ import {
 } from 'lucide-react';
 import { Student, ClassSession } from './TeacherRouter';
 import { getIssuesForClass } from './classIssuesData';
-import { SessionSummary } from './SessionSummary';
+import SessionSummary from './SessionSummary';
 
 interface ActiveClassViewProps {
   classSession: ClassSession;

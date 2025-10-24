@@ -26,7 +26,7 @@ interface SessionSummaryProps {
   onEndClass: () => void;
 }
 
-export function SessionSummary({
+export default function SessionSummary({
   classSession,
   students,
   studentIssues: initialStudentIssues,
