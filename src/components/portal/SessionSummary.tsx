@@ -22,6 +22,14 @@ interface SessionSummaryProps {
   classSession: ClassSession;
   students: Student[];
   studentIssues: StudentIssues;
+  studentNotes: StudentNotes;
+  setStudentNotes: React.Dispatch<React.SetStateAction<StudentNotes>>;
+  savedStudentNotes: StudentNotes;
+  setSavedStudentNotes: React.Dispatch<React.SetStateAction<StudentNotes>>;
+  classWideNotes: string;
+  setClassWideNotes: React.Dispatch<React.SetStateAction<string>>;
+  savedClassWideNotes: string;
+  setSavedClassWideNotes: React.Dispatch<React.SetStateAction<string>>;
   onClose: () => void;
   onEndClass: () => void;
 }
@@ -30,14 +38,18 @@ export default function SessionSummary({
   classSession,
   students,
   studentIssues: initialStudentIssues,
+  studentNotes,
+  setStudentNotes,
+  savedStudentNotes,
+  setSavedStudentNotes,
+  classWideNotes,
+  setClassWideNotes,
+  savedClassWideNotes,
+  setSavedClassWideNotes,
   onClose,
   onEndClass
 }: SessionSummaryProps) {
   const [studentIssues, setStudentIssues] = useState<StudentIssues>(initialStudentIssues);
-  const [studentNotes, setStudentNotes] = useState<StudentNotes>({});
-  const [savedStudentNotes, setSavedStudentNotes] = useState<StudentNotes>({});
-  const [classWideNotes, setClassWideNotes] = useState('');
-  const [savedClassWideNotes, setSavedClassWideNotes] = useState('');
   const [exportedToAI, setExportedToAI] = useState(false);
   const [isExporting, setIsExporting] = useState(false);
 
@@ -299,6 +311,18 @@ export default function SessionSummary({
                             </div>
                           ))}
                         </div>
+                      </div>
+                    )}
+
+                    {/* Class-Wide Notes (read-only reference) */}
+                    {savedClassWideNotes && (
+                      <div className="mb-4 p-3 rounded-lg" style={{ background: '#F0F9FF', border: '1px solid #3B82F6' }}>
+                        <p className="text-[13px] font-semibold mb-1" style={{ color: '#3B82F6' }}>
+                          📝 Class-Wide Notes (for reference):
+                        </p>
+                        <p className="text-[13px]" style={{ color: '#6B7280' }}>
+                          {savedClassWideNotes}
+                        </p>
                       </div>
                     )}
 
