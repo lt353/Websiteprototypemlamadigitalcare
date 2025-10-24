@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Button } from '../ui/button';
-import { X, Sparkles, FileDown, Trash2, Save, Plus } from 'lucide-react';
+import { X, Sparkles, FileDown, Trash2, Save, Check } from 'lucide-react';
 import { Student, ClassSession } from './TeacherRouter';
 
 interface TrackedIssue {
@@ -35,8 +35,11 @@ export function SessionSummary({
 }: SessionSummaryProps) {
   const [studentIssues, setStudentIssues] = useState<StudentIssues>(initialStudentIssues);
   const [studentNotes, setStudentNotes] = useState<StudentNotes>({});
+  const [savedStudentNotes, setSavedStudentNotes] = useState<StudentNotes>({});
   const [classWideNotes, setClassWideNotes] = useState('');
+  const [savedClassWideNotes, setSavedClassWideNotes] = useState('');
   const [exportedToAI, setExportedToAI] = useState(false);
+  const [isExporting, setIsExporting] = useState(false);
 
   const removeIssue = (studentId: string, issueIndex: number) => {
     const updated = { ...studentIssues };
@@ -53,21 +56,37 @@ export function SessionSummary({
     }));
   };
 
-  const handleExportToAI = () => {
+  const saveStudentNote = (studentId: string) => {
+    const note = studentNotes[studentId] || '';
+    setSavedStudentNotes(prev => ({
+      ...prev,
+      [studentId]: note
+    }));
+  };
+
+  const saveClassWideNotes = () => {
+    setSavedClassWideNotes(classWideNotes);
+  };
+
+  const handleExportToAI = async () => {
+    setIsExporting(true);
+
     // Prepare data for AI export
     const exportData = {
+      sessionId: `session-${Date.now()}`,
       class: {
         topic: classSession.topic,
         date: classSession.date,
         time: classSession.time,
         venue: classSession.venue
       },
-      classWideNotes,
+      classWideNotes: savedClassWideNotes,
       students: students.map(student => {
         const issues = studentIssues[student.id] || [];
-        const notes = studentNotes[student.id] || '';
+        const notes = savedStudentNotes[student.id] || '';
 
         return {
+          id: student.id,
           name: student.name,
           deviceType: student.deviceType,
           status: student.status,
@@ -75,27 +94,53 @@ export function SessionSummary({
           personalizedNotes: notes,
           accessibilityNeeds: student.accessibilityNeeds
         };
-      })
+      }),
+      exportedAt: new Date().toISOString()
     };
 
-    // In real implementation, this would send to AI API
-    console.log('Exporting to AI:', exportData);
+    // Save to localStorage (session history)
+    const existingSessions = JSON.parse(localStorage.getItem('teacherSessions') || '[]');
+    existingSessions.unshift(exportData); // Add to beginning
+    localStorage.setItem('teacherSessions', JSON.stringify(existingSessions));
 
-    // Download as JSON for now
-    const blob = new Blob([JSON.stringify(exportData, null, 2)], {
-      type: 'application/json'
-    });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `ai-export-${classSession.topic.replace(/\s+/g, '-').toLowerCase()}-${new Date().toISOString().split('T')[0]}.json`;
-    a.click();
+    // Simulate AI API call (in real implementation, this would send to Claude API)
+    await new Promise(resolve => setTimeout(resolve, 1500));
 
+    console.log('📤 Sending to AI for personalized page generation:', exportData);
+
+    // In production, this would be:
+    // await fetch('/api/generate-personalized-pages', {
+    //   method: 'POST',
+    //   headers: { 'Content-Type': 'application/json' },
+    //   body: JSON.stringify(exportData)
+    // });
+
+    setIsExporting(false);
     setExportedToAI(true);
   };
 
   const getTotalIssues = () => {
     return Object.values(studentIssues).reduce((sum, issues) => sum + issues.length, 0);
+  };
+
+  const isStudentNoteSaved = (studentId: string) => {
+    const current = studentNotes[studentId] || '';
+    const saved = savedStudentNotes[studentId] || '';
+    return current === saved && current.length > 0;
+  };
+
+  const hasStudentNoteChanged = (studentId: string) => {
+    const current = studentNotes[studentId] || '';
+    const saved = savedStudentNotes[studentId] || '';
+    return current !== saved && current.length > 0;
+  };
+
+  const isClassWideNotesSaved = () => {
+    return classWideNotes === savedClassWideNotes && classWideNotes.length > 0;
+  };
+
+  const hasClassWideNotesChanged = () => {
+    return classWideNotes !== savedClassWideNotes && classWideNotes.length > 0;
   };
 
   return (
@@ -142,9 +187,33 @@ export function SessionSummary({
         <div className="flex-1 overflow-y-auto">
           {/* Class-Wide Notes */}
           <div className="px-6 py-6 border-b" style={{ background: '#F9FAFB', borderColor: '#E5E7EB' }}>
-            <h3 className="text-[18px] font-bold mb-3" style={{ color: '#265073' }}>
-              Class-Wide Notes
-            </h3>
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="text-[18px] font-bold" style={{ color: '#265073' }}>
+                Class-Wide Notes
+              </h3>
+              <button
+                onClick={saveClassWideNotes}
+                disabled={!hasClassWideNotesChanged()}
+                className="flex items-center gap-2 px-4 py-2 rounded-lg transition-all"
+                style={{
+                  background: isClassWideNotesSaved() ? '#10B981' : (hasClassWideNotesChanged() ? '#2D9596' : '#D1D5DB'),
+                  color: '#FFFFFF',
+                  cursor: hasClassWideNotesChanged() ? 'pointer' : 'default'
+                }}
+              >
+                {isClassWideNotesSaved() ? (
+                  <>
+                    <Check className="w-4 h-4" />
+                    <span className="text-[14px] font-semibold">Saved</span>
+                  </>
+                ) : (
+                  <>
+                    <Save className="w-4 h-4" />
+                    <span className="text-[14px] font-semibold">Save</span>
+                  </>
+                )}
+              </button>
+            </div>
             <textarea
               value={classWideNotes}
               onChange={(e) => setClassWideNotes(e.target.value)}
@@ -235,9 +304,33 @@ export function SessionSummary({
 
                     {/* Student Notes */}
                     <div>
-                      <label className="text-[14px] font-semibold mb-2 block" style={{ color: '#265073' }}>
-                        Personalized Notes for {student.name.split(' ')[0]}:
-                      </label>
+                      <div className="flex items-center justify-between mb-2">
+                        <label className="text-[14px] font-semibold" style={{ color: '#265073' }}>
+                          Personalized Notes for {student.name.split(' ')[0]}:
+                        </label>
+                        <button
+                          onClick={() => saveStudentNote(student.id)}
+                          disabled={!hasStudentNoteChanged(student.id)}
+                          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-all"
+                          style={{
+                            background: isStudentNoteSaved(student.id) ? '#10B981' : (hasStudentNoteChanged(student.id) ? '#2D9596' : '#D1D5DB'),
+                            color: '#FFFFFF',
+                            cursor: hasStudentNoteChanged(student.id) ? 'pointer' : 'default'
+                          }}
+                        >
+                          {isStudentNoteSaved(student.id) ? (
+                            <>
+                              <Check className="w-3.5 h-3.5" />
+                              <span className="text-[13px] font-semibold">Saved</span>
+                            </>
+                          ) : (
+                            <>
+                              <Save className="w-3.5 h-3.5" />
+                              <span className="text-[13px] font-semibold">Save</span>
+                            </>
+                          )}
+                        </button>
+                      </div>
                       <textarea
                         value={studentNote}
                         onChange={(e) => updateStudentNote(student.id, e.target.value)}
@@ -251,6 +344,17 @@ export function SessionSummary({
                           resize: 'vertical'
                         }}
                       />
+                      {/* Show saved notes */}
+                      {isStudentNoteSaved(student.id) && savedStudentNotes[student.id] && (
+                        <div className="mt-3 p-3 rounded-lg" style={{ background: '#F0FDF4', border: '1px solid #10B981' }}>
+                          <p className="text-[13px] font-semibold mb-1" style={{ color: '#10B981' }}>
+                            ✓ Saved Notes:
+                          </p>
+                          <p className="text-[14px]" style={{ color: '#265073' }}>
+                            {savedStudentNotes[student.id]}
+                          </p>
+                        </div>
+                      )}
                     </div>
                   </div>
                 );
@@ -266,23 +370,35 @@ export function SessionSummary({
         >
           <div className="flex flex-col sm:flex-row gap-3">
             <Button
+              onClick={onClose}
+              variant="outline"
+              className="flex-1 h-[50px]"
+            >
+              ← Go Back to Add More Issues
+            </Button>
+            <Button
               onClick={handleExportToAI}
-              disabled={exportedToAI}
+              disabled={exportedToAI || isExporting}
               className="flex-1 h-[50px]"
               style={{
-                background: exportedToAI ? '#10B981' : '#2D9596',
+                background: exportedToAI ? '#10B981' : (isExporting ? '#9CA3AF' : '#2D9596'),
                 color: '#FFFFFF'
               }}
             >
               {exportedToAI ? (
                 <>
-                  <Save className="w-5 h-5 mr-2" />
-                  Exported to AI
+                  <Check className="w-5 h-5 mr-2" />
+                  Sent to AI Successfully
+                </>
+              ) : isExporting ? (
+                <>
+                  <Sparkles className="w-5 h-5 mr-2 animate-spin" />
+                  Sending to AI...
                 </>
               ) : (
                 <>
                   <Sparkles className="w-5 h-5 mr-2" />
-                  Export to AI
+                  Send to AI for Page Generation
                 </>
               )}
             </Button>
@@ -295,7 +411,7 @@ export function SessionSummary({
               }}
             >
               <FileDown className="w-5 h-5 mr-2" />
-              End Class
+              End Class & Save
             </Button>
           </div>
         </div>
