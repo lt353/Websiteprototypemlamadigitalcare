@@ -1,6 +1,7 @@
 import { Home, Calendar, Users, Clock, MapPin, LogOut, ChevronRight, History, CheckCircle2 } from 'lucide-react';
 import { Button } from '../ui/button';
 import logoWithTagline from 'figma:asset/67e57119f09275ddba6aeee613daad29af3852a3.png';
+import { getUniqueStudentCount, getTotalClassCount } from './classRosters';
 
 interface TeacherDashboardProps {
   currentView: string;
@@ -91,10 +92,14 @@ export function TeacherDashboard({ currentView, onNavigate, onLogout }: TeacherD
     'small-group': { label: 'Small Group', color: '#E67E50', bg: '#FED7AA' }
   };
 
-  // Weekly stats - using sample data for demo
+  // Get actual counts from roster data
+  const uniqueStudentCount = getUniqueStudentCount();
+  const totalClassCount = getTotalClassCount();
+
+  // Weekly stats - using real data
   const weeklyStats = [
-    { label: 'Classes This Week', value: '15', color: '#2D9596', subtext: '8 Group, 3 Virtual, 2 In-Person, 2 Small Group' },
-    { label: 'Total Student Sessions', value: '92', color: '#E67E50', subtext: 'Some students attend multiple classes' }
+    { label: 'Classes This Week', value: totalClassCount.toString(), color: '#2D9596', subtext: '8 Group, 3 Virtual, 2 In-Person, 2 Small Group' },
+    { label: 'Unique Students This Week', value: uniqueStudentCount.toString(), color: '#E67E50', subtext: 'Some students attend multiple classes' }
   ];
 
   return (
