@@ -4,8 +4,9 @@ import { TeacherDashboard } from './TeacherDashboard';
 import { WeeklySchedule } from './WeeklySchedule';
 import { PreClassPrep } from './PreClassPrep';
 import { ActiveClassView } from './ActiveClassView';
+import { PastSessions } from './PastSessions';
 
-type TeacherView = 'dashboard' | 'schedule' | 'pre-class-prep' | 'active-class';
+type TeacherView = 'dashboard' | 'schedule' | 'pre-class-prep' | 'active-class' | 'past-sessions' | 'walk-in';
 
 interface TeacherRouterProps {
   onLogout: () => void;
@@ -113,6 +114,15 @@ export function TeacherRouter({ onLogout }: TeacherRouterProps) {
           onEndClass={handleEndClass}
         />
       ) : null;
+
+    case 'past-sessions':
+      return <PastSessions onBack={handleBackToDashboard} />;
+
+    case 'walk-in':
+      // Placeholder for walk-in registration - can be implemented later
+      toast.info('Walk-in registration coming soon!');
+      setCurrentView('dashboard');
+      return null;
 
     case 'dashboard':
     default:

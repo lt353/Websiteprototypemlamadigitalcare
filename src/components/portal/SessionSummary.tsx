@@ -344,6 +344,17 @@ export function SessionSummary({
                           resize: 'vertical'
                         }}
                       />
+                      {/* Show saved notes */}
+                      {isStudentNoteSaved(student.id) && savedStudentNotes[student.id] && (
+                        <div className="mt-3 p-3 rounded-lg" style={{ background: '#F0FDF4', border: '1px solid #10B981' }}>
+                          <p className="text-[13px] font-semibold mb-1" style={{ color: '#10B981' }}>
+                            ✓ Saved Notes:
+                          </p>
+                          <p className="text-[14px]" style={{ color: '#265073' }}>
+                            {savedStudentNotes[student.id]}
+                          </p>
+                        </div>
+                      )}
                     </div>
                   </div>
                 );
@@ -358,6 +369,13 @@ export function SessionSummary({
           style={{ background: '#FFFFFF', borderColor: '#E5E7EB' }}
         >
           <div className="flex flex-col sm:flex-row gap-3">
+            <Button
+              onClick={onClose}
+              variant="outline"
+              className="flex-1 h-[50px]"
+            >
+              ← Go Back to Add More Issues
+            </Button>
             <Button
               onClick={handleExportToAI}
               disabled={exportedToAI || isExporting}
