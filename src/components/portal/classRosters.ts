@@ -148,16 +148,8 @@ const CLASS_ROSTERS: { [classId: string]: Student[] } = {
   ]
 };
 
-// Helper function to get roster for a class
-export default function getRosterForClass(classId: string): Student[] {
-  return CLASS_ROSTERS[classId] || [];
-}
-
-// Also export as named export for flexibility
-export { getRosterForClass };
-
 // Helper function to get unique student count across all classes this week
-export function getUniqueStudentCount(): number {
+function getUniqueStudentCount(): number {
   const uniqueEmails = new Set<string>();
 
   Object.values(CLASS_ROSTERS).forEach(roster => {
@@ -172,6 +164,14 @@ export function getUniqueStudentCount(): number {
 }
 
 // Helper function to get total class count
-export function getTotalClassCount(): number {
+function getTotalClassCount(): number {
   return Object.keys(CLASS_ROSTERS).length;
 }
+
+// Helper function to get roster for a class
+export default function getRosterForClass(classId: string): Student[] {
+  return CLASS_ROSTERS[classId] || [];
+}
+
+// Also export as named export for flexibility
+export { getRosterForClass, getUniqueStudentCount, getTotalClassCount };
